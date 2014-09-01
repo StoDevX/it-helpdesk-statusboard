@@ -11,7 +11,7 @@ refreshFrequency: 60000,
 
 style: [
 	"top: 50px",
-	"left: 700px",
+	"right: 50px",
 	"width: 450px",
 
 	"color: rgb(255, 255, 255)",
