@@ -7,7 +7,7 @@ refreshFrequency: 60000,
 style: [
 	"top: 50px",
 	"left: 50px",
-	"width: 260px",
+	"width: 28em",
 
 	"color: rgb(255, 255, 255)",
 	"background-color: rgba(0, 0, 0, 0.6)",
@@ -50,7 +50,7 @@ style: [
 	"	-webkit-flex: 1",
 
 	".details",
-	"	font-size: 6em",
+	"	font-size: 18em",
 	"	-webkit-flex: 1",
 ].join('\n'),
 
