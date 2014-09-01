@@ -32,7 +32,7 @@ style: [
 	"	padding-bottom: 2rem",
 
 	".danger",
-	"	color: rgb(255,  48,   0)",
+	"	color: rgb(255, 200,   0)",
 	".success",
 	"	color: rgb(  0, 186,   0)",
 
