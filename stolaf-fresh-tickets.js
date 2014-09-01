@@ -73,6 +73,15 @@ update: function(output, domEl) {
 		})
 		.sortBy('lastUpdatedTime')
 		.first(5)
+		.map(function(ticket) {
+			var smaller = {};
+			smaller.id = ticket.id;
+			smaller.detail = ticket.detail;
+			smaller.notes = ticket.notes;
+			smaller.client = ticket.displayClient;
+			smaller.lastUpdated = ticket.lastUpdated;
+			return smaller;
+		})
 		.value();
 
 	var wrapper = domEl.querySelector('.wrapper');
