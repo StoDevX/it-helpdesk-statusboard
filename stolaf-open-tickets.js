@@ -7,6 +7,8 @@ style: [
 	"left: 50px",
 	"width: 260px",
 
+	"font-family: Avenir Next",
+
 	"color: rgb(255, 255, 255)",
 	"background-color: rgba(0, 0, 0, 0.6)",
 
@@ -41,6 +43,8 @@ style: [
 	"	-webkit-align-items: center;",
 
 	".title",
+	"	font-family: Avenir Next Condensed",
+	"	font-weight: 300",
 	"	text-transform: uppercase",
 	"	margin: 0",
 	"	font-size: 1.75em",
