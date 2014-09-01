@@ -3,7 +3,7 @@ command: 'curl --silent "https://help.stolaf.edu/helpdesk/WebObjects/Helpdesk.wo
 refreshFrequency: 60000,
 
 style: [
-	"top: 350px",
+	"bottom: 50px",
 	"left: 50px",
 	"width: 260px",
 

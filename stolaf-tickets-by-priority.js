@@ -5,8 +5,8 @@ command: 'curl --silent "https://help.stolaf.edu/helpdesk/WebObjects/Helpdesk.wo
 refreshFrequency: 60000,
 
 style: [
-	"top: 650px",
-	"left: 50px",
+	"top: 50px",
+	"left: 350px",
 	"width: 300px",
 
 	"color: rgb(255, 255, 255)",
