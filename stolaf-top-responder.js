@@ -88,19 +88,17 @@ style: [
 
 	".yellow",
 	"	color: rgb(255, 198,   0)",
-	".green ",
+	".green",
 	"	color: rgb(  0, 186,   0)",
-	".red   ",
+	".red",
 	"	color: rgb(255,  48,   0)",
 	".purple",
 	"	color: rgb(155,   0, 194)",
-	".blue  ",
+	".blue",
 	"	color: rgb(  0, 108, 230)",
-	".gray  ",
-	"	color: rgb(100, 112, 118)",
-	".pink  ",
+	".pink",
 	"	color: rgb(252,  88, 181)",
-	".aqua  ",
+	".aqua",
 	"	color: rgb(  0, 159, 153)",
 	".orange",
 	"	color: rgb(252, 107,   0)",
@@ -125,15 +123,14 @@ update: function(output, domEl) {
 	var tickets = _.flatten(JSON.parse(output));
 
 	var colors = [
+		'red',
+		'orange',
 		'yellow',
 		'green',
-		'red',
-		'purple',
 		'blue',
-		'gray',
+		'purple',
 		'pink',
 		'aqua',
-		'orange',
 		'silver',
 	]
 
@@ -174,18 +171,18 @@ update: function(output, domEl) {
 			return item[1]
 		})
 		.reverse()
-		.first(10)
+		.first(9)
 		.value();
 
 	var contentTable = document.createElement('table');
 	contentTable.classList.add('colorful');
 
-	_.each(topResponders, function(pair) {
+	_.each(topResponders, function(pair, index) {
 		var row = document.createElement('tr');
 		var nameCell = document.createElement('td');
 		var numberCell = document.createElement('td');
 
-		row.classList.add(_.sample(colors));
+		row.classList.add(colors[index]);
 
 		nameCell.textContent = pair[0];
 		numberCell.textContent = pair[1];
