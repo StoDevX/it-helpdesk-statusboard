@@ -139,11 +139,11 @@ update: function(output, domEl) {
 	]
 
 	var staff = [
-		'Mike Sjulstad',
-		'Phinehas Bynum',
-		'Nhia Lee',
-		'Jennie Moberg',
-		'Michael Domingues',
+		// 'Mike Sjulstad',
+		// 'Phinehas Bynum',
+		// 'Nhia Lee',
+		// 'Jennie Moberg',
+		// 'Michael Domingues',
 	]
 
 	function hasTechNote(note) {
