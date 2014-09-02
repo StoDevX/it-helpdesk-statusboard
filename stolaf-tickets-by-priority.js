@@ -14,8 +14,6 @@ style: [
 	"color: rgb(255, 255, 255)",
 	"background-color: rgba(0, 0, 0, 0.6)",
 
-	"text-align: center",
-
 	"box-sizing: border-box",
 
 	"*, *::before, *::after",
@@ -60,38 +58,25 @@ style: [
 
 	"table",
 	"	color: white",
-	"	border-collapse: separate;",
-	"	border-spacing: 0.5em",
 
 	"td",
 	"	padding-top: 0.15em",
 
 	".bubbles td:first-child",
-	"	border-radius: 50px",
-	"	padding-left: 1em",
 	"	padding-right: 1em",
 
 	".bubbles td:nth-child(2)",
 	"	padding-left: 0.5em",
+	"	text-align: right",
 
-	".high td:nth-child(1)",
-	"	background: rgb(255, 48,  0)",
-	".high td:nth-child(2)",
+	".high td:nth-child(1), .high td:nth-child(2)",
 	"	color: rgb(255, 48,  0)",
 
-	".medium td:nth-child(1)",
-	"	background: rgb(255, 198,  0)",
-	".medium td:nth-child(2)",
+	".medium td:nth-child(1), .medium td:nth-child(2)",
 	"	color: rgb(255, 198,  0)",
 
-	".low td:nth-child(1)",
-	"	background: rgb(174, 183, 188)",
-	".low td:nth-child(2)",
+	".low td:nth-child(1), .low td:nth-child(2)",
 	"	color: rgb(174, 183, 188)",
-
-	".bubbles .total td",
-	"	border-top: solid 1px white",
-	"	border-radius: 0",
 ].join('\n'),
 
 render: function(output) {
