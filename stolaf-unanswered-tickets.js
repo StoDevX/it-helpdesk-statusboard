@@ -70,6 +70,7 @@ render: function(output) {
 update: function(output, domEl) {
 	var _ = this.lodash();
 	var openTickets = JSON.parse(output);
+
 	var unansweredTickets = _.chain(openTickets).filter({'notes': []}).value();
 	var unansweredTicketCount = unansweredTickets.length;
 
