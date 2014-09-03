@@ -83,7 +83,7 @@ render: function(output) {
 	return [
 		'<div class="wrapper">',
 			'<div class="details"></div>',
-			'<h1 class="title"></h1>',
+			'<h1 class="title">Ticket Priority</h1>',
 		'</div>',
 	].join('')
 },
