@@ -39,9 +39,9 @@ style: [
 	"	padding-bottom: 1rem",
 
 	".danger",
-	"	color: rgb(255,  48,   0)",
+	"	color: rgb(255,  48, 0)",
 	".success",
-	"	color: rgb(  0, 186,   0)",
+	"	color: rgb(  0, 186, 0)",
 
 	".title, .details",
 	"	display: -webkit-flex;",
