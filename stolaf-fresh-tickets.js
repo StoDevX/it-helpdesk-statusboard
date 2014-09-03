@@ -75,7 +75,7 @@ style: [
 	"	font-weight: 500",
 
 	".item",
-	"	margin-bottom: 0.5em",
+	"	margin-bottom: 0.85em",
 
 	".item:last-child",
 	"	margin-bottom: 0",
@@ -90,9 +90,6 @@ style: [
 
 	".client-name::after",
 	"	content: ' — '",
-
-	// ".note-count::after",
-	// "	content: ' notes'"
 ].join('\n'),
 
 render: function(output) {
@@ -146,7 +143,7 @@ update: function(output, domEl) {
 		var updateDate = document.createElement('time');
 		updateDate.className = 'date-updated';
 		updateDate.dateTime = ticket.lastUpdatedTime;
-		updateDate.textContent = moment(ticket.lastUpdatedTime).calendar();
+		updateDate.textContent = moment(ticket.lastUpdatedTime).add(5, 'hours').calendar();
 		infoRow.appendChild(updateDate);
 
 		item.appendChild(infoRow);
