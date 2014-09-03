@@ -7,7 +7,7 @@ refreshFrequency: 60000,
 style: [
 	"bottom: 50px",
 	"left: 360px",
-	"width: 310px",
+	"width: 260px",
 
 	"font-family: Avenir Next",
 
