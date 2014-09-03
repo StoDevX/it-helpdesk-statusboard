@@ -19,8 +19,6 @@ style: [
 	"color: rgb(255, 255, 255)",
 	"background-color: rgba(0, 0, 0, 0.6)",
 
-	"text-align: center",
-
 	"box-sizing: border-box",
 
 	"*, *::before, *::after",
@@ -59,7 +57,7 @@ style: [
 	"	-webkit-flex: 1",
 
 	".details",
-	"	font-size: 2em",
+	"	font-size: 1.75em",
 	"	-webkit-flex: 1",
 	"	line-height: 1.35",
 
@@ -67,9 +65,10 @@ style: [
 	"	color: white",
 	"	border-collapse: separate;",
 	"	border-spacing: 0.5em",
+	"	width: 100%",
 
-	"td:first-child",
-	"	text-align: left",
+	"td:last-child",
+	"	text-align: right",
 
 	".high td:nth-child(1)",
 	"	background: rgb(255, 48,  0)",
