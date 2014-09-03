@@ -78,8 +78,8 @@ update: function(output, domEl) {
 
 	details.textContent = unansweredTicketCount;
 
-	if (unansweredTicketCount > 0)
-		wrapper.classList.add('danger');
-	else if (unansweredTicketCount === 0)
-		wrapper.classList.add('success');
+	if (unansweredTicketCount === 0)
+		wrapper.className = 'wrapper success';
+	else
+		wrapper.className = 'wrapper danger';
 },

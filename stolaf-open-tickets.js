@@ -75,7 +75,7 @@ update: function(output, domEl) {
 	details.textContent = openTicketCount;
 
 	if (openTicketCount > 0)
-		wrapper.classList.add('danger');
+		wrapper.className = 'wrapper danger';
 	else if (openTicketCount === 0)
-		wrapper.classList.add('success');
+		wrapper.className = 'wrapper success';
 },

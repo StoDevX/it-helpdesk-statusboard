@@ -2,9 +2,9 @@ lodash: (function(){function q(e,t,n){var r=(n||0)-1,i=e?e.length:0;while(++r<i)
 
 command: [
 	'echo "[";',
-	'curl --silent "https://help.stolaf.edu/helpdesk/WebObjects/Helpdesk.woa/ra/Tickets?style=details&qualifier=%28statustype.statusTypeName%3D%27Open%27%29&limit=25&apiKey=***REMOVED***" || echo "null";',
+	'curl --silent "https://help.stolaf.edu/helpdesk/WebObjects/Helpdesk.woa/ra/Tickets?style=details&qualifier=(statustype.statusTypeName%3D%27Open%27)&limit=25&apiKey=***REMOVED***" || echo "null";',
 	'echo ",";',
-	'curl --silent "https://help.stolaf.edu/helpdesk/WebObjects/Helpdesk.woa/ra/Tickets?style=details&qualifier=(statustype.statusTypeName%20%3D%20%27Closed%27)&limit=25&apiKey=***REMOVED***" || echo "null";',
+	'curl --silent "https://help.stolaf.edu/helpdesk/WebObjects/Helpdesk.woa/ra/Tickets?style=details&qualifier=(statustype.statusTypeName%3D%27Closed%27)&limit=25&apiKey=***REMOVED***" || echo "null";',
 	'echo "]";',
 ].join(''),
 refreshFrequency: 60000,
