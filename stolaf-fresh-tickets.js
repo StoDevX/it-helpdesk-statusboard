@@ -120,7 +120,6 @@ update: function(output, domEl) {
 
 	var wrapper = domEl.querySelector('.wrapper');
 	var details = domEl.querySelector('.details');
-	var title = domEl.querySelector('.title');
 
 	var contentList = document.createElement('ul');
 	contentList.className = 'list';

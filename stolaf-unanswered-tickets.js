@@ -62,7 +62,7 @@ render: function(output) {
 	return [
 		'<div class="wrapper">',
 			'<div class="details"></div>',
-			'<h1 class="title"></h1>',
+			'<h1 class="title">Unanswered Tickets</h1>',
 		'</div>',
 	].join('')
 },
@@ -75,9 +75,7 @@ update: function(output, domEl) {
 
 	var wrapper = domEl.querySelector('.wrapper');
 	var details = domEl.querySelector('.details');
-	var title = domEl.querySelector('.title');
 
-	title.textContent = 'Unanswered Tickets';
 	details.textContent = unansweredTicketCount;
 
 	if (unansweredTicketCount > 0)
