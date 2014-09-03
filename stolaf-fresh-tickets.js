@@ -6,8 +6,8 @@ command: 'curl --silent "https://help.stolaf.edu/helpdesk/WebObjects/Helpdesk.wo
 refreshFrequency: 60000,
 
 style: [
-	"top: 50px",
-	"left: -webkit-calc(28em + 100px)",
+	"top: 400px",
+	"right: 550px",
 	"width: 28em",
 
 	"font-family: Avenir Next",
