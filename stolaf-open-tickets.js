@@ -29,7 +29,7 @@ style: [
 	".wrapper > *:first-child",
 	"	padding-top: 2rem",
 	".wrapper > *:last-child",
-	"	padding-bottom: 2rem",
+	"	padding-bottom: 1rem",
 
 	".danger",
 	"	color: rgb(255, 200,   0)",
