@@ -92,8 +92,6 @@ update: function(output, domEl) {
 	var _ = this.lodash();
 	var wrapper = domEl.querySelector('.wrapper');
 	var details = domEl.querySelector('.details');
-	var title = domEl.querySelector('.title');
-	title.textContent = 'Ticket Priority';
 
 	function getPriorityName(ticket) {
 		if (_.isObject(ticket.prioritytype))

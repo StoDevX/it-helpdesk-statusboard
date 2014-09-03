@@ -82,7 +82,7 @@ update: function(output, domEl) {
 	details.textContent = networkTicketCount;
 
 	if (networkTicketCount === 0)
-		wrapper.classList.add('success');
+		wrapper.className = 'wrapper success';
 	else
-		wrapper.classList.add('danger');
+		wrapper.className = 'wrapper danger';
 },
