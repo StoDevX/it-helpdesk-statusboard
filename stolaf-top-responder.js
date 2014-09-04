@@ -139,6 +139,8 @@ update: function(output, domEl) {
 		'Nhia Lee',
 		'Jennie Moberg',
 		'Michael Domingues',
+		'Perrin Bishop-Wright',
+		'Tony Skalski',
 	]
 
 	function hasTechNote(note) {
