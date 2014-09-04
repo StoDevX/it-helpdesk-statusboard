@@ -15,5 +15,5 @@ render: function(argument) {
 },
 
 update: function(output, domEl) {
-	localStorage.setItem('stolaf-closed-tickets', output);
+	localStorage.setItem('stolaf-open-tickets', output);
 }
