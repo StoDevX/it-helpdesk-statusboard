@@ -1,4 +1,4 @@
-command: 'curl --silent "https://help.stolaf.edu/helpdesk/WebObjects/Helpdesk.woa/ra/Tickets?style=details&qualifier=%28statustype.statusTypeName%3D%27Open%27%29&limit=100&apiKey=***REMOVED***" || echo "null"',
+command: 'echo ""',
 
 refreshFrequency: 60000,
 
@@ -66,7 +66,7 @@ render: function(output) {
 },
 
 update: function(output, domEl) {
-	var openTickets = JSON.parse(output);
+	var openTickets = JSON.parse(localStorage.getItem('stolaf-open-tickets'));
 	var openTicketCount = openTickets.length;
 
 	var wrapper = domEl.querySelector('.wrapper');
