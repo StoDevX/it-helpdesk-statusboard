@@ -9,17 +9,7 @@ style: [
 	"left: 50px",
 	"width: 28em",
 
-	"font-family: Avenir Next",
-
-	"color: rgb(255, 255, 255)",
-	"background-color: rgba(0, 0, 0, 0.6)",
-
 	"text-align: center",
-
-	"box-sizing: border-box",
-
-	"*, *::before, *::after",
-	"	box-sizing: inherit",
 
 	".wrapper",
 	"	display: -webkit-flex",
@@ -60,6 +50,7 @@ style: [
 
 render: function(output) {
 	return [
+		'<link rel="stylesheet" type="text/css" href="/stolaf-base/base.css">',
 		'<div class="wrapper">',
 			'<div class="details"></div>',
 			'<h1 class="title">Unanswered Tickets</h1>',
