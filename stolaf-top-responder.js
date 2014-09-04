@@ -162,7 +162,7 @@ update: function(output, domEl) {
 		.pluck('notes')
 		.flatten()
 		.filter(hasTechNote)
-		// .reject(isStaffMember)
+		.reject(isStaffMember)
 		.groupBy(responderName)
 		.mapValues(_.size)
 		.pairs()
