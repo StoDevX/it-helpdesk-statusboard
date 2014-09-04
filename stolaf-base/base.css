@@ -1,0 +1,12 @@
+[id^='stolaf'] {
+	font-family: Avenir Next;
+
+	color: rgb(255, 255, 255);
+	background-color: rgba(0, 0, 0, 0.6);
+
+	box-sizing: border-box;
+}
+
+.widget *, .widget *::before, .widget *::after {
+	box-sizing: inherit;
+}
