@@ -11,41 +11,8 @@ style: [
 
 	"text-align: center",
 
-	".wrapper",
-	"	display: -webkit-flex",
-	"	-webkit-flex-direction: column",
-	"	-webkit-justify-content: space-between",
-
-	".wrapper > *",
-	"	padding: 0.5rem 2rem",
-	".wrapper > *:first-child",
-	"	padding-top: 2rem",
-	".wrapper > *:last-child",
-	"	padding-bottom: 1rem",
-
-	".danger",
-	"	color: rgb(255,  48,   0)",
-	".success",
-	"	color: rgb(  0, 186,   0)",
-
-	".title, .details",
-	"	display: -webkit-flex;",
-	"	-webkit-flex-direction: column;",
-	"	-webkit-justify-content: center;",
-	"	-webkit-align-items: center;",
-
-	".title",
-	"	font-family: Avenir Next Condensed",
-	"	font-weight: 300",
-	"	text-transform: uppercase",
-	"	margin: 0",
-	"	font-size: 1.75em",
-	"	color: rgb(128, 128, 128)",
-	"	-webkit-flex: 1",
-
 	".details",
 	"	font-size: 18em",
-	"	-webkit-flex: 1",
 ].join('\n'),
 
 render: function(output) {
@@ -71,7 +38,7 @@ update: function(output, domEl) {
 	details.textContent = unansweredTicketCount;
 
 	if (unansweredTicketCount === 0)
-		wrapper.className = 'wrapper success';
+		wrapper.className = 'wrapper green';
 	else
-		wrapper.className = 'wrapper danger';
+		wrapper.className = 'wrapper red';
 },
