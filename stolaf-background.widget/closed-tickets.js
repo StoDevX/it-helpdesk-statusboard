@@ -19,7 +19,6 @@ update: function(output, domEl) {
 	localStorage.setItem('stolaf-closed-last-update-date', JSON.stringify(new Date()));
 
 	var m = new Date(JSON.parse(localStorage.getItem('stolaf-closed-last-update-date')));
-	console.log(m);
 	var dateString =
 		m.getUTCFullYear() + "/" +
 		("0" + (m.getUTCMonth()+1)).slice(-2) + "/" +
