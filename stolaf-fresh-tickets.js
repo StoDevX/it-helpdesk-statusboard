@@ -85,8 +85,11 @@ style: [
 	".ticket-number::after",
 	"	content: ' — '",
 
-	".info-row, .detail-row",
+	".info-row, .detail-row, .type-row",
 	"	color: rgba(255, 255, 255, 0.5)",
+
+	".type-row",
+	"	font-family: Avenir Next Condensed",
 
 	".client-name::after",
 	"	content: ' — '",
@@ -133,13 +136,6 @@ update: function(output, domEl) {
 		ticketNum.textContent = ticket.id;
 		infoRow.appendChild(ticketNum);
 
-		// var openDate = document.createElement('time');
-		// openDate.className = 'date-opened';
-		// var reportDate = new Date(ticket.reportDateUtc);
-		// openDate.dateTime = reportDate;
-		// openDate.textContent = moment(reportDate).calendar();
-		// infoRow.appendChild(openDate);
-
 		var updateDate = document.createElement('time');
 		updateDate.className = 'date-updated';
 		updateDate.dateTime = ticket.lastUpdatedTime;
@@ -177,6 +173,20 @@ update: function(output, domEl) {
 		detailRow.appendChild(noteCount);
 
 		item.appendChild(detailRow);
+
+		/////
+
+		var ticketTypeRow = document.createElement('div');
+		ticketTypeRow.className = 'type-row';
+
+		var detailDisplayName = document.createElement('span');
+		detailDisplayName.innerHTML = ticket.problemtype.detailDisplayName;
+		detailDisplayName.className = 'ticket-type';
+		detailRow.appendChild(detailDisplayName);
+
+		ticketTypeRow.appendChild(detailDisplayName);
+
+		item.appendChild(ticketTypeRow);
 
 		/////
 
