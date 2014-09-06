@@ -4,55 +4,13 @@ command: 'echo ""',
 refreshFrequency: 60000,
 
 style: [
-	"top: 50px",
+	"top:   50px",
 	"right: 50px",
+
 	"width: 450px",
-
-	"font-family: Avenir Next",
-
-	"color: rgb(255, 255, 255)",
-	"background-color: rgba(0, 0, 0, 0.6)",
-
-	"box-sizing: border-box",
-
-	"*, *::before, *::after",
-	"	box-sizing: inherit",
-
-	".wrapper",
-	"	display: -webkit-flex",
-	"	-webkit-flex-direction: column",
-	"	-webkit-justify-content: space-between",
-
-	".wrapper > *",
-	"	padding: 0.5rem 2rem",
-	".wrapper > *:first-child",
-	"	padding-top: 2rem",
-	".wrapper > *:last-child",
-	"	padding-bottom: 1rem",
-
-	".danger",
-	"	color: rgb(255,  48, 0)",
-	".success",
-	"	color: rgb(  0, 186, 0)",
-
-	".title, .details",
-	"	display: -webkit-flex;",
-	"	-webkit-flex-direction: column;",
-	"	-webkit-justify-content: center;",
-	"	-webkit-align-items: center;",
-
-	".title",
-	"	font-family: Avenir Next Condensed",
-	"	font-weight: 300",
-	"	text-transform: uppercase",
-	"	margin: 0",
-	"	font-size: 1.5em",
-	"	color: rgb(128, 128, 128)",
-	"	-webkit-flex: 1",
 
 	".details",
 	"	font-size: 1.75em",
-	"	-webkit-flex: 1",
 	"	line-height: 1.35",
 
 	"table",
@@ -82,25 +40,6 @@ style: [
 	".bubbles .total td",
 	"	border-top: solid 1px white",
 	"	border-radius: 0",
-
-	".yellow",
-	"	color: rgb(255, 198,   0)",
-	".green",
-	"	color: rgb(  0, 186,   0)",
-	".red",
-	"	color: rgb(255,  48,   0)",
-	".purple",
-	"	color: rgb(155,   0, 194)",
-	".blue",
-	"	color: rgb(  0, 108, 230)",
-	".pink",
-	"	color: rgb(252,  88, 181)",
-	".aqua",
-	"	color: rgb(  0, 159, 153)",
-	".orange",
-	"	color: rgb(252, 107,   0)",
-	".silver",
-	"	color: rgb(174, 183, 188)",
 ].join('\n'),
 
 render: function(output) {
