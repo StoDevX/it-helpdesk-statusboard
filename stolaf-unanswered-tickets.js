@@ -5,8 +5,9 @@ command: 'echo ""',
 refreshFrequency: 60000,
 
 style: [
-	"top: 50px",
+	"top:  50px",
 	"left: 50px",
+
 	"width: 28em",
 
 	"text-align: center",
@@ -17,7 +18,6 @@ style: [
 
 render: function(output) {
 	return [
-		'<link rel="stylesheet" type="text/css" href="/stolaf-base/base.css">',
 		'<div class="wrapper">',
 			'<div class="details"></div>',
 			'<h1 class="title">Unanswered Tickets</h1>',

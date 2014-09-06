@@ -7,57 +7,12 @@ refreshFrequency: 60000,
 style: [
 	"top: 50px",
 	"right: 550px",
+
 	"width: 300px",
-
-	"font-family: Avenir Next",
-
-	"color: rgb(255, 255, 255)",
-	"background-color: rgba(0, 0, 0, 0.6)",
-
-	"box-sizing: border-box",
-
-	"*, *::before, *::after",
-	"	box-sizing: inherit",
-
-	".wrapper",
-	"	display: -webkit-flex",
-	"	-webkit-flex-direction: column",
-	"	-webkit-justify-content: space-between",
-
-	".wrapper > *",
-	"	padding: 0.5rem 2rem",
-	".wrapper > *:first-child",
-	"	padding-top: 2rem",
-	".wrapper > *:last-child",
-	"	padding-bottom: 1rem",
-
-	".danger",
-	"	color: rgb(255,  48,   0)",
-	".success",
-	"	color: rgb(  0, 186,   0)",
-
-	".title, .details",
-	"	display: -webkit-flex;",
-	"	-webkit-flex-direction: column;",
-	"	-webkit-justify-content: center;",
-	"	-webkit-align-items: center;",
-
-	".title",
-	"	font-family: Avenir Next Condensed",
-	"	font-weight: 300",
-	"	text-transform: uppercase",
-	"	margin: 0",
-	"	font-size: 1.5em",
-	"	color: rgb(128, 128, 128)",
-	"	-webkit-flex: 1",
 
 	".details",
 	"	font-size: 2em",
-	"	-webkit-flex: 1",
 	"	line-height: 1.35",
-
-	"table",
-	"	color: white",
 
 	"td",
 	"	padding-top: 0.15em",
@@ -69,14 +24,9 @@ style: [
 	"	padding-left: 0.5em",
 	"	text-align: right",
 
-	".high td:nth-child(1), .high td:nth-child(2)",
-	"	color: rgb(255, 48,  0)",
-
-	".medium td:nth-child(1), .medium td:nth-child(2)",
-	"	color: rgb(255, 198,  0)",
-
-	".low td:nth-child(1), .low td:nth-child(2)",
-	"	color: rgb(174, 183, 188)",
+	".high   { color: rgb(255,  48,   0) }",
+	".medium { color: rgb(255, 198,   0) }",
+	".low    { color: rgb(174, 183, 188) }",
 ].join('\n'),
 
 render: function(output) {
