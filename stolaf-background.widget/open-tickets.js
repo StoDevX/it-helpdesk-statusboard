@@ -1,11 +1,11 @@
 command: [
 	'curl --silent ',
-	'"https://help.stolaf.edu/helpdesk',
-	'/WebObjects/Helpdesk.woa/ra/Tickets?',
-	'style=details&',
-	'qualifier=(statustype.statusTypeName%3D%27Open%27)&',
-	'limit=50&',
-	'apiKey=***REMOVED***"',
+		'"https://help.stolaf.edu/helpdesk',
+		'/WebObjects/Helpdesk.woa/ra/Tickets?',
+		'style=details&',
+		'qualifier=(statustype.statusTypeName%3D%27Open%27)&',
+		'limit=50&',
+		'apiKey=***REMOVED***"',
 ].join(''),
 
 refreshFrequency: 60000,
