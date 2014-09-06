@@ -10,8 +10,8 @@ command: [
 
 refreshFrequency: 60000,
 
-render: function(argument) {
-	return "<span class='last-updated'></span>";
+render: function(output) {
+	return '<span class="last-updated"></span>';
 },
 
 update: function(output, domEl) {
