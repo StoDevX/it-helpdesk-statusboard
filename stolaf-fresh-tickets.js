@@ -9,7 +9,7 @@ style: [
 	"top: 400px",
 	"right: 550px",
 
-	"width: 25em",
+	"max-width: 25em",
 
 	".details",
 	"	font-size: 1em",
