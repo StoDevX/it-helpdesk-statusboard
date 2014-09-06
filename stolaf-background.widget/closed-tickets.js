@@ -1,24 +1,26 @@
 command: [
 	'curl --silent ',
-	'"https://help.stolaf.edu/helpdesk',
-	'/WebObjects/Helpdesk.woa/ra/Tickets?',
-	'style=details&',
-	'qualifier=(statustype.statusTypeName%3D%27Closed%27)&',
-	'limit=50&',
-	'apiKey=dYqqjOjwkOd2k411ytv8G6rADIgpCbWZ59WouoEc"',
+		'"https://help.stolaf.edu/helpdesk',
+		'/WebObjects/Helpdesk.woa/ra/Tickets?',
+		'style=details&',
+		'qualifier=(statustype.statusTypeName%3D%27Closed%27)&',
+		'limit=50&',
+		'apiKey=dYqqjOjwkOd2k411ytv8G6rADIgpCbWZ59WouoEc"',
 ].join(''),
 
 refreshFrequency: 60000,
 
-render: function(argument) {
-	return "<span class='last-updated'></span>";
+render: function(output) {
+	return '<span class="last-updated"></span>';
 },
+
+lastUpdateTime: undefined,
 
 update: function(output, domEl) {
 	localStorage.setItem('stolaf-closed-tickets', output);
-	localStorage.setItem('stolaf-closed-last-update-date', JSON.stringify(new Date()));
+	this.lastUpdateTime = new Date();
 
-	var m = new Date(JSON.parse(localStorage.getItem('stolaf-closed-last-update-date')));
+	var m = this.lastUpdateTime;
 	var dateString =
 		m.getUTCFullYear() + "/" +
 		("0" + (m.getUTCMonth()+1)).slice(-2) + "/" +

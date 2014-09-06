@@ -1,20 +1,25 @@
 [id^='stolaf'] {
+	box-sizing: border-box;
+
 	font-family: Avenir Next;
 
-	color: rgb(255, 255, 255);
+	color: white;
 	background-color: rgba(0, 0, 0, 0.6);
-
-	box-sizing: border-box;
 }
 
-[id^='stolaf'].widget *, [id^='stolaf'].widget *::before, [id^='stolaf'].widget *::after {
+[id^='stolaf'].widget *,
+[id^='stolaf'].widget *::before,
+[id^='stolaf'].widget *::after {
 	box-sizing: inherit;
 }
 
 [id^='stolaf'].wrapper {
-	display: -webkit-flex:;
-	-webkit-flex-direction: column:;
-	-webkit-justify-content: space-between:;
+	display: -webkit-flex;
+	-webkit-flex-direction: column;
+	-webkit-justify-content: space-between;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 }
 
 [id^='stolaf'] .wrapper > * {
@@ -30,6 +35,7 @@
 }
 
 [id^='stolaf'] .title {
+	text-align: center;
 	font-family: Avenir Next Condensed;
 	font-weight: 300;
 	text-transform: uppercase;
@@ -37,10 +43,12 @@
 	font-size: 1.75em;
 	color: rgb(128, 128, 128);
 	-webkit-flex: 1;
+	flex: 1;
 }
 
 [id^='stolaf'] .details {
 	-webkit-flex: 1;
+	flex: 1;
 }
 
 [id^='stolaf'] .title, [id^='stolaf'] .details {
@@ -50,10 +58,12 @@
 	-webkit-align-items: center;
 }
 
-[id^='stolaf'] .red {
-	color: rgb(255,  48,   0);
-}
-
-[id^='stolaf'] .green {
-	color: rgb(  0, 186,   0);
-}
+.aqua   { color: rgb(  0, 159, 153) }
+.blue   { color: rgb(  0, 108, 230) }
+.green  { color: rgb(  0, 186,   0) }
+.orange { color: rgb(252, 107,   0) }
+.pink   { color: rgb(252,  88, 181) }
+.purple { color: rgb(155,   0, 194) }
+.red    { color: rgb(255,  48,   0) }
+.silver { color: rgb(174, 183, 188) }
+.yellow { color: rgb(255, 198,   0) }
