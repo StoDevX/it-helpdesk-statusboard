@@ -30,7 +30,7 @@ update: function(output, domEl) {
 	details.textContent = openTicketCount;
 
 	if (openTicketCount > 0)
-		wrapper.className = 'wrapper danger';
+		wrapper.className = 'wrapper yellow';
 	else if (openTicketCount === 0)
-		wrapper.className = 'wrapper success';
+		wrapper.className = 'wrapper green';
 },

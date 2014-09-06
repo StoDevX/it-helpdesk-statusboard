@@ -50,7 +50,11 @@ update: function(output, domEl) {
 		return undefined
 	}
 
-	var order = {'High': 2, 'Medium': 3, 'Low': 4};
+	var order = {
+		'High': 2,
+		'Medium': 3,
+		'Low': 4
+	};
 
 	var grouped = _.chain(openTickets)
 		.groupBy(getPriorityName)
