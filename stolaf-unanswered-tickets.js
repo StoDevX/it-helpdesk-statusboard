@@ -28,7 +28,7 @@ update: function(output, domEl) {
 	var _ = this.lodash();
 	var openTickets = JSON.parse(localStorage.getItem('stolaf-open-tickets'));
 
-	var unansweredTickets = _.chain(openTickets).filter({'notes': []}).value();
+	var unansweredTickets = _.filter(openTickets, {'notes': []});
 	var unansweredTicketCount = unansweredTickets.length;
 
 	var wrapper = domEl.querySelector('.wrapper');

@@ -25,18 +25,12 @@ update: function(output, domEl) {
 	var _ = this.lodash();
 	var openTickets = JSON.parse(localStorage.getItem('stolaf-open-tickets'));
 
-	var networkTickets = _.chain(openTickets).filter(function(ticket) {
+	var networkTickets = _.filter(openTickets, function(ticket) {
 		return ticket.problemtype && ticket.problemtype.detailDisplayName && ticket.problemtype.detailDisplayName === "Network & Connectivity &#8226; Ethernet Activation Request";
-	}).value();
+	});
 	var networkTicketCount = networkTickets.length;
 
-	var wrapper = domEl.querySelector('.wrapper');
 	var details = domEl.querySelector('.details');
 
 	details.textContent = networkTicketCount;
-
-	if (networkTicketCount === 0)
-		wrapper.className = 'wrapper success';
-	else
-		wrapper.className = 'wrapper danger';
 },
