@@ -7,6 +7,53 @@
 	box-sizing: border-box;
 }
 
-.widget *, .widget *::before, .widget *::after {
+[id^='stolaf'].widget *, [id^='stolaf'].widget *::before, [id^='stolaf'].widget *::after {
 	box-sizing: inherit;
+}
+
+[id^='stolaf'].wrapper {
+	display: -webkit-flex:;
+	-webkit-flex-direction: column:;
+	-webkit-justify-content: space-between:;
+}
+
+[id^='stolaf'] .wrapper > * {
+	padding: 0.5rem 2rem;
+}
+
+[id^='stolaf'] .wrapper > *:first-child {
+	padding-top: 2rem;
+}
+
+[id^='stolaf'] .wrapper > *:last-child {
+	padding-bottom: 1rem;
+}
+
+[id^='stolaf'] .title {
+	font-family: Avenir Next Condensed;
+	font-weight: 300;
+	text-transform: uppercase;
+	margin: 0;
+	font-size: 1.75em;
+	color: rgb(128, 128, 128);
+	-webkit-flex: 1;
+}
+
+[id^='stolaf'] .details {
+	-webkit-flex: 1;
+}
+
+[id^='stolaf'] .title, [id^='stolaf'] .details {
+	display: -webkit-flex;
+	-webkit-flex-direction: column;
+	-webkit-justify-content: center;
+	-webkit-align-items: center;
+}
+
+[id^='stolaf'] .red {
+	color: rgb(255,  48,   0);
+}
+
+[id^='stolaf'] .green {
+	color: rgb(  0, 186,   0);
 }
