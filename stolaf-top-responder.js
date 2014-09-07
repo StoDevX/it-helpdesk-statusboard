@@ -11,8 +11,11 @@ style: [
 	"height: 47vh",
 
 	".details",
-	"	font-size: 1.75em",
+	"	font-size: 1.5em",
 	"	line-height: 1",
+	"	padding-top: 1.5rem",
+	"	padding-left: 1.5rem",
+	"	padding-right: 1.5rem",
 
 	"ul",
 	"	height: 100vh",
