@@ -4,15 +4,25 @@ command: 'echo ""',
 refreshFrequency: 60000,
 
 style: [
-	"top:  50px",
-	"left: 50px",
+	"top:  1%",
+	"left: 1%",
 
-	"width: 28em",
+	"width: 30%",
 
 	"text-align: center",
 
 	".details",
-	"	font-size: 18em",
+	"	font-size: 15em",
+
+	".w100 { font-weight: 100 }",
+	".w200 { font-weight: 200 }",
+	".w300 { font-weight: 300 }",
+	".w400 { font-weight: 400 }",
+	".w500 { font-weight: 500 }",
+	".w600 { font-weight: 600 }",
+	".w700 { font-weight: 700 }",
+	".w800 { font-weight: 800 }",
+	".w900 { font-weight: 900 }",
 ].join('\n'),
 
 render: function(output) {
@@ -35,6 +45,24 @@ update: function(output, domEl) {
 	var details = domEl.querySelector('.details');
 
 	details.textContent = unansweredTicketCount;
+
+	var fontWeight = [
+		{min:  0,  max:  0,   weight: 'w100'},
+		{min:  1,  max:  5,   weight: 'w200'},
+		{min:  6,  max: 10,   weight: 'w300'},
+		{min: 11,  max: 15,   weight: 'w400'},
+		{min: 16,  max: 20,   weight: 'w500'},
+		{min: 21,  max: 25,   weight: 'w600'},
+		{min: 26,  max: 30,   weight: 'w700'},
+		{min: 31,  max: 35,   weight: 'w800'},
+		{min: 36,  max: null, weight: 'w900'},
+	];
+
+	_.find(fontWeight, function(weightClass) {
+		if (unansweredTicketCount >= weightClass.min && (unansweredTicketCount <= weightClass.max || _.isNull(weightClass.max))) {
+			details.className = 'details ' + weightClass.weight;
+		}
+	})
 
 	if (unansweredTicketCount === 0)
 		wrapper.className = 'wrapper green';
