@@ -4,12 +4,20 @@ command: 'echo ""',
 refreshFrequency: 60000,
 
 style: [
-	"bottom: 50px",
-	"left: 360px",
-	"width: 260px",
+	"bottom: 4%",
+	"left: 16%",
+
+	"width: 15%",
+
+	"text-align: center",
+
+	"border-left: 0",
+
+	"color: rgba(174, 183, 188, 0.8)",
 
 	".details",
-	"	font-size: 6em",
+	"	font-size: 4em",
+	"	font-weight: 100",
 ].join('\n'),
 
 render: function(output) {
