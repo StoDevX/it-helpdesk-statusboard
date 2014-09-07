@@ -11,6 +11,7 @@ style: [
 	"height: 50vh",
 
 	"border-right: 0",
+	"border-left: 0",
 
 	"text-align: center",
 
