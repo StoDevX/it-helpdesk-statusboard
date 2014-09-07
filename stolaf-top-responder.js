@@ -4,18 +4,15 @@ command: 'echo ""',
 refreshFrequency: 60000,
 
 style: [
-	"top:   0",
-	"right: 0",
+	"left:  0",
+	"bottom: 3%",
 
-	"width: 25%",
-	"height: 97vh",
+	"width: 20%",
+	"height: 47vh",
 
 	".details",
 	"	font-size: 1.75em",
-	"	line-height: 1.35",
-
-	".title",
-	"	margin-top: 1em",
+	"	line-height: 1",
 
 	"ul",
 	"	height: 100vh",

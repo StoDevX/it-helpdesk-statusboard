@@ -4,10 +4,13 @@ command: 'echo ""',
 refreshFrequency: 60000,
 
 style: [
-	"top:  1%",
-	"left: 1%",
+	"top:   0",
+	"right: 20%",
 
 	"width: 30%",
+	"height: 50vh",
+
+	"border-right: 0",
 
 	"text-align: center",
 
