@@ -5,8 +5,11 @@ command: 'curl --silent "https://www3.whentowork.com/cgi-bin/w2wC.dll/empwhosonl
 refreshFrequency: 120000,
 
 style: [
-	"top: 0",
+	"left: 20%",
+	"bottom: 3%",
+
 	"width: 20%",
+	"height: 47vh",
 
 	"text-align: center",
 

@@ -6,13 +6,11 @@ command: 'echo ""',
 refreshFrequency: 60000,
 
 style: [
-	"right: 25%",
+	"right: 0",
 	"top: 0",
+
 	"height: 97vh",
-
-	"border-right: 0",
-
-	"max-width: 25em",
+	"width: 20%",
 
 	".details",
 	"	font-size: 1em",
