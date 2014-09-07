@@ -15,3 +15,5 @@ stolaf-ubersicht-widgets
   - Assigned to Staff (uses the staff list from Top Responders)
   - Equipment Checkout
   - Classroom Technology
+
+There are two background widgets that pull data once a minute from WebHelpDesk's API and save it to `localStorage`. The others check every 5 seconds for new data and re-render themselves.
