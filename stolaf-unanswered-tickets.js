@@ -41,13 +41,13 @@ update: function(output, domEl) {
 	var _ = this.lodash();
 	var openTickets = JSON.parse(localStorage.getItem('stolaf-open-tickets'));
 
-	var unansweredTickets = _.filter(openTickets, {'notes': []});
-	var unansweredTicketCount = unansweredTickets.length;
+	var tickets = _.filter(openTickets, {'notes': []});
+	var ticketCount = tickets.length;
 
 	var wrapper = domEl.querySelector('.wrapper');
 	var details = domEl.querySelector('.details');
 
-	details.textContent = unansweredTicketCount;
+	details.textContent = ticketCount;
 
 	var fontWeight = [
 		{min:  0,  max:  0,   weight: 'w100'},
@@ -62,12 +62,12 @@ update: function(output, domEl) {
 	];
 
 	_.find(fontWeight, function(weightClass) {
-		if (unansweredTicketCount >= weightClass.min && (unansweredTicketCount <= weightClass.max || _.isNull(weightClass.max))) {
+		if (ticketCount >= weightClass.min && (ticketCount <= weightClass.max || _.isNull(weightClass.max))) {
 			details.className = 'details ' + weightClass.weight;
 		}
 	})
 
-	if (unansweredTicketCount === 0)
+	if (ticketCount === 0)
 		wrapper.className = 'wrapper green';
 	else
 		wrapper.className = 'wrapper red';
