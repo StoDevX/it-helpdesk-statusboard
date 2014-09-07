@@ -5,11 +5,12 @@ refreshFrequency: 60000,
 
 style: [
 	"top: 25vh",
-	"left: 20%",
+	"left: 13.33%",
 
-	"width: 20%",
+	"width: 13.33%",
 	"height: 25vh",
 
+	"border-right: 0",
 	"border-left: 0",
 	"border-top: 0",
 

@@ -7,7 +7,7 @@ style: [
 	"top: 25vh",
 	"left: 0%",
 
-	"width: 20%",
+	"width: 13.33%",
 	"height: 25vh",
 
 	"border-right: 0",
