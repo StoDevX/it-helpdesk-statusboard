@@ -8,6 +8,8 @@ style: [
 	"top: 0",
 	"width: 20%",
 
+	"text-align: center",
+
 	".details",
 	"	padding-top: 0.5rem",
 
