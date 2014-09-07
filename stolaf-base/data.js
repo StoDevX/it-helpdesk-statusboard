@@ -1,5 +1,7 @@
 command: 'echo ""',
 
+style: "border: 0",
+
 render: function() {
 	var staff = [
 		'Mike Sjulstad',

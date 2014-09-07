@@ -54,7 +54,6 @@ update: function(output, domEl) {
 	var closedTickets = JSON.parse(localStorage.getItem('stolaf-closed-tickets'));
 	var tickets = _.flatten([openTickets, closedTickets]);
 
-
 	function hasTechNote(note) {
 		return (
 			    note.isTechNote
@@ -62,6 +61,7 @@ update: function(output, domEl) {
 			&&  note.mobileNoteText.length > 10
 		)
 	}
+
 	var colors = JSON.parse(localStorage.getItem('stolaf-colors'));
 	var staff = JSON.parse(localStorage.getItem('stolaf-staff'));
 
@@ -73,7 +73,7 @@ update: function(output, domEl) {
 		return note.prettyUpdatedString.replace(/.*<strong>(.+)<\/strong>.*/gm, "$1")
 	}
 
-	var topResponders = _.chain(tickets)
+	var responders = _.chain(tickets)
 		.reject({notes: []})
 		.pluck('notes')
 		.flatten()
@@ -85,9 +85,15 @@ update: function(output, domEl) {
 		.sortBy(function(item) {
 			return item[1]
 		})
+		.value();
+
+	var topResponders = _.chain(responders)
 		.reverse()
 		.first(9)
 		.value();
+
+	var restOfResponders = _.chain(responders)
+
 
 	var contentTable = document.createElement('ul');
 	contentTable.classList.add('colorful');
