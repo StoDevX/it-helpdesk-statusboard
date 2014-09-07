@@ -9,4 +9,6 @@ style: [
 
 render: function(output) {
 	return ''
-}
+},
+
+update: function() {},
