@@ -2,20 +2,25 @@ command: 'echo ""',
 refreshFrequency: 60000,
 
 style: [
-	"bottom: 50px",
-	"left:   50px",
+	"bottom: 4%",
+	"left:   1%",
 
-	"width: 260px",
+	"width: 15%",
+
+	"text-align: center",
+
+	"border-right: 0",
 
 	".details",
-	"	font-size: 6em",
+	"	font-size: 4em",
+	"	font-weight: 100",
 ].join('\n'),
 
 render: function(output) {
 	return [
 		'<div class="wrapper">',
 			'<div class="details"></div>',
-			'<h1 class="title">Open Tickets</h1>',
+			'<h1 class="title">Open<br>Tickets</h1>',
 		'</div>',
 	].join('')
 },

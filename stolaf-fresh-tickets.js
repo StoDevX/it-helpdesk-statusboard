@@ -6,19 +6,25 @@ command: 'echo ""',
 refreshFrequency: 60000,
 
 style: [
-	"top: 400px",
-	"right: 550px",
+	"right: 25%",
+	"top: 0",
+	"height: 97vh",
+
+	"border-right: 0",
 
 	"max-width: 25em",
 
 	".details",
 	"	font-size: 1em",
 
-	".list",
-	"	width: 100%",
-	"	padding: 0",
-	"	margin: 0",
-	"	list-style: none",
+	".title",
+	"	margin-top: 1em",
+
+	"ul",
+	"	height: 100vh",
+	"	display: -webkit-flex",
+	"	-webkit-flex-flow: column nowrap",
+	"	-webkit-justify-content: space-between",
 
 	".ticket-title",
 	"	text-overflow: ellipsis",
@@ -41,9 +47,12 @@ style: [
 
 	".info-row, .detail-row, .type-row",
 	"	color: rgba(255, 255, 255, 0.5)",
+	"	font-weight: 300",
 
 	".type-row",
-	"	font-family: Avenir Next Condensed",
+	"	font-family: Fira Sans",
+	"	font-size: 0.85em",
+	"	letter-spacing: -0.025em",
 
 	".client-name::after",
 	"	content: ' — '",
