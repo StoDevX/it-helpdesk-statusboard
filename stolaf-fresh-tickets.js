@@ -76,7 +76,7 @@ update: function(output, domEl) {
 		})
 		.sortBy('lastUpdatedTime')
 		.reverse()
-		.first(5)
+		.first(7)
 		.value();
 
 	var wrapper = domEl.querySelector('.wrapper');
