@@ -4,10 +4,10 @@ command: 'echo ""',
 refreshFrequency: 60000,
 
 style: [
-	"top: 50px",
-	"right: 550px",
+	"top: 1%",
+	"right: 51%",
 
-	"width: 300px",
+	"width: 20%",
 
 	".details",
 	"	font-size: 2em",
@@ -18,14 +18,15 @@ style: [
 
 	".bubbles td:first-child",
 	"	padding-right: 1em",
+	"	font-weight: 200",
 
 	".bubbles td:nth-child(2)",
 	"	padding-left: 0.5em",
 	"	text-align: right",
 
-	".high   { color: rgb(255,  48,   0) }",
-	".medium { color: rgb(255, 198,   0) }",
-	".low    { color: rgb(174, 183, 188) }",
+	".high   { color: rgb(255,  48,   0); font-weight: 900 }",
+	".medium { color: rgb(255, 198,   0); font-weight: 500 }",
+	".low    { color: rgb(174, 183, 188); font-weight: 300 }",
 ].join('\n'),
 
 render: function(output) {
