@@ -5,7 +5,22 @@ command: 'curl --silent "https://www3.whentowork.com/cgi-bin/w2wC.dll/empwhosonl
 refreshFrequency: 120000,
 
 style: [
-	"top: 0"
+	"top: 0",
+	"width: 20%",
+
+	".details",
+	"	padding-top: 0.5rem",
+
+	".time",
+	"	font-weight: 200",
+	"	font-size: 2em",
+	"	color: rgba(255, 255, 255, 0.65)",
+	"	padding-bottom: 0.5rem",
+
+	".workers",
+	"	font-weight: 500",
+	"	font-size: 1.25em",
+	"	color: rgba(255, 255, 255, 0.75)",
 ].join('\n'),
 
 render: function(output) {
@@ -20,27 +35,56 @@ render: function(output) {
 update: function(output, domEl) {
 	var _ = this.lodash();
 	var details = domEl.querySelector('.details');
+	details.innerHTML = "";
 
 	var whenToWork = document.createElement('div');
 	whenToWork.innerHTML = output;
 
 	// turn the table into an array of objects of the workers
 	var table = whenToWork.querySelector('.bwgt > table > tbody');
-	var headers = _.toArray(table.querySelectorAll('tr:first-child td'));
-	var keys = _.pluck(headers, 'textContent');
 
 	var noWorkerScheduled = table.querySelector('[colspan="5"]');
-	var noWorkerScheduledMessage = noWorkerScheduled.textContent;
-	var noMoreShiftsMessage = 'As of $time, there are no more shifts scheduled.';
-	var isLastShift = false;
-	if (noWorkerScheduledMessage && _.contains(noWorkerScheduledMessage, 'There are no workers scheduled later today')) {
-		isLastShift = true;
-		var timeMatches = noWorkerScheduledMessage.match(/\(.*\)/);
-		var currentTime = timeMatches.length ? timeMatches[0].substr(1, 5) : "";
-		noMoreShiftsMessage = noMoreShiftsMessage.replace('$time', currentTime)
+	var noMoreShiftsMessage = noWorkerScheduled.textContent;
+	var isLastShift = _.contains(noMoreShiftsMessage, 'There are no workers scheduled later today');
+
+	var shiftHTML = '', shifts = [];
+	if (isLastShift) {
+		details.textContent = noMoreShiftsMessage;
 	}
+	else {
+		var headers = _.toArray(table.querySelectorAll('tr:first-child td'));
+		var keys = _.map(headers, 'textContent');
 
-	details.textContent = isLastShift ? noMoreShiftsMessage : 'FIXME: Parse worker table.';
+		var shiftRows = table.querySelectorAll('tr.underline');
+		shifts = _.chain(shiftRows)
+			.map(function(row) {
+				return _.zipObject(keys, _.chain(row.children).toArray().map('textContent').value())
+			})
+			.reject({'Position': 'Library'})
+			.map(function(shift) {
+				return {
+					name: shift['Scheduled'],
+					time: shift['Time'],
+				}
+			})
+			.groupBy('time')
+			.toArray()
+			.first()
+			.value()
 
-	// details.innerHTML = output;
+		var time = document.createElement('time');
+		time.className = 'time';
+		time.textContent = shifts[0].time;
+		details.appendChild(time);
+
+		var list = document.createElement('ul');
+		list.className = 'workers';
+		_.each(shifts, function(shift) {
+			var item = document.createElement('li');
+			item.textContent = shift.name;
+			list.appendChild(item);
+		})
+
+		details.appendChild(list);
+	}
 }
