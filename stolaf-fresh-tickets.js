@@ -48,9 +48,9 @@ style: [
 	"	font-weight: 300",
 
 	".type-row",
-	"	font-family: Fira Sans",
-	"	font-size: 0.85em",
-	"	letter-spacing: -0.025em",
+	"	font-family: Avenir Next Condensed",
+	"	font-size: 0.75em",
+	"	letter-spacing: 0.015em",
 
 	".client-name::after",
 	"	content: ' — '",
