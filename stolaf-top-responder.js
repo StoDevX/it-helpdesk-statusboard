@@ -54,45 +54,6 @@ update: function(output, domEl) {
 	var closedTickets = JSON.parse(localStorage.getItem('stolaf-closed-tickets'));
 	var tickets = _.flatten([openTickets, closedTickets]);
 
-	var colors = [
-		'red',
-		'orange',
-		'yellow',
-		'green',
-		'blue',
-		'purple',
-		'pink',
-		'aqua',
-		'silver',
-	]
-
-	var staff = [
-		'Mike Sjulstad',
-		'Phinehas Bynum',
-		'Nhia Lee',
-		'Jennie Moberg',
-		'Michael Domingues',
-		'Perrin Bishop-Wright',
-		'Tony Skalski',
-		'Ben Gottfried',
-		'Roberta Lembke',
-		'Kelly Kloos',
-		'Wendy Woitalla',
-		'Jeff Dixon',
-		'Tim Isom',
-		'Andy Prehall',
-		'Michael Strand',
-		'Myron Engle',
-		'Craig Rice',
-		'Bob Breid',
-		'Nancy Aarsvold',
-		'Doug Hamilton',
-		'Jason Menard',
-		'Dana Thompson',
-		'Sean Tonko',
-		'Dan Beach',
-		'Marc Thomas',
-	]
 
 	function hasTechNote(note) {
 		return (
@@ -101,6 +62,8 @@ update: function(output, domEl) {
 			&&  note.mobileNoteText.length > 10
 		)
 	}
+	var colors = JSON.parse(localStorage.getItem('stolaf-colors'));
+	var staff = JSON.parse(localStorage.getItem('stolaf-staff'));
 
 	function isStaffMember(note) {
 		return _.contains(staff, responderName(note));
