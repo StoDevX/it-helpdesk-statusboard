@@ -2,12 +2,9 @@ moment: (function(e){function tt(e,t,n){switch(arguments.length){case 2:return e
 
 command: [
 	'curl --silent ',
-		'"https://help.stolaf.edu/helpdesk',
-		'/WebObjects/Helpdesk.woa/ra/Tickets?',
-		'style=details&',
-		'qualifier=(statustype.statusTypeName%3D%27Closed%27)&',
-		'limit=50&',
-		'apiKey=***REMOVED***"',
+		'"https://www3.whentowork.com',
+		'/cgi-bin/w2wC.dll/empwhosonlater.htm',
+		'?SID=500606355428D"',
 ].join(''),
 
 refreshFrequency: 60000,
@@ -15,7 +12,7 @@ lastUpdateTime: undefined,
 
 style: [
 	"bottom: 0",
-	"left: 66.66%",
+	"left: 33.33%",
 	"width: 33.33%",
 	"text-align: center",
 	"border: 0",
@@ -26,12 +23,12 @@ style: [
 ].join('\n'),
 
 render: function(argument) {
-	return 'Closed Tickets: <span class="last-updated"></span>';
+	return 'Helpdesk Workers: <span class="last-updated"></span>';
 },
 
 update: function(output, domEl) {
 	var moment = this.moment();
-	localStorage.setItem('stolaf-closed-tickets', output);
+	localStorage.setItem('stolaf-helpdesk-workers', output);
 	this.lastUpdateTime = new Date();
 
 	domEl.querySelector('.last-updated').textContent = moment(this.lastUpdateTime).calendar();

@@ -4,19 +4,21 @@ command: 'echo ""',
 refreshFrequency: 60000,
 
 style: [
-	"top:   0",
-	"right: 20%",
+	"top: 0",
+	"left: 0",
 
-	"width: 40%",
-	"height: 50vh",
+	"width: 20%",
+	"height: 25vh",
 
 	"border-right: 0",
-	"border-left: 0",
+	"border-bottom: 0",
 
 	"text-align: center",
 
 	".details",
-	"	font-size: 15em",
+	"	font-size: 4em",
+	"	font-weight: 100",
+	"	opacity: 0.5",
 
 	".w100 { font-weight: 100 }",
 	".w200 { font-weight: 200 }",
@@ -33,7 +35,7 @@ render: function(output) {
 	return [
 		'<div class="wrapper">',
 			'<div class="details"></div>',
-			'<h1 class="title">Unanswered Tickets</h1>',
+			'<h1 class="title">Open<br>Tickets</h1>',
 		'</div>',
 	].join('')
 },
@@ -41,14 +43,17 @@ render: function(output) {
 update: function(output, domEl) {
 	var _ = this.lodash();
 	var openTickets = JSON.parse(localStorage.getItem('stolaf-open-tickets'));
-
-	var tickets = _.filter(openTickets, {'notes': []});
-	var ticketCount = tickets.length;
+	var ticketCount = openTickets.length;
 
 	var wrapper = domEl.querySelector('.wrapper');
 	var details = domEl.querySelector('.details');
 
 	details.textContent = ticketCount;
+
+	if (ticketCount > 0)
+		wrapper.className = 'wrapper yellow';
+	else if (ticketCount === 0)
+		wrapper.className = 'wrapper green';
 
 	var fontWeight = [
 		{min:  0,  max:  0,   weight: 'w100'},
@@ -67,9 +72,4 @@ update: function(output, domEl) {
 			details.className = 'details ' + weightClass.weight;
 		}
 	})
-
-	if (ticketCount === 0)
-		wrapper.className = 'wrapper green';
-	else
-		wrapper.className = 'wrapper red';
 },

@@ -4,42 +4,36 @@ command: 'echo ""',
 refreshFrequency: 60000,
 
 style: [
-	"top:   50px",
-	"right: 50px",
+	"left:  0",
+	"bottom: 3%",
 
-	"width: 450px",
+	"width: 20%",
+	"height: 47vh",
 
 	".details",
-	"	font-size: 1.75em",
-	"	line-height: 1.35",
+	"	font-size: 1.5em",
+	"	line-height: 1",
+	"	padding-top: 1.5rem",
+	"	padding-left: 1.5rem",
+	"	padding-right: 1.5rem",
 
-	"table",
-	"	color: white",
-	"	border-collapse: separate;",
-	"	border-spacing: 0.5em",
-	"	width: 100%",
+	"ul",
+	"	height: 100vh",
+	"	display: -webkit-flex",
+	"	-webkit-flex-flow: column nowrap",
+	"	-webkit-justify-content: space-between",
 
-	"td:last-child",
+	"li",
+	"	display: -webkit-flex",
+	"	-webkit-flex-flow: row nowrap",
+	"	-webkit-justify-content: space-between",
+
+	"span:first-child",
+	"	font-weight: 300",
+
+	"span:last-child",
 	"	text-align: right",
-
-	".high td:nth-child(1)",
-	"	background: rgb(255, 48,  0)",
-	".high td:nth-child(2)",
-	"	color: rgb(255, 48,  0)",
-
-	".medium td:nth-child(1)",
-	"	background: rgb(255, 198,  0)",
-	".medium td:nth-child(2)",
-	"	color: rgb(255, 198,  0)",
-
-	".low td:nth-child(1)",
-	"	background: rgb(174, 183, 188)",
-	".low td:nth-child(2)",
-	"	color: rgb(174, 183, 188)",
-
-	".bubbles .total td",
-	"	border-top: solid 1px white",
-	"	border-radius: 0",
+	"	font-weight: 500",
 ].join('\n'),
 
 render: function(output) {
@@ -60,46 +54,6 @@ update: function(output, domEl) {
 	var closedTickets = JSON.parse(localStorage.getItem('stolaf-closed-tickets'));
 	var tickets = _.flatten([openTickets, closedTickets]);
 
-	var colors = [
-		'red',
-		'orange',
-		'yellow',
-		'green',
-		'blue',
-		'purple',
-		'pink',
-		'aqua',
-		'silver',
-	]
-
-	var staff = [
-		'Mike Sjulstad',
-		'Phinehas Bynum',
-		'Nhia Lee',
-		'Jennie Moberg',
-		'Michael Domingues',
-		'Perrin Bishop-Wright',
-		'Tony Skalski',
-		'Ben Gottfried',
-		'Roberta Lembke',
-		'Kelly Kloos',
-		'Wendy Woitalla',
-		'Jeff Dixon',
-		'Tim Isom',
-		'Andy Prehall',
-		'Michael Strand',
-		'Myron Engle',
-		'Craig Rice',
-		'Bob Breid',
-		'Nancy Aarsvold',
-		'Doug Hamilton',
-		'Jason Menard',
-		'Dana Thompson',
-		'Sean Tonko',
-		'Dan Beach',
-		'Marc Thomas',
-	]
-
 	function hasTechNote(note) {
 		return (
 			    note.isTechNote
@@ -107,6 +61,9 @@ update: function(output, domEl) {
 			&&  note.mobileNoteText.length > 10
 		)
 	}
+
+	var colors = JSON.parse(localStorage.getItem('stolaf-colors'));
+	var staff = JSON.parse(localStorage.getItem('stolaf-staff'));
 
 	function isStaffMember(note) {
 		return _.contains(staff, responderName(note));
@@ -116,7 +73,7 @@ update: function(output, domEl) {
 		return note.prettyUpdatedString.replace(/.*<strong>(.+)<\/strong>.*/gm, "$1")
 	}
 
-	var topResponders = _.chain(tickets)
+	var responders = _.chain(tickets)
 		.reject({notes: []})
 		.pluck('notes')
 		.flatten()
@@ -128,27 +85,33 @@ update: function(output, domEl) {
 		.sortBy(function(item) {
 			return item[1]
 		})
+		.value();
+
+	var topResponders = _.chain(responders)
 		.reverse()
 		.first(9)
 		.value();
 
-	var contentTable = document.createElement('table');
+	var restOfResponders = _.chain(responders)
+
+
+	var contentTable = document.createElement('ul');
 	contentTable.classList.add('colorful');
 
 	_.each(topResponders, function(pair, index) {
-		var row = document.createElement('tr');
-		var nameCell = document.createElement('td');
-		var numberCell = document.createElement('td');
+		var item = document.createElement('li');
+		var nameCell = document.createElement('span');
+		var numberCell = document.createElement('span');
 
-		row.classList.add(colors[index]);
+		item.classList.add(colors[index]);
 
 		nameCell.textContent = pair[0];
 		numberCell.textContent = pair[1];
 
-		row.appendChild(nameCell);
-		row.appendChild(numberCell);
+		item.appendChild(nameCell);
+		item.appendChild(numberCell);
 
-		contentTable.appendChild(row);
+		contentTable.appendChild(item);
 	})
 
 	details.innerHTML = contentTable.outerHTML;
