@@ -4,42 +4,36 @@ command: 'echo ""',
 refreshFrequency: 60000,
 
 style: [
-	"top:   50px",
-	"right: 50px",
+	"top:   0",
+	"right: 0",
 
-	"width: 450px",
+	"width: 25%",
+	"height: 97vh",
 
 	".details",
 	"	font-size: 1.75em",
 	"	line-height: 1.35",
 
-	"table",
-	"	color: white",
-	"	border-collapse: separate;",
-	"	border-spacing: 0.5em",
-	"	width: 100%",
+	".title",
+	"	margin-top: 1em",
 
-	"td:last-child",
+	"ul",
+	"	height: 100vh",
+	"	display: -webkit-flex",
+	"	-webkit-flex-flow: column nowrap",
+	"	-webkit-justify-content: space-between",
+
+	"li",
+	"	display: -webkit-flex",
+	"	-webkit-flex-flow: row nowrap",
+	"	-webkit-justify-content: space-between",
+
+	"span:first-child",
+	"	font-weight: 300",
+
+	"span:last-child",
 	"	text-align: right",
-
-	".high td:nth-child(1)",
-	"	background: rgb(255, 48,  0)",
-	".high td:nth-child(2)",
-	"	color: rgb(255, 48,  0)",
-
-	".medium td:nth-child(1)",
-	"	background: rgb(255, 198,  0)",
-	".medium td:nth-child(2)",
-	"	color: rgb(255, 198,  0)",
-
-	".low td:nth-child(1)",
-	"	background: rgb(174, 183, 188)",
-	".low td:nth-child(2)",
-	"	color: rgb(174, 183, 188)",
-
-	".bubbles .total td",
-	"	border-top: solid 1px white",
-	"	border-radius: 0",
+	"	font-weight: 500",
 ].join('\n'),
 
 render: function(output) {
@@ -132,23 +126,23 @@ update: function(output, domEl) {
 		.first(9)
 		.value();
 
-	var contentTable = document.createElement('table');
+	var contentTable = document.createElement('ul');
 	contentTable.classList.add('colorful');
 
 	_.each(topResponders, function(pair, index) {
-		var row = document.createElement('tr');
-		var nameCell = document.createElement('td');
-		var numberCell = document.createElement('td');
+		var item = document.createElement('li');
+		var nameCell = document.createElement('span');
+		var numberCell = document.createElement('span');
 
-		row.classList.add(colors[index]);
+		item.classList.add(colors[index]);
 
 		nameCell.textContent = pair[0];
 		numberCell.textContent = pair[1];
 
-		row.appendChild(nameCell);
-		row.appendChild(numberCell);
+		item.appendChild(nameCell);
+		item.appendChild(numberCell);
 
-		contentTable.appendChild(row);
+		contentTable.appendChild(item);
 	})
 
 	details.innerHTML = contentTable.outerHTML;
