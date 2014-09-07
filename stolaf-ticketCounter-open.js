@@ -2,14 +2,16 @@ command: 'echo ""',
 refreshFrequency: 60000,
 
 style: [
-	"bottom: 4%",
-	"left:   1%",
+	"top: 0",
+	"left: 0",
 
-	"width: 15%",
-
-	"text-align: center",
+	"width: 20%",
+	"height: 25vh",
 
 	"border-right: 0",
+	"border-bottom: 0",
+
+	"text-align: center",
 
 	".details",
 	"	font-size: 4em",
