@@ -3,7 +3,7 @@ moment: (function(e){function tt(e,t,n){switch(arguments.length){case 2:return e
 
 command: 'echo ""',
 
-refreshFrequency: 5000,
+refreshFrequency: 10000,
 
 style: [
 	"right: 0",
