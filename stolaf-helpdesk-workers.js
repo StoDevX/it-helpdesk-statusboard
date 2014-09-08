@@ -2,7 +2,7 @@ lodash: (function(){function q(e,t,n){var r=(n||0)-1,i=e?e.length:0;while(++r<i)
 
 command: 'echo ""',
 
-refreshFrequency: 5000,
+refreshFrequency: 10000,
 
 style: [
 	"left: 20%",
