@@ -43,8 +43,12 @@ style: [
 	".ticket-number::after",
 	"	content: ' — '",
 
+	".info-row, .detail-row",
+	"	line-height: 1",
+
 	".info-row, .detail-row, .type-row",
 	"	color: rgba(255, 255, 255, 0.5)",
+	"	font-size: 0.85em",
 	"	font-weight: 300",
 
 	".type-row",
