@@ -1,4 +1,5 @@
 command: 'echo ""',
+refreshFrequency: 60000,
 
 style: "border: 0",
 
