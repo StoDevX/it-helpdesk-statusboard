@@ -1,6 +1,6 @@
 command: 'echo ""',
 
-updateFrequency: 60000,
+refreshFrequency: 60000,
 
 style: [
 	'@import "/stolaf-base/base.css"',
