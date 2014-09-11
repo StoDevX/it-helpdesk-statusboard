@@ -43,7 +43,6 @@ update: function(output, domEl) {
 	details.innerHTML = "";
 
 	var data = localStorage.getItem('stolaf-helpdesk-workers');
-	console.log(data);
 
 	var whenToWork = document.createElement('div');
 	whenToWork.innerHTML = data;
