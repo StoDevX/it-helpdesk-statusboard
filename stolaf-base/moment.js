@@ -5,4 +5,5 @@ moment: (function(e){function tt(e,t,n){switch(arguments.length){case 2:return e
 
 render: function() {
 	window.moment = this.moment()
+	return ''
 }

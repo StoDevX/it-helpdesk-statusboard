@@ -52,4 +52,5 @@ mapDOM: function(element, json) {
 
 render: function() {
 	window.mapDOM = this.mapDOM
+	return ''
 }
