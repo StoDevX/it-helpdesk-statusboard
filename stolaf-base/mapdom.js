@@ -1,7 +1,7 @@
-// from http://stackoverflow.com/questions/12980648/map-html-to-json
-
 command: 'echo ""',
-refreshFrequency: 100000,
+refreshFrequency: 3600000,
+
+// from http://stackoverflow.com/questions/12980648/map-html-to-json
 
 mapDOM: function(element, json) {
 	var treeObject = {};
