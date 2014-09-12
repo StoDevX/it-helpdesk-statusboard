@@ -21,8 +21,14 @@ render: function(argument) {
 },
 
 update: function(output, domEl) {
-	localStorage.setItem('stolaf-printer-status', output);
-	this.lastUpdateTime = new Date();
+	if (!window.sto)             return '';
+	if (!window.sto.libs.csv)    return '';
+	if (!window.sto.libs.moment) return '';
+	var csv = window.sto.libs.csv;
+	var moment = window.sto.libs.moment;
 
+	window.sto.data.printers = csv.parse(output, {header: true, cast: ['String', 'String', 'String']});;
+
+	this.lastUpdateTime = new Date();
 	domEl.querySelector('.last-updated').textContent = moment(this.lastUpdateTime).calendar();
 },

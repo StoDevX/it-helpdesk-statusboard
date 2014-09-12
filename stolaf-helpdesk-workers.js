@@ -55,22 +55,29 @@ findLocation: function(title) {
 },
 
 update: function(output, domEl) {
-	window.helpdeskWorkers = {};
-	window.helpdeskWorkers.findTimes = this.findTimes;
-	window.helpdeskWorkers.whoIsWorking = this.whoIsWorking;
-	window.helpdeskWorkers.findLocation = this.findLocation;
+	if (!window.sto)              return '';
+	if (!window.sto.libs.lodash)  return '';
+	if (!window.sto.libs.moment)  return '';
+	if (!window.sto.libs.mapDOM)  return '';
+	if (!window.sto.data.helpers) return '';
 
-	//
-	// Fetch the data
-	//
-	var data = localStorage.getItem('stolaf-helpdesk-workers');
-	var parser = new DOMParser();
-	var xmlDoc = parser.parseFromString(data, "text/xml");
-	var rawShifts = xmlDoc.querySelectorAll('entry');
+	var _ = window.sto.libs.lodash;
+	var moment = window.sto.libs.moment;
+	var mapDOM = window.sto.libs.mapDOM;
+
+	var findTimes = this.findTimes;
+	var whoIsWorking = this.whoIsWorking;
+	var findLocation = this.findLocation;
+
+	var data = window.sto.data.helpers;
 
 	//
 	// Organize the data
 	//
+	var parser = new DOMParser();
+	var xmlDoc = parser.parseFromString(data, "text/xml");
+	var rawShifts = xmlDoc.querySelectorAll('entry');
+
 	var allShifts = _.map(rawShifts, function(shift) {
 		var jsonEvent = mapDOM(shift);
 		var keys = ['summary', 'title'];
@@ -85,12 +92,12 @@ update: function(output, domEl) {
 		props.summary = props.summary.split('&nbsp;')[0];
 
 		var result = {};
-		var times = helpdeskWorkers.findTimes(props.title)
+		var times = findTimes(props.title);
 		result.date = props.summary.match(/(\w{3,4} \d\d, \d{4})/)[0];
 		result.startTime = times[1];
 		result.endTime = times[2];
-		result.person = helpdeskWorkers.whoIsWorking(props.title);
-		result.location = helpdeskWorkers.findLocation(props.title);
+		result.person = whoIsWorking(props.title);
+		result.location = findLocation(props.title);
 
 		return result;
 	})
