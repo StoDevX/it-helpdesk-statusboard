@@ -1,4 +1,5 @@
-command: 'cat ./stolaf-base/printer-data-url.txt | xargs curl --silent',
+// command: 'cat ./stolaf-base/printer-data-url.txt | xargs curl --silent',
+command: 'cat ./stolaf-base/printerstatus.csv',
 
 refreshFrequency: 60000,
 lastUpdateTime: undefined,
