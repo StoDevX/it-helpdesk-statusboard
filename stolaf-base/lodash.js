@@ -5,4 +5,5 @@ lodash: (function(){function q(e,t,n){var r=(n||0)-1,i=e?e.length:0;while(++r<i)
 
 render: function() {
 	window._ = this.lodash()
+	return ''
 }
