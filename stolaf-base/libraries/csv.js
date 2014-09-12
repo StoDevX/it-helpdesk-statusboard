@@ -1,6 +1,8 @@
 command: 'echo ""',
 refreshFrequency: 3600000,
 
+// from https://github.com/knrz/CSV.js
+
 csv: function() {
   'use strict';
 
