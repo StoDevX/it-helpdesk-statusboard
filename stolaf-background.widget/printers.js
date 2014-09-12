@@ -1,11 +1,11 @@
-command: 'cat ./stolaf-base/whentowork-calendar-url.txt | xargs curl --silent',
+command: 'cat ./stolaf-base/printer-data-url.txt | xargs curl --silent',
 
 refreshFrequency: 60000,
 lastUpdateTime: undefined,
 
 style: [
 	"bottom: 0",
-	"left: 50%",
+	"left: 75%",
 	"width: 25%",
 	"text-align: center",
 	"border: 0",
@@ -16,7 +16,7 @@ style: [
 ].join('\n'),
 
 render: function(argument) {
-	return 'Helpdesk Workers: <span class="last-updated"></span>';
+	return 'Printers: <span class="last-updated"></span>';
 },
 
 update: function(output, domEl) {
