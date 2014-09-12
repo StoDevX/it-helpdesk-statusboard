@@ -13,8 +13,8 @@ lastUpdateTime: undefined,
 
 style: [
 	"bottom: 0",
-	"left: 66.66%",
-	"width: 33.33%",
+	"left: 25%",
+	"width: 25%",
 	"text-align: center",
 	"border: 0",
 	"height: 3%",

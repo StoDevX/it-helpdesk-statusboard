@@ -14,7 +14,7 @@ lastUpdateTime: undefined,
 style: [
 	"bottom: 0",
 	"left: 0",
-	"width: 33.33%",
+	"width: 25%",
 	"text-align: center",
 	"border: 0",
 	"height: 3%",
