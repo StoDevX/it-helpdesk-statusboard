@@ -108,6 +108,7 @@ update: function(output, domEl) {
 	// Construct the widget
 	//
 	var details = domEl.querySelector('.details');
+	details.innerHTML = "";
 
 	var time = document.createElement('time');
 	time.className = 'time';
