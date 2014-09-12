@@ -1,0 +1,282 @@
+"Name","DetectedErrorState","Location"
+"stoPrint-Personal","No Error",
+"stoPrint-Personal-LPR","No Error",
+"dept-it-test","Ok",
+"dept-rns392hplc","Ok",
+"dept-rml259","Offline","Rolvaag 259"
+"dept-oslo-color","Ok",
+"stoPrint-LPR","No Error",
+"stoPrint-color-LPR","No Error",
+"stoPrint-color","No Error",
+"stoPrint","No Error","Everywhere"
+"mfc-ytt118","Ok",
+"mfc-tph","Ok",
+"mfc-toh3-west","Ok",
+"mfc-toh3-east","Ok",
+"mfc-toh3","Ok",
+"mfc-toh251","Ok",
+"mfc-toh181","Ok",
+"mfc-toh145","Ok",
+"mfc-toh133","Ok",
+"mfc-toh101","Ok",
+"mfc-thorson","Ok",
+"mfc-theater","Ok",
+"mfc-swfs","Ok",
+"mfc-stofund","Ok",
+"mfc-sss","Ok",
+"mfc-skifter","Ok",
+"mfc-scilib","Ok",
+"mfc-sac","Ok",
+"mfc-rns-2nd","Ok",
+"mfc-rmlref","Ok",
+"mfc-rml560","Ok",
+"mfc-rml433","Ok",
+"mfc-rml386","Ok",
+"mfc-rml330","Ok",
+"mfc-rml115","Ok",
+"mfc-rml-1st","Ok",
+"mfc-religion","Ok",
+"mfc-rand","Low Toner",
+"mfc-publicsafety","Ok",
+"mfc-polisci","Ok",
+"mfc-piperctr","Ok",
+"mfc-pastor","Ok",
+"mfc-om245","Ok",
+"mfc-nursing","Ok",
+"mfc-musicorgs","Ok",
+"mfc-musiclib2","Ok",
+"mfc-music","Ok",
+"mfc-mscs","Ok",
+"mfc-mohn","Ok",
+"mfc-mellby","Ok",
+"mfc-library","Ok",
+"mfc-larson","Ok",
+"mfc-kildahl","Ok",
+"mfc-kierk","Ok",
+"mfc-it","Ok","RML 257"
+"mfc-hwy19","Ok",
+"mfc-hoyme","Ok",
+"mfc-hollandhouse","Ok",
+"mfc-history","Low Toner",
+"mfc-hillkitt","Ok",
+"mfc-hh407","Ok",
+"mfc-hh205","Offline",
+"mfc-healthservices","Ok",
+"mfc-fireside","Ok",
+"mfc-facilities","Ok",
+"mfc-english","Ok",
+"mfc-ellingson","Ok",
+"mfc-education","Ok",
+"mfc-econ","Ok",
+"mfc-dataservices","Ok",
+"mfc-crossroads","Ok",
+"mfc-chm209a","Ok",
+"mfc-chm101","Ok",
+"mfc-casualreading","Ok",
+"mfc-bookstore","Ok",
+"mfc-boehouse","Offline",
+"mfc-bc147","Ok",
+"mfc-bc110","Ok",
+"mfc-artdance","Ok",
+"mfc-alumni","Ok",
+"mfc-advancement","Ok",
+"mfc-admissions","Ok",
+"dept-ytt118","Offline",
+"dept-wlc","Ok","World Languages Center"
+"dept-volunteer","Ok","Sun Ballroom"
+"dept-visit","Low Toner","Tomson Hall 244"
+"dept-trio-gearup","Ok",
+"dept-treasurer","Ok","Treasurer's Office"
+"mfc-rns258","Ok",
+"dept-training-room","Ok","Skogland Training room"
+"dept-tph","Ok","Manitou Field House"
+"dept-tostrud","Ok","Tostrude Center"
+"dept-toh368-color","Low Toner","Tomson Hall 368"
+"dept-toh331-color","Ok","Tomson Hall 331"
+"dept-toh290","Ok","Education Dept Tomson 275"
+"dept-toh270-color","Ok","Piper Center TOH"
+"dept-toh270","Ok","Tomson Hall 270"
+"dept-toh257","Ok","Tomson Hall 257"
+"dept-toh252a","Ok","Tomson Hall 252A"
+"dept-toh242","Offline","Tomson Hall 242"
+"dept-toh239","Ok","Tomson Hall 239"
+"dept-toh230","Offline","Tomson Hall 230"
+"dept-toh180b","Offline","Tomson Hall 180B"
+"dept-toh130c","Offline","Tomson Hall 130C"
+"dept-toh023","Ok",
+"dept-toh010d","Ok","Tomson Hall 010D"
+"dept-tickets","Ok",
+"dept-theater-color","Ok",
+"dept-theater","Low Toner","Theater Department Office"
+"dept-techservices","Ok","Rolvaag 386"
+"dept-tb48","Ok","Theater Buliding 48"
+"dept-tb211","Ok","Theater 211"
+"dept-swfs","Ok","Holland Hall 213"
+"dept-studentaccounts","Ok","Tomson Hall 132"
+"dept-steward","Ok","Admin Bldg 3rd Floor"
+"dept-sss-color","Ok",
+"dept-sss","Low Toner",
+"dept-special-events","Ok","AB109"
+"dept-spanish","Ok","Spanish Dept. Office Area"
+"dept-soc","Low Toner","Sociology Dept Printer"
+"dept-skh8","Ok",
+"dept-skh109","Ok",
+"dept-sk103","Low Toner","SK103"
+"dept-scilib","Ok","Science Library"
+"dept-sacolor","Ok","Student Activities Office"
+"dept-sa","Ok","Student Activities Office"
+"dept-rns452","Ok","RNS 452"
+"dept-rns446","Ok","RNS 446"
+"dept-rns441","Offline","RNS 441"
+"dept-rns440","Ok","RNS 440"
+"dept-rns438","Ok",
+"dept-rns400","Ok",
+"dept-rns395","Ok","RNS 395"
+"dept-rns392","Ok","RNS 392"
+"dept-rns355","Ok","RNS 355"
+"dept-rns354-color","Low Toner","RNS 354"
+"dept-rns354","Ok","RNS354"
+"dept-rns350","Ok","RNS 350"
+"dept-rns346","Ok","RNS 346"
+"dept-rns340","Ok","RNS 340"
+"dept-rns325","Ok","RNS 325"
+"dept-rns302","Ok","RNS 302"
+"dept-rns294","Low Toner","RNS 294"
+"dept-rns293","Ok",
+"dept-rns271","Ok",
+"dept-rns254","Ok",
+"dept-rns253","Offline","RNS 253"
+"dept-rns246","Ok","RNS 246"
+"dept-rns240-color","Low Toner","RNS 240"
+"dept-rns240","Ok","RNS 240"
+"dept-rns207","Ok",
+"dept-rns202","Ok","RNS 202"
+"dept-rns131","Ok","RNS 131"
+"dept-rns127-color","Low Toner","RNS 127"
+"dept-rns127","Low Toner","RNS 127"
+"mfc-musiclib","Ok",
+"dept-rms201","Ok","RMS 201"
+"dept-rml477","Ok","RML 477"
+"dept-rml415","Low Toner","RML 415"
+"dept-rml386-color","Low Toner",
+"dept-rml386","Ok","RML 386"
+"dept-rml300","Ok","RML 300"
+"dept-rml265","Low Toner","RML 265"
+"dept-rml256","Ok",
+"dept-rml251","Ok",
+"dept-rml135a","Ok",
+"dept-reslife","Low Toner","Reslife Office"
+"dept-religion","Ok","Old Main 130C"
+"dept-relations","Ok","College Relations Office"
+"dept-registrar","Offline","Registrar's Office"
+"dept-recreg","Ok","Registrar's Office"
+"dept-receipt","Offline","Business Office TOH 134"
+"dept-radar","Ok","RNS 299"
+"dept-public-safety","Ok","Public Saftey dept printer"
+"dept-psych","Ok","Psychology dept printer"
+"dept-principlegifts","Ok","AB 300"
+"Dept-President","Low Toner","President's Office. "
+"dept-polisci","Ok","Polotical Science dept printer"
+"dept-physics-color","Offline","Physics Dept Color Laser"
+"dept-physics","Ok","Physics Dept Office RNS260"
+"dept-phyed","Ok","SKH 114"
+"dept-phonathon","Ok",
+"dept-philo","Ok","Philosophy Dept Printer"
+"dept-periodicals","Offline",
+"dept-payroll","No Toner","Payroll Office"
+"dept-pause","Ok","The Pause dept printer. "
+"dept-pastor","Ok","Pastor's Office"
+"dept-oslo","Low Toner","Oslo Inernational Summer School Office (TOH)"
+"dept-om330","Ok","Old Main 330"
+"dept-om230","Low Toner","Old Main 230"
+"dept-om130","Low Toner","Old Main 130"
+"dept-om12","Ok","Old Main 12"
+"mfc-rns358","Ok",
+"dept-nursing","Ok","Nursing Department Office"
+"dept-news","Ok",
+"dept-naha","Ok","RML 200"
+"dept-musicorgs","Ok","Music Organizations Office"
+"dept-musiclib","Ok","Music Library"
+"dept-music","Low Toner","Music Department Office"
+"dept-mscs","Ok","RMS 306"
+"dept-mess","Ok",
+"dept-mca","Ok",
+"dept-mc-color","Low Toner","Marketing and Communications"
+"dept-mc","Ok",
+"dept-locksmith","Ok","Locksmith Office"
+"dept-library","Ok","Rolvaag Library Office"
+"dept-kierk","Ok","Kierkegard Library"
+"dept-ire","Low Toner","Institutional Research and Evaluation Office"
+"dept-intl2","Ok","IOS Office"
+"dept-intl","Ok","IOS Office"
+"dept-iit","Ok","IIT Office RML 277"
+"dept-hr","Ok","Human Resources Office"
+"dept-history","Ok","History Dept Office"
+"dept-hh507","Low Toner","Holland Hall 507"
+"dept-hh332","Low Toner","Holland Hall 332"
+"dept-healthsvcs","Ok","Health Services Office"
+"dept-grants","Low Toner","Government and Foundation Relations Office"
+"dept-govfound","Ok","Government and Foundation Relations Office"
+"dept-german-norwegian","Ok","Norwegian Department printer"
+"dept-french","Low Toner","French Dept Office"
+"dept-finaid","Ok","Financial Aid Office"
+"dept-facilities","Low Toner","Facilities"
+"mfc-telecom","Ok",
+"dept-enrollment-color","Ok","Tomson Hall 226"
+"dept-enrollment","Ok","Tomson Hall 226"
+"dept-english","Ok","English Dept Office"
+"dept-education","Ok","Education Dept Office"
+"dept-econ","Ok","Economics Dept Office"
+"dept-dos-color","Ok","Admin Bldg 223A"
+"dept-doc-color","Low Toner","Dean of the College Office"
+"dept-doc","Ok","Dean of the College Office"
+"dept-rns262","Ok","RNS 262"
+"dept-diploma","Ok","Tomson 149"
+"dept-dc207","Ok","Dittmann 207"
+"dept-dc116","Offline","Dittmann 116"
+"dept-dc100","Ok","Dittmann 100"
+"dept-data","Ok","Data Services Office"
+"dept-dance","Ok","Dance Dept Office"
+"dept-custodial","Ok","Custodial Office"
+"dept-counsel","Ok","Counseling Center Office"
+"dept-classics-russian","Ok",
+"dept-cis","Ok","CIS Office"
+"dept-circulation","Ok","RML Circulation Desk"
+"dept-chmaux","Ok",
+"dept-chm234","Ok","CHM 234"
+"dept-chm222","Low Toner","Christiansen 222"
+"dept-chm209a","Ok","Christiansen 209a"
+"dept-chm209","Ok","CHM 209"
+"dept-chm144","Ok","Christiansen 144"
+"dept-chm104","Ok","Christiansen 104"
+"dept-chm101","Ok",
+"dept-chem","Ok","RNS 336"
+"dept-check","Ok","Business Office"
+"dept-carpshop","Ok","Carpenter's Shop"
+"dept-carpenter","Ok",
+"dept-campaign","Ok",
+"dept-busoffice","Ok","Business Office TOH 134"
+"dept-bookstore-dir","Low Toner","Bookstore Director's Office"
+"dept-bookstore","Ok","Bookstore"
+"dept-biology","Ok","Biology Dept Office"
+"dept-bcm","Ok","Broadcast Media Office"
+"dept-bc147","Ok","Buntrock 147"
+"dept-bc104","Ok","Buntrock 104"
+"dept-asian-studies","Ok","Asian Studies Departmental Laser"
+"dept-asc-h","Ok","Academic Support Center"
+"dept-asc","Ok","Academic Support Center"
+"dept-art","No Error","Art Dept Office"
+"dept-archives","Ok","Archives Office"
+"dept-ap","Low Toner","Tomson Hall 131 AP Office"
+"dept-alumni-color","Ok","Admin Bldg 211"
+"dept-alumni","Ok","Alumni Office"
+"dept-ah280d","Ok",
+"dept-ah261","Offline",
+"dept-ah260c","Ok",
+"dept-advancement-color","Offline","Advancement Office"
+"dept-adoc","Ok",
+"dept-admissions","Ok","Tomson Hall 229"
+"dept-rns227-color","Ok",
+"dept-ab302","Ok",
+"dept-ab210a","Ok","Admin Bldg 210A"
+"dept-aac","Ok","Academic Advising Office TOH 141A"
