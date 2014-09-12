@@ -20,7 +20,7 @@ render: function(argument) {
 },
 
 update: function(output, domEl) {
-	localStorage.setItem('stolaf-helpdesk-workers', output);
+	localStorage.setItem('stolaf-printer-status', output);
 	this.lastUpdateTime = new Date();
 
 	domEl.querySelector('.last-updated').textContent = moment(this.lastUpdateTime).calendar();
