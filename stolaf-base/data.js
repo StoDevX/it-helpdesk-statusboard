@@ -4,6 +4,11 @@ refreshFrequency: 3600000,
 style: "border: 0",
 
 render: function() {
+	window.sto = window.sto || {
+		libs: {},
+		data: {},
+	};
+
 	var staff = [
 		'Mike Sjulstad',
 		'Phinehas Bynum',
@@ -31,7 +36,7 @@ render: function() {
 		'Dan Beach',
 		'Marc Thomas',
 	];
-	localStorage.setItem('stolaf-staff', JSON.stringify(staff));
+	window.sto.data.staff = staff;
 
 	var colors = [
 		'red',
@@ -44,7 +49,7 @@ render: function() {
 		'aqua',
 		'silver',
 	]
-	localStorage.setItem('stolaf-colors', JSON.stringify(colors));
+	window.sto.data.colors = colors;
 
 	return ''
 }

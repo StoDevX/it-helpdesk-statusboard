@@ -29,8 +29,13 @@ render: function(output) {
 },
 
 update: function(output, domEl) {
-	var openTickets = JSON.parse(localStorage.getItem('stolaf-open-tickets'));
-	var staff = JSON.parse(localStorage.getItem('stolaf-staff'));
+	if (!window.sto)                  return '';
+	if (!window.sto.libs.lodash)      return '';
+	if (!window.sto.data.openTickets) return '';
+
+	var _ = window.sto.libs.lodash;
+	var openTickets = window.sto.data.openTickets;
+	var staff = window.sto.data.staff;
 
 	function isStaffMember(ticket) {
 		return _.contains(staff, ticket.clientTech.displayName);

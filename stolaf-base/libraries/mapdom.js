@@ -51,6 +51,8 @@ mapDOM: function(element, json) {
 },
 
 render: function() {
-	window.mapDOM = this.mapDOM
+	window.sto = window.sto || {};
+	window.sto.libs = window.sto.libs || {};
+	window.sto.libs.mapDOM = this.mapDOM;
 	return ''
 }

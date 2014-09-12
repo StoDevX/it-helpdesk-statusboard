@@ -38,10 +38,13 @@ render: function(output) {
 },
 
 update: function(output, domEl) {
-	var wrapper = domEl.querySelector('.wrapper');
-	var details = domEl.querySelector('.details');
+	if (!window.sto)                  return '';
+	if (!window.sto.libs.lodash)      return '';
+	if (!window.sto.data.openTickets) return '';
 
-	var openTickets = JSON.parse(localStorage.getItem('stolaf-open-tickets'));
+	var _ = window.sto.libs.lodash;
+	var openTickets = window.sto.data.openTickets;
+	var details = domEl.querySelector('.details');
 
 	function getPriorityName(ticket) {
 		if (_.isObject(ticket.prioritytype))

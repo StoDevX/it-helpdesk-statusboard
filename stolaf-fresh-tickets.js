@@ -66,7 +66,16 @@ render: function(output) {
 },
 
 update: function(output, domEl) {
-	var openTickets = JSON.parse(localStorage.getItem('stolaf-open-tickets'));
+	if (!window.sto)                  return '';
+	if (!window.sto.libs.lodash)      return '';
+	if (!window.sto.libs.moment)      return '';
+	if (!window.sto.data.openTickets) return '';
+
+	var _ = window.sto.libs.lodash;
+	var moment = window.sto.libs.moment;
+
+	var openTickets = window.sto.data.openTickets;
+
 	var sortedTickets = _.chain(openTickets)
 		.map(function(ticket) {
 			ticket.lastUpdatedTime = new Date(ticket.lastUpdated);
