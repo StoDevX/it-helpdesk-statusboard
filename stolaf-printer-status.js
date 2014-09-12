@@ -44,10 +44,16 @@ render: function(output) {
 },
 
 update: function(output, domEl) {
-	var printers = csv.parse(localStorage.getItem('stolaf-printer-status'), {header: true, cast: ['String', 'String', 'String']});
+	if (!window.sto)               return '';
+	if (!window.sto.libs.lodash)   return '';
+	if (!window.sto.data.printers) return '';
+
+	var _ = window.sto.libs.lodash;
+
+	var printers = window.sto.data.printers;
 	var printersInErrorState = _.chain(printers)
-		.reject({DetectedErrorState: "No Error"})
-		.reject({DetectedErrorState: "Ok"})
+		.reject({'DetectedErrorState': "No Error"})
+		.reject({'DetectedErrorState': "Ok"})
 		.groupBy('DetectedErrorState')
 		.value()
 

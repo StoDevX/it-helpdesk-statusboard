@@ -28,8 +28,12 @@ render: function(argument) {
 },
 
 update: function(output, domEl) {
-	localStorage.setItem('stolaf-closed-tickets', output);
-	this.lastUpdateTime = new Date();
+	if (!window.sto)             return '';
+	if (!window.sto.libs.moment) return '';
+	var moment = window.sto.libs.moment;
 
+	window.sto.data.closedTickets = JSON.parse(output);
+
+	this.lastUpdateTime = new Date();
 	domEl.querySelector('.last-updated').textContent = moment(this.lastUpdateTime).calendar();
 },

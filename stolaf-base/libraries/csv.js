@@ -431,6 +431,8 @@ csv: function() {
 },
 
 render: function() {
-	window.csv = this.csv()
+	window.sto = window.sto || {};
+	window.sto.libs = window.sto.libs || {};
+	window.sto.libs.csv = this.csv();
 	return ''
 }

@@ -30,7 +30,12 @@ render: function(output) {
 },
 
 update: function(output, domEl) {
-	var openTickets = JSON.parse(localStorage.getItem('stolaf-open-tickets'));
+	if (!window.sto)                  return '';
+	if (!window.sto.libs.lodash)      return '';
+	if (!window.sto.data.openTickets) return '';
+
+	var _ = window.sto.libs.lodash;
+	var openTickets = window.sto.data.openTickets;
 
 	var tickets = _.filter(openTickets, function(ticket) {
 		return (
