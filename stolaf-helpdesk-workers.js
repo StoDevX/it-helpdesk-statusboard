@@ -98,6 +98,7 @@ update: function(output, domEl) {
 		result.endTime = times[2];
 		result.person = whoIsWorking(props.title);
 		result.location = findLocation(props.title);
+		result.startDateTime = moment(result.date + ' - ' + result.startTime, "MMM D YYYY - hh:mma");
 
 		return result;
 	})
@@ -106,9 +107,12 @@ update: function(output, domEl) {
 	var grouped = _.groupBy(allShifts, 'date')
 	var shifts = _.chain(grouped[today])
 		.reject({'location': 'Library'})
-		.groupBy('startTime')
+		.sortBy('startDateTime')
+		.reject(function(shift) {
+			return moment().isAfter(shift.startDateTime)
+		})
+		.groupBy('startDateTime')
 		.toArray()
-		.first()
 		.value()
 
 	//
@@ -116,19 +120,22 @@ update: function(output, domEl) {
 	//
 	var details = domEl.querySelector('.details');
 	details.innerHTML = "";
+	if (shifts.length) {
+		var time = document.createElement('time');
+		time.className = 'time';
+		time.textContent = shifts[0].startTime + ' – ' + shifts[0].endTime;
+		details.appendChild(time);
 
-	var time = document.createElement('time');
-	time.className = 'time';
-	time.textContent = shifts[0].startTime + ' – ' + shifts[0].endTime;
-	details.appendChild(time);
+		var list = document.createElement('ul');
+		list.className = 'workers';
+		_.each(shifts, function(shift) {
+			var item = document.createElement('li');
+			item.textContent = shift.person;
+			list.appendChild(item);
+		})
 
-	var list = document.createElement('ul');
-	list.className = 'workers';
-	_.each(shifts, function(shift) {
-		var item = document.createElement('li');
-		item.textContent = shift.person;
-		list.appendChild(item);
-	})
-
-	details.appendChild(list);
+		details.appendChild(list);
+	} else {
+		details.textContent = "No more shifts scheduled."
+	}
 }
