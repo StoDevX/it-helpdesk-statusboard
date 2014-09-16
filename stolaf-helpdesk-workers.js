@@ -103,17 +103,22 @@ update: function(output, domEl) {
 		return result;
 	})
 
-	var today = moment(new Date()).format('MMM D, YYYY');
+	var now = moment(new Date());
+	// window.now = now;
+	var today = now.format('MMM D, YYYY');
 	var grouped = _.groupBy(allShifts, 'date')
 	var shifts = _.chain(grouped[today])
 		.reject({'location': 'Library'})
 		.sortBy('startDateTime')
 		.reject(function(shift) {
-			return moment().isAfter(shift.startDateTime)
+			// console.log(shift, now.isAfter(shift.startDateTime));
+			return now.isAfter(shift.startDateTime)
 		})
 		.groupBy('startDateTime')
 		.toArray()
 		.value()
+
+	// console.log(grouped, shifts);
 
 	//
 	// Construct the widget
