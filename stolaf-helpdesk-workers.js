@@ -141,6 +141,6 @@ update: function(output, domEl) {
 
 		details.appendChild(list);
 	} else {
-		details.textContent = "No more shifts scheduled.<br>(Ignore me, I'm silly.)"
+		details.innerHTML = "No more shifts scheduled.<br>(Ignore me, I'm silly.)"
 	}
 }
