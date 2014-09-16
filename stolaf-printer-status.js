@@ -4,11 +4,11 @@ refreshFrequency: 10000,
 printerCount: 8,
 
 style: [
-	"left: 20vw",
+	"left: 40vw",
 	"bottom: 3vh",
 
 	"height: 47vh",
-	"width: 40%",
+	"width: 20%",
 
 	"text-align: center",
 	"font-size: 1.2em",
