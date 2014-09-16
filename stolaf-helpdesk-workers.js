@@ -2,7 +2,7 @@ command: 'echo ""',
 refreshFrequency: 10000,
 
 style: [
-	"left: 0%",
+	"left: 20%",
 	"bottom: 3%",
 
 	"width: 20%",
