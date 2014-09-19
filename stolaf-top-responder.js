@@ -28,6 +28,9 @@ style: [
 
 	"span:first-child",
 	"	font-weight: 300",
+	"	text-overflow: ellipsis",
+	"	overflow: hidden",
+	"	white-space: nowrap",
 
 	"span:last-child",
 	"	text-align: right",
