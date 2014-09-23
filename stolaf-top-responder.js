@@ -31,6 +31,7 @@ style: [
 	"	text-overflow: ellipsis",
 	"	overflow: hidden",
 	"	white-space: nowrap",
+	"	padding-right: 0.5em",
 
 	"span:last-child",
 	"	text-align: right",
