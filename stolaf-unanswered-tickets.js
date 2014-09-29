@@ -33,8 +33,11 @@ render: function(output) {
 			'<div class="details"></div>',
 			'<h1 class="title">Unanswered Tickets</h1>',
 		'</div>',
+		'<audio class="noise" src="inceptionbutton.mp3"></audio>',
 	].join('')
 },
+
+priorTicketCount: undefined,
 
 update: function(output, domEl) {
 	if (!window.sto)                  return '';
@@ -49,7 +52,13 @@ update: function(output, domEl) {
 
 	var wrapper = domEl.querySelector('.wrapper');
 	var details = domEl.querySelector('.details');
+	var noise = domEl.querySelector('.noise');
 
+	if (ticketCount > priorTicketCount) {
+		noise.play();
+	}
+
+	priorTicketCount = ticketCount;
 	details.textContent = ticketCount;
 
 	var fontWeight = [
@@ -70,8 +79,10 @@ update: function(output, domEl) {
 		}
 	})
 
-	if (ticketCount === 0)
+	if (ticketCount === 0) {
 		wrapper.className = 'wrapper green';
-	else
+	}
+	else {
 		wrapper.className = 'wrapper red';
+	}
 },
