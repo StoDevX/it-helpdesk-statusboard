@@ -35,8 +35,11 @@ render: function(output) {
 			'<div class="details"></div>',
 			'<h1 class="title">Open<br>Tickets</h1>',
 		'</div>',
+		'<audio class="noise" src="inceptionbutton.mp3"></audio>',
 	].join('')
 },
+
+priorTicketCount: 0,
 
 update: function(output, domEl) {
 	if (!window.sto)                  return '';
@@ -49,6 +52,13 @@ update: function(output, domEl) {
 
 	var wrapper = domEl.querySelector('.wrapper');
 	var details = domEl.querySelector('.details');
+	var noise = domEl.querySelector('.noise');
+
+	if (ticketCount > this.priorTicketCount) {
+		noise.play();
+	}
+
+	this.priorTicketCount = ticketCount;
 
 	details.textContent = ticketCount;
 
