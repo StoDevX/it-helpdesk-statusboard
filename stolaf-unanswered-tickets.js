@@ -37,7 +37,7 @@ render: function(output) {
 	].join('')
 },
 
-priorTicketCount: undefined,
+priorTicketCount: 0,
 
 update: function(output, domEl) {
 	if (!window.sto)                  return '';
@@ -54,11 +54,11 @@ update: function(output, domEl) {
 	var details = domEl.querySelector('.details');
 	var noise = domEl.querySelector('.noise');
 
-	if (ticketCount > priorTicketCount) {
+	if (ticketCount > this.priorTicketCount) {
 		noise.play();
 	}
 
-	priorTicketCount = ticketCount;
+	this.priorTicketCount = ticketCount;
 	details.textContent = ticketCount;
 
 	var fontWeight = [
