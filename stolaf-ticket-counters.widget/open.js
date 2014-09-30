@@ -39,7 +39,7 @@ render: function(output) {
 	].join('')
 },
 
-priorTicketCount: 0,
+priorTicketId: 0,
 
 update: function(output, domEl) {
 	if (!window.sto)                  return '';
@@ -54,12 +54,20 @@ update: function(output, domEl) {
 	var details = domEl.querySelector('.details');
 	var noise = domEl.querySelector('.noise');
 
-	if (ticketCount > this.priorTicketCount) {
+	var newestTicketId = 0;
+	if (openTickets.length) {
+		newestTicketId = _.chain(openTickets)
+			.sortBy('id')
+			.last()
+			.value()
+			.id;
+	}
+
+	if (newestTicketId > this.priorTicketId) {
 		noise.play();
 	}
 
-	this.priorTicketCount = ticketCount;
-
+	this.priorTicketId = newestTicketId;
 	details.textContent = ticketCount;
 
 	if (ticketCount > 0)
