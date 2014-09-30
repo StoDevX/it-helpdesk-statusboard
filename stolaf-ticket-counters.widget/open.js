@@ -36,10 +36,13 @@ render: function(output) {
 			'<h1 class="title">Open<br>Tickets</h1>',
 		'</div>',
 		'<audio class="noise" src="inceptionbutton.mp3"></audio>',
+		'<audio class="happy" src="happy.out.m4a"></audio>',
 	].join('')
 },
 
 priorTicketId: 0,
+happyHasPlayed: 0,
+
 
 update: function(output, domEl) {
 	if (!window.sto)                  return '';
@@ -53,6 +56,7 @@ update: function(output, domEl) {
 	var wrapper = domEl.querySelector('.wrapper');
 	var details = domEl.querySelector('.details');
 	var noise = domEl.querySelector('.noise');
+	var happy = domEl.querySelector('.happy');
 
 	var newestTicketId = 0;
 	if (openTickets.length) {
@@ -65,6 +69,13 @@ update: function(output, domEl) {
 
 	if (newestTicketId > this.priorTicketId) {
 		noise.play();
+	}
+
+	if (openTickets.length === 0 && !this.happyHasPlayed) {
+		happy.play();
+		this.happyHasPlayed = true;
+	} else {
+		this.happyHasPlayed = false;
 	}
 
 	this.priorTicketId = newestTicketId;
