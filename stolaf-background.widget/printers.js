@@ -1,5 +1,5 @@
 // command: 'cat ./stolaf-base/printer-data-url.txt | xargs curl --silent',
-command: 'cat ./stolaf-base/printerstatus.csv',
+command: 'bash ./stolaf-base/snmpGet.sh',
 
 refreshFrequency: 60000,
 lastUpdateTime: undefined,
@@ -27,7 +27,7 @@ update: function(output, domEl) {
 	var csv = window.sto.libs.csv;
 	var moment = window.sto.libs.moment;
 
-	window.sto.data.printers = csv.parse(output, {header: true, cast: ['String', 'String', 'String']});;
+	window.sto.data.printers = csv.parse(output, {header: true, cast: ['String', 'String', 'String', 'String']});;
 
 	this.lastUpdateTime = new Date();
 	domEl.querySelector('.last-updated').textContent = moment(this.lastUpdateTime).calendar();
