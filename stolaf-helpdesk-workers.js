@@ -54,6 +54,47 @@ findLocation: function(title) {
 	return spot ? spot[1] : null;
 },
 
+xhrSuccess: function(req) {
+	return (req.status === 200 || (req.status === 0 && req.responseText));
+},
+
+read: function(url) {
+	return new Promise(function(resolve, reject) {
+		var request = new XMLHttpRequest();
+		function onload() {
+			if (xhrSuccess(request)) {
+				resolve(request.responseText);
+			} else {
+				onerror();
+			}
+		}
+		function onerror() {
+			reject("Can't XHR " + JSON.stringify(url));
+		}
+		try {
+			request.open("GET", url, true);
+			request.onreadystatechange = function () {
+				if (request.readyState === 4) {
+					onload();
+				}
+			};
+			request.onload = request.load = onload;
+			request.onerror = request.error = onerror;
+		} catch (exception) {
+			reject(exception.message, exception);
+		}
+		request.send();
+	});
+},
+
+getJson: function(url) {
+	return read(url)
+		.then(JSON.parse)
+		.catch(function(err) {
+			console.log('JSON parsing failed', err);
+		});
+},
+
 update: function(output, domEl) {
 	if (!window.sto)              return '';
 	if (!window.sto.libs.lodash)  return '';
@@ -63,62 +104,52 @@ update: function(output, domEl) {
 
 	var _ = window.sto.libs.lodash;
 	var moment = window.sto.libs.moment;
-	var mapDOM = window.sto.libs.mapDOM;
+	var now = moment(new Date());
 
-	var findTimes = this.findTimes;
+	var apiHost = 'https://www.googleapis.com/calendar/v3/calendars/';
+	var calendarId = 'stolaf.edu_rl14mc72a4c2gjbot4hc6oqroc%40group.calendar.google.com';
+	var api = '/events';
+	var queryParams = {
+		timeMax: now.format('YYYY-MM-DD[T23:59:59]Z'), // the end of today
+		timeMin: now.format('YYYY-MM-DD[T00:00:00]Z'), // the beginning of today
+		key: 'AIzaSyCaofH_C8xK7pddaRYfZePFjvvuYs1Fi-U'
+	};
+
+	var data = getJson(apiHost + calendarId + api + makeParams(queryParams));
+
 	var whoIsWorking = this.whoIsWorking;
 	var findLocation = this.findLocation;
 
-	var data = window.sto.data.helpers;
 
 	//
 	// Organize the data
 	//
-	var parser = new DOMParser();
-	var xmlDoc = parser.parseFromString(data, "text/xml");
-	var rawShifts = xmlDoc.querySelectorAll('entry');
-
-	var allShifts = _.map(rawShifts, function(shift) {
-		var jsonEvent = mapDOM(shift);
-		var keys = ['summary', 'title'];
-
-		var props = {};
-		_.each(jsonEvent.content, function(obj) {
-			if (_.contains(keys, obj.type)) {
-				props[obj.type] = obj.content.length === 1 ? obj.content[0] : obj.content;
-			}
-		})
-
-		props.summary = props.summary.split('&nbsp;')[0];
-
+	var allShifts = _.map(data, function(shift) {
 		var result = {};
-		var times = findTimes(props.title);
-		result.date = props.summary.match(/(\w{3,4} \d\d, \d{4})/)[0];
-		result.startTime = times[1];
-		result.endTime = times[2];
-		result.person = whoIsWorking(props.title);
-		result.location = findLocation(props.title);
-		result.startDateTime = moment(result.date + ' - ' + result.startTime, "MMM D YYYY - hh:mma");
+		result.startTime = moment(shift.start.dateTime);
+		result.endTime = moment(shift.end.dateTime);
+		result.person = whoIsWorking(shift.summary);
+		result.location = findLocation(shift.summary);
 
 		return result;
-	})
+	});
 
-	var now = moment(new Date());
 	// window.now = now;
 	var today = now.format('MMM D, YYYY');
-	var grouped = _.groupBy(allShifts, 'date')
+	var grouped = _.groupBy(allShifts, 'date');
 	var shifts = _.chain(grouped[today])
 		.reject({'location': 'Library'})
-		.sortBy('startDateTime')
+		.sortBy('startTime')
 		.reject(function(shift) {
 			// console.log(shift, now.isAfter(shift.startDateTime));
-			return now.isAfter(shift.startDateTime)
+			return now.isAfter(shift.startTime);
 		})
 		.groupBy('startDateTime')
 		.toArray()
-		.value()
+		.value();
 
 	// console.log(grouped, shifts);
+
 
 	//
 	// Construct the widget
@@ -144,4 +175,3 @@ update: function(output, domEl) {
 		details.innerHTML = "No more shifts scheduled.<br>(Ignore me, I'm silly.)"
 	}
 }
-
