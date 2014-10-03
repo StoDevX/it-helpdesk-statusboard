@@ -1,0 +1,72 @@
+Printer,Toner,Status,Error
+mfc-bc110,45,idle(3),No Error
+mfc-bc147,80,idle(3),Paper Low
+mfc-casualreading,36,idle(3),No Error
+mfc-crossroads,94,printing(4),Paper Low
+mfc-ellingson,77,unknown(2),Tray 2 Empty
+mfc-fireside,56,printing(4),Tray 2 Empty
+mfc-hh407,42,idle(3),No Error
+mfc-hillkitt,6,unknown(2),Tray 2 Empty
+mfc-hoyme,35,idle(3),No Error
+mfc-kierk,8,idle(3),No Error
+mfc-kildahl,98,other(1),Unknown code 
+mfc-larson,1,printing(4),Tray 2 Empty
+mfc-mellby,2,unknown(2),Unknown code 
+mfc-mohn,92,other(1),Unknown code 
+mfc-om245,45,idle(3),No Error
+mfc-pastor,78,idle(3),Paper Low
+mfc-rand,73,idle(3),Paper Low
+mfc-rml-1st,25,idle(3),No Error
+mfc-rml115,76,idle(3),No Error
+mfc-rml330,51,idle(3),No Error
+mfc-rml386,94,idle(3),Paper Low
+mfc-rml433,12,idle(3),No Error
+mfc-rml560,3,idle(3),No Error
+mfc-rmlref,32,idle(3),No Error
+mfc-rns-2nd,50,other(1),Unknown code 
+mfc-rns258,11,idle(3),No Error
+mfc-rns358,43,idle(3),No Error
+mfc-sac,38,idle(3),No Error
+mfc-scilib,4,idle(3),No Error
+mfc-thorson,66,idle(3),Paper Low
+mfc-toh101,91,idle(3),No Error
+mfc-toh3,67,idle(3),No Error
+mfc-toh3-east,1,idle(3),No Error
+mfc-toh3-west,15,idle(3),No Error
+mfc-ytt118,45,idle(3),Paper Low
+Printer,Toner,Status,Error#
+mfc-bc110,#45,#idle(3),#No Error##
+mfc-bc147,#80,#idle(3),#Paper Low##
+mfc-casualreading,#36,#idle(3),#No Error##
+mfc-crossroads,#94,#printing(4),#Paper Low##
+mfc-ellingson,#77,#unknown(2),#Tray 2 Empty##
+mfc-fireside,#56,#printing(4),#Tray 2 Empty##
+mfc-hh407,#42,#printing(4),#Paper Low##
+mfc-hillkitt,#6,#unknown(2),#Tray 2 Empty##
+mfc-hoyme,#35,#idle(3),#No Error##
+mfc-kierk,#8,#idle(3),#No Error##
+mfc-kildahl,#98,#other(1),#Tray 2 Empty##
+mfc-larson,#1,#printing(4),#Tray 2 Empty##
+mfc-mellby,#2,#unknown(2),#Tray 2 Empty##
+mfc-mohn,#92,#other(1),#Tray 2 Empty##
+mfc-om245,#45,#idle(3),#No Error##
+mfc-pastor,#78,#idle(3),#Paper Low##
+mfc-rand,#73,#idle(3),#Paper Low##
+mfc-rml-1st,#25,#idle(3),#No Error##
+mfc-rml115,#76,#idle(3),#No Error##
+mfc-rml330,#51,#idle(3),#No Error##
+mfc-rml386,#94,#idle(3),#Paper Low##
+mfc-rml433,#12,#idle(3),#No Error##
+mfc-rml560,#3,#idle(3),#No Error##
+mfc-rmlref,#32,#idle(3),#No Error##
+mfc-rns-2nd,#50,#other(1),#Tray 2 Empty##
+mfc-rns258,#11,#idle(3),#No Error##
+mfc-rns358,#43,#idle(3),#No Error##
+mfc-sac,#38,#idle(3),#No Error##
+mfc-scilib,#4,#idle(3),#No Error##
+mfc-thorson,#66,#idle(3),#Paper Low##
+mfc-toh101,#91,#idle(3),#No Error##
+mfc-toh3,#67,#idle(3),#No Error##
+mfc-toh3-east,#1,#idle(3),#No Error##
+mfc-toh3-west,#15,#idle(3),#No Error##
+mfc-ytt118,#45,#idle(3),#Paper Low##

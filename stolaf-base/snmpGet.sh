@@ -22,44 +22,40 @@ snmpStatus () {
 
 snmpStatusCode () {
 	code=`snmpwalk -c public -v 1 $1.printer.stolaf.edu 1.3.6.1.2.1.25.3.5.1.2 | awk 'NF>1{print $NF}'`
-	case "$code" in
-		00) statusCode="No Error";;
-		0) statusCode="Low Paper";;
-		1) statusCode="No Paper";;
-		2) statusCode="Low Toner";;
-		3) statusCode="No Toner";;
-		4) statusCode="Door Open";;
-		5) statusCode="Printer Jammed";;
-		6) statusCode="Printer Offline";;
-		7) statusCode="Service Requested";;
-		8) statusCode="Input Tray Missing";;
-		9) statusCode="Output Tray Missing";;
-		10) statusCode="Marker Supply Missing";;
-		11) statusCode="Output Tray Nearly Full";;
-		12) statusCode="Output Tray Full";;
-		13) statusCode="Input Tray Empty";;
-		14) statusCode="Preventative Maintenance Overdue";;
-		#TOSHIBA printers have compound status codes based on paper_empty, paper_nearly_empty, paper_available. We don't care. All of these will print as "paper_empty" for our purposes.
-		\"@\") statusCode="Tray 1 Empty";;
-		\"?\") statusCode="Tray 2 Empty";;
-		80) statusCode="Paper Low";;
-		*) statusCode="Unknown code $statusCode";;
-	esac
-	echo $statusCode
+case "$code" in
+00) statusCode="No Error";;
+0) statusCode="Low Paper";;
+1) statusCode="No Paper";;
+2) statusCode="Low Toner";;
+3) statusCode="No Toner";;
+4) statusCode="Door Open";;
+5) statusCode="Printer Jammed";;
+6) statusCode="Printer Offline";;
+7) statusCode="Service Requested";;
+8) statusCode="Input Tray Missing";;
+9) statusCode="Output Tray Missing";;
+10) statusCode="Marker Supply Missing";;
+11) statusCode="Output Tray Nearly Full";;
+12) statusCode="Output Tray Full";;
+13) statusCode="Input Tray Empty";;
+14) statusCode="Preventative Maintenance Overdue";;
+#TOSHIBA printers have compound status codes based on paper_empty, paper_nearly_empty, paper_available. We don't care. All of these will print as "paper_empty" for our purposes.
+\"@\") statusCode="Tray 1 Empty";;
+\"?\") statusCode="Tray 2 Empty";;
+80) statusCode="Paper Low";;
+*) statusCode="Unknown code $statusCode";;
+esac
+echo $statusCode
 }
 
-rm output.csv
-
-echo "Printer,Toner,Status,Error" >> output.csv
+echo "Printer,Toner,Status,Error"
 for printerName in $printerList; do
-    echo -n "$printerName," >> output.csv
-    echo -n `snmpMFCToner $printerName`, >> output.csv
-    echo -n `snmpStatus $printerName`, >> output.csv
-    echo -n `snmpStatusCode $printerName` >> output.csv
-    echo "" >> output.csv
+    echo -n "$printerName,"
+    echo -n `snmpMFCToner $printerName`,
+    echo -n `snmpStatus $printerName`,
+    echo -n `snmpStatusCode $printerName`
+    echo ""
 done
-
-cat output.csv
 
 #Set separator back to original
 IFS=$OIFS

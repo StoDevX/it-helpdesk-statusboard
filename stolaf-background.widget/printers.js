@@ -1,7 +1,6 @@
-// command: 'cat ./stolaf-base/printer-data-url.txt | xargs curl --silent',
-command: 'bash ./stolaf-base/snmpGet.sh',
+command: 'bash stolaf-base/snmpGet.sh',
 
-refreshFrequency: 60000,
+refreshFrequency: 600000,
 lastUpdateTime: undefined,
 
 style: [
