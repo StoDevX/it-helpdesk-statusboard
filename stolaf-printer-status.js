@@ -54,7 +54,7 @@ update: function(output, domEl) {
 	var printersInErrorState = _.chain(printers)
 		.reject({'Error': "No Error"})
 		.filter(function(printer) {
-			return _.contains(printer['Printer'].toLowerCase(), 'mfc-')
+			return printer['Printer'] && _.contains(printer['Printer'].toLowerCase(), 'mfc-')
 		})
 		.groupBy('Error')
 		.value()
