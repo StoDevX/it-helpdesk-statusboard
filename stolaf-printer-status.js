@@ -53,6 +53,7 @@ update: function(output, domEl) {
 	var printers = window.sto.data.printers;
 	var printersInErrorState = _.chain(printers)
 		.reject({'Error': "No Error"})
+		.reject({'Error': "Paper Low"})
 		.filter(function(printer) {
 			return printer['Printer'] && _.contains(printer['Printer'].toLowerCase(), 'mfc-')
 		})
