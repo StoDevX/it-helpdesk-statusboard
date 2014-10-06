@@ -1,4 +1,4 @@
-command: 'bash stolaf-base/snmpGet.sh',
+command: '/bin/bash stolaf-base/snmpGet.sh',
 
 refreshFrequency: 600000,
 lastUpdateTime: undefined,
