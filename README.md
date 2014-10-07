@@ -6,7 +6,7 @@ stolaf-ubersicht-widgets
 ## Widgets so far:
 - Fresh Tickets, a list of the last 7 tickets to update.
 - Unanswered Tickets, a count of the tickets without any client-visible notes.
-- Next @Helpdesk, a display of the next shift's workers. (Currently disabled.)
+- ~~Next @Helpdesk, a display of the next shift's workers.~~ (Currently disabled.)
 - Top Responders, a list of the top responders to tickets over the last 50 open and closed, excluding the staff.
 - Ticket Priority, a count of tickets based on priority.
 - Ticket Counts, a group of five ticket counting widgets:
