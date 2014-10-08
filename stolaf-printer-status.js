@@ -52,12 +52,12 @@ update: function(output, domEl) {
 
 	var printers = window.sto.data.printers;
 	var printersInErrorState = _.chain(printers)
-		.reject({'DetectedErrorState': "No Error"})
-		.reject({'DetectedErrorState': "Ok"})
+		.reject({'Error': "No Error"})
+		.reject({'Error': "Paper Low"})
 		.filter(function(printer) {
-			return _.contains(printer['Name'].toLowerCase(), 'mfc-')
+			return printer['Printer'] && _.contains(printer['Printer'].toLowerCase(), 'mfc-')
 		})
-		.groupBy('DetectedErrorState')
+		.groupBy('Error')
 		.value()
 
 	var details = domEl.querySelector('.details');
@@ -81,7 +81,7 @@ update: function(output, domEl) {
 		printerList.className = 'inner-list';
 		_.each(printers, function(printer) {
 			var printerAsElement = document.createElement('li');
-			printerAsElement.textContent = printer['Name'];
+			printerAsElement.textContent = printer['Printer'];
 			printerList.appendChild(printerAsElement);
 		})
 
