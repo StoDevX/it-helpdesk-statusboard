@@ -20,13 +20,21 @@ style: [
 	"	-webkit-flex-flow: column nowrap",
 	"	-webkit-justify-content: space-between",
 
-	".ticket-title",
+	".detail-row, .ticket-title",
 	"	text-overflow: ellipsis",
 	"	overflow: hidden",
 	"	white-space: nowrap",
+
+	".detail-row",
 	"	margin: 0",
 	"	font-size: 1.2em",
 	"	font-weight: 500",
+
+	".ticket-title",
+	"	color: white",
+	"	font-size: 1em",
+	"	margin: 0.25em 0 0em 0",
+	"	font-weight: 400",
 
 	".item",
 	"	margin-bottom: 0.85em",
@@ -39,10 +47,10 @@ style: [
 	".ticket-number::after",
 	"	content: ' — '",
 
-	".info-row, .detail-row",
+	".info-row, .title-row",
 	"	line-height: 1",
 
-	".info-row, .detail-row, .type-row",
+	".info-row, .ticket-title, .type-row",
 	"	color: rgba(255, 255, 255, 0.5)",
 	"	font-size: 0.85em",
 	"	font-weight: 300",
