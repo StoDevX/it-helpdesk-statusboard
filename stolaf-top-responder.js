@@ -10,21 +10,21 @@ style: [
 
 	".details",
 	"	font-size: 1.5em",
-	"	line-height: 1",
+	"	line-height: 1.2",
 	"	padding-top: 1.5rem",
 	"	padding-left: 1.5rem",
 	"	padding-right: 1.5rem",
 
 	"ul",
 	"	height: 100vh",
-	"	display: -webkit-flex",
-	"	-webkit-flex-flow: column nowrap",
-	"	-webkit-justify-content: space-between",
+	"	display: flex",
+	"	flex-flow: column nowrap",
+	"	justify-content: space-between",
 
 	"li",
-	"	display: -webkit-flex",
-	"	-webkit-flex-flow: row nowrap",
-	"	-webkit-justify-content: space-between",
+	"	display: flex",
+	"	flex-flow: row nowrap",
+	"	justify-content: space-between",
 
 	"span:first-child",
 	"	font-weight: 300",
