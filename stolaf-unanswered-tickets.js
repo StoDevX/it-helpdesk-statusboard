@@ -47,7 +47,7 @@ update: function(output, domEl) {
 	var unansweredTickets = _.filter(openTickets, {'notes': []});
 
 	var clientResponseTickets = _.chain(openTickets)
-		.filter('notes')
+		.reject({'notes': []})
 		.reject(function(ticket) {
 			return ticket.notes[0].isTechNote;
 		})
