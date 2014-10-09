@@ -8,6 +8,8 @@ style: [
 	"height: 97vh",
 	"width: 20%",
 
+	"color: rgba(255, 255, 255, 0.5)",
+
 	".details",
 	"	font-size: 1em",
 
@@ -16,14 +18,15 @@ style: [
 
 	"ul",
 	"	height: 100vh",
-	"	display: -webkit-flex",
-	"	-webkit-flex-flow: column nowrap",
-	"	-webkit-justify-content: space-between",
+	"	display: flex",
+	"	flex-flow: column nowrap",
+	"	justify-content: space-between",
 
 	".detail-row, .ticket-title",
 	"	text-overflow: ellipsis",
 	"	overflow: hidden",
 	"	white-space: nowrap",
+	"	color: white",
 
 	".detail-row",
 	"	margin: 0",
@@ -31,10 +34,10 @@ style: [
 	"	font-weight: 500",
 
 	".ticket-title",
-	"	color: white",
-	"	font-size: 1em",
 	"	margin: 0.25em 0 0em 0",
+	"	font-size: 1em",
 	"	font-weight: 400",
+	"	line-height: 1.2",
 
 	".item",
 	"	margin-bottom: 0.85em",
@@ -47,11 +50,10 @@ style: [
 	".ticket-number::after",
 	"	content: ' — '",
 
-	".info-row, .title-row",
+	".info-row",
 	"	line-height: 1",
 
 	".info-row, .ticket-title, .type-row",
-	"	color: rgba(255, 255, 255, 0.5)",
 	"	font-size: 0.85em",
 	"	font-weight: 300",
 
@@ -62,6 +64,11 @@ style: [
 
 	".client-name::after",
 	"	content: ' — '",
+
+	".link-wrapper",
+	"	color: inherit",
+	"	text-decoration: none",
+	"	cursor: pointer",
 ].join('\n'),
 
 render: function(output) {
@@ -101,6 +108,10 @@ update: function(output, domEl) {
 	contentList.className = 'list';
 
 	_.each(sortedTickets, function(ticket) {
+		var link = document.createElement('a');
+		link.className = 'link-wrapper';
+		link.href = ticket.bookmarkableLink;
+
 		var item = document.createElement('li');
 		item.className = 'item';
 
@@ -166,7 +177,8 @@ update: function(output, domEl) {
 
 		/////
 
-		contentList.appendChild(item);
+		link.appendChild(item);
+		contentList.appendChild(link);
 	})
 
 	details.innerHTML = contentList.outerHTML
