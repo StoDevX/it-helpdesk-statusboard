@@ -44,8 +44,16 @@ update: function(output, domEl) {
 	var _ = window.sto.libs.lodash;
 	var openTickets = window.sto.data.openTickets;
 
-	var tickets = _.filter(openTickets, {'notes': []});
-	var ticketCount = tickets.length;
+	var unansweredTickets = _.filter(openTickets, {'notes': []});
+
+	var clientResponseTickets = _.chain(openTickets)
+		.filter('notes')
+		.reject(function(ticket) {
+			return ticket.notes[0].isTechNote;
+		})
+		.value();
+
+	var ticketCount = unansweredTickets.length + clientResponseTickets.length;
 
 	var wrapper = domEl.querySelector('.wrapper');
 	var details = domEl.querySelector('.details');
