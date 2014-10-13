@@ -82,3 +82,13 @@ body {
 .red    { color: rgb(255,  48,   0) }
 .silver { color: rgb(174, 183, 188) }
 .yellow { color: rgb(255, 198,   0) }
+
+.bg-aqua   { background-color: rgb(  0, 159, 153) !important }
+.bg-blue   { background-color: rgb(  0, 108, 230) !important }
+.bg-green  { background-color: rgb(  0, 186,   0) !important }
+.bg-orange { background-color: rgb(252, 107,   0) !important }
+.bg-pink   { background-color: rgb(252,  88, 181) !important }
+.bg-purple { background-color: rgb(155,   0, 194) !important }
+.bg-red    { background-color: rgb(255,  48,   0) !important }
+.bg-silver { background-color: rgb(174, 183, 188) !important }
+.bg-yellow { background-color: rgb(255, 198,   0) !important }
