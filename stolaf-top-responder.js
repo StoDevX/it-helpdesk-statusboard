@@ -100,9 +100,6 @@ update: function(output, domEl) {
 		.first(9)
 		.value();
 
-	var restOfResponders = _.chain(responders)
-
-
 	var contentTable = document.createElement('ul');
 	contentTable.classList.add('colorful');
 
