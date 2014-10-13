@@ -6,6 +6,7 @@ from __future__ import print_function
 ## Ported to Python by Hawken Rives on 10/12/14
 
 from subprocess import check_output as output
+awk = ' | awk \'NF>1{print $NF}\''
 
 printerList = [
 	'mfc-bc110', 'mfc-bc147', 'mfc-casualreading',
@@ -21,32 +22,38 @@ printerList = [
 	'mfc-toh101', 'mfc-toh3', 'mfc-toh3-east',
 	'mfc-toh3-west', 'mfc-ytt118']
 
+printerBaseUrl = '.printer.stolaf.edu'
+printerList = [(printer, printer + printerBaseUrl) for printer in printerList]
+
 def snmpModel(printer):
-	model = output('snmpwalk -c public -v 1 ' + printer+'.printer.stolaf.edu 1.3.6.1.2.1.25.3.2.1.3.1', shell=True)
+	model = output('snmpwalk -c public -v 1 '+printer+' 1.3.6.1.2.1.25.3.2.1.3.1', shell=True)
 	return model.strip()
 
 
 def snmpMFCToner(printer):
-	toner_level = output('snmpwalk -c public -v 1 '+printer+'.printer.stolaf.edu 1.3.6.1.2.1.43.11.1.1.9.1.1 | awk \'NF>1{print $NF}\'', shell=True)
+	toner_level = output('snmpwalk -c public -v 1 '+printer+' 1.3.6.1.2.1.43.11.1.1.9.1.1' + awk, shell=True)
 	return toner_level.strip()
 
 
 def snmpStatus(printer):
-	printerStatus = output('snmpwalk -c public -v 1 '+printer+'.printer.stolaf.edu 1.3.6.1.2.1.25.3.5.1.1 | awk \'NF>1{print $NF}\'', shell=True)
+	printerStatus = output('snmpwalk -c public -v 1 '+printer+' 1.3.6.1.2.1.25.3.5.1.1' + awk, shell=True)
 	return printerStatus.strip()
 
 
 def snmpStatusCode(printer):
-	raw_code = output('snmpwalk -c public -v 1 '+printer+'.printer.stolaf.edu 1.3.6.1.2.1.25.3.5.1.2 | awk \'NF>1{print $NF}\'', shell=True)
+	raw_code = output('snmpwalk -c public -v 1 '+printer+' 1.3.6.1.2.1.25.3.5.1.2' + awk, shell=True)
 	
 	# Remove wrapping quotes, if present
 	code = raw_code.strip()
 	
-	if (code[0] == code[-1]) and code.startswith(("'", '"')):
+	if (code[0] == code[-1]) and code.startswith('"'):
 		code = code[1:-1]
 
-	if len(code) is 1 and ord(code) is 200:
-		code = '?'
+	if len(code) is 1:
+		if ord(code) is 200:
+			code = '?'
+		if ord(code) is 192:
+			code = '@'
 
 	codes = {
 		'00': 'No Error',
@@ -83,7 +90,7 @@ def snmpStatusCode(printer):
 	# Turn something like C0 into [67 32]
 	raw_code = ''
 	for ch in code:
-		raw_code += ord(ch) + ' '
+		raw_code += str(ord(ch)) + ' '
 	raw_code = raw_code.strip()
 	raw_code = '[' + raw_code + ']'
 
@@ -92,11 +99,11 @@ def snmpStatusCode(printer):
 
 def main():
 	print("Printer,Toner,Status,Error")
-	for printerName in printerList:
+	for printerName, printerUrl in printerList:
 		# model = snmpModel(printerName)
-		toner = snmpMFCToner(printerName)
-		status = snmpStatus(printerName)
-		code = snmpStatusCode(printerName)
+		toner = snmpMFCToner(printerUrl)
+		status = snmpStatus(printerUrl)
+		code = snmpStatusCode(printerUrl)
 		print(printerName+','+toner+','+status+','+code)
 
 if __name__ == '__main__':
