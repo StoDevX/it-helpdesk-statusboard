@@ -1,6 +1,6 @@
-command: '/bin/bash stolaf-base/snmpGet.sh',
+command: '/usr/bin/env python stolaf-base/snmpGet.py',
 
-refreshFrequency: 600000,
+refreshFrequency: 300000,
 lastUpdateTime: undefined,
 
 style: [
