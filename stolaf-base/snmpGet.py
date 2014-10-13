@@ -1,4 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
+
+from __future__ import print_function
 
 ## Created by Phinehas Bynum on 10/1/14.
 ## Ported to Python by Hawken Rives on 10/12/14
@@ -20,19 +22,31 @@ printerList = [
 	'mfc-toh3-west', 'mfc-ytt118']
 
 def snmpModel(printer):
-	return output('snmpwalk -c public -v 1 ' + printer+'.printer.stolaf.edu 1.3.6.1.2.1.25.3.2.1.3.1', shell=True)
+	model = output('snmpwalk -c public -v 1 ' + printer+'.printer.stolaf.edu 1.3.6.1.2.1.25.3.2.1.3.1', shell=True)
+	return model.strip()
 
 
 def snmpMFCToner(printer):
-	return output('snmpwalk -c public -v 1 '+printer+'.printer.stolaf.edu 1.3.6.1.2.1.43.11.1.1.9.1.1 | awk \'NF>1{print $NF}\'', shell=True)
+	toner_level = output('snmpwalk -c public -v 1 '+printer+'.printer.stolaf.edu 1.3.6.1.2.1.43.11.1.1.9.1.1 | awk \'NF>1{print $NF}\'', shell=True)
+	return toner_level.strip()
 
 
 def snmpStatus(printer):
-	return output('snmpwalk -c public -v 1 '+printer+'.printer.stolaf.edu 1.3.6.1.2.1.25.3.5.1.1 | awk \'NF>1{print $NF}\'', shell=True)
+	printerStatus = output('snmpwalk -c public -v 1 '+printer+'.printer.stolaf.edu 1.3.6.1.2.1.25.3.5.1.1 | awk \'NF>1{print $NF}\'', shell=True)
+	return printerStatus.strip()
 
 
 def snmpStatusCode(printer):
-	code = output('snmpwalk -c public -v 1 '+printer+'.printer.stolaf.edu 1.3.6.1.2.1.25.3.5.1.2 | awk \'NF>1{print $NF}\'', shell=True)
+	raw_code = output('snmpwalk -c public -v 1 '+printer+'.printer.stolaf.edu 1.3.6.1.2.1.25.3.5.1.2 | awk \'NF>1{print $NF}\'', shell=True)
+	
+	# Remove wrapping quotes, if present
+	code = raw_code.strip()
+	
+	if (code[0] == code[-1]) and code.startswith(("'", '"')):
+		code = code[1:-1]
+
+	if len(code) is 1 and ord(code) is 200:
+		code = '?'
 
 	codes = {
 		'00': 'No Error',
@@ -56,23 +70,34 @@ def snmpStatusCode(printer):
 		# We don't care. All of these will print as "paper_empty" for our purposes.
 		'@': "Tray 1 Empty",
 		'?': "Tray 2 Empty",
+		'H': "Drawer Open",
+		'C': "Drawer Open",
+		'C8': "Drawer Open",
+		'C0': "Tray 1 Empty",
 		'80': "Paper Low"
 	}
 
 	if code in codes:
 		return codes[code]
 
-	return 'Unknown Code ' + code
+	# Turn something like C0 into [67 32]
+	raw_code = ''
+	for ch in code:
+		raw_code += ord(ch) + ' '
+	raw_code = raw_code.strip()
+	raw_code = '[' + raw_code + ']'
+
+	return 'Unknown Code ' + code + ' (raw list: ' + raw_code + ')'
 
 
 def main():
-	print "Printer,Toner,Status,Error"
+	print("Printer,Toner,Status,Error")
 	for printerName in printerList:
 		# model = snmpModel(printerName)
 		toner = snmpMFCToner(printerName)
 		status = snmpStatus(printerName)
 		code = snmpStatusCode(printerName)
-		print '%s,%s,%s,%s' % (printerName, toner, status, code)
+		print(printerName+','+toner+','+status+','+code)
 
 if __name__ == '__main__':
 	main()
