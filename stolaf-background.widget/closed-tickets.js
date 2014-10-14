@@ -19,7 +19,7 @@ style: [
 	"border: 0",
 	"height: 3%",
 	"vertical-align: middle",
-	"color: rgba(255, 255, 255, 0.25)",
+	"color: rgba(255, 255, 255, 0.5)",
 	"font-weight: 300",
 ].join('\n'),
 

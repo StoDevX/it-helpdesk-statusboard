@@ -1,4 +1,7 @@
 .DS_Store
+<<<<<<< HEAD
 whentowork-calendar-url.txt
-
-stolaf-base/whentowork.credentials
+whd-api-key.txt
+=======
+*.credential
+>>>>>>> master
