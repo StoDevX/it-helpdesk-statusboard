@@ -1,6 +1,6 @@
-command: '/bin/bash stolaf-base/snmpGet.sh',
+command: '/usr/bin/env python stolaf-base/snmpGet.py',
 
-refreshFrequency: 600000,
+refreshFrequency: 300000,
 lastUpdateTime: undefined,
 
 style: [
@@ -11,7 +11,7 @@ style: [
 	"border: 0",
 	"height: 3%",
 	"vertical-align: middle",
-	"color: rgba(255, 255, 255, 0.5)",
+	"color: rgba(255, 255, 255, 0.25)",
 	"font-weight: 300",
 ].join('\n'),
 
