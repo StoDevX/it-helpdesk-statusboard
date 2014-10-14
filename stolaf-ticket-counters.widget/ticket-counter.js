@@ -1,11 +1,11 @@
 command: 'echo ""',
-refreshFrequency: 100000,
+refreshFrequency: 10000,
 
 style: [
 	"top: 0",
 	"left: 0",
 
-	"width: 30%",
+	"width: 25%",
 	"height: 50vh",
 
 	"border-right: 0",
