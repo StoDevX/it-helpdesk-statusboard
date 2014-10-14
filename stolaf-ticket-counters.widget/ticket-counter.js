@@ -32,7 +32,7 @@ style: [
 	".counters li",
 	"	display: flex",
 	"	flex-flow: row nowrap",
-	"	align-items: flex-end",
+	"	align-items: center",
 
 	".count",
 	"	flex-basis: 1.25em",
@@ -40,7 +40,7 @@ style: [
 
 	".count-group",
 	"	font-weight: 300",
-	"	font-size: 1em",
+	"	font-size: 0.85em",
 	"	display: inline-block",
 	"	margin: 0",
 	"	margin-left: 0.75em"
