@@ -1,3 +1,7 @@
 .DS_Store
+<<<<<<< HEAD
 whentowork-calendar-url.txt
 whd-api-key.txt
+=======
+*.credential
+>>>>>>> master

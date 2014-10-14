@@ -8,14 +8,8 @@ mapDOM: function(element, json) {
 
 	// If string convert to document Node
 	if (typeof element === "string") {
-		if (window.DOMParser) {
-			  parser = new DOMParser();
-			  docNode = parser.parseFromString(element,"text/xml");
-		} else { // Microsoft strikes again
-			  docNode = new ActiveXObject("Microsoft.XMLDOM");
-			  docNode.async = false;
-			  docNode.loadXML(element);
-		}
+		var parser = new DOMParser();
+		docNode = parser.parseFromString(element,"text/html");
 		element = docNode.firstChild;
 	}
 

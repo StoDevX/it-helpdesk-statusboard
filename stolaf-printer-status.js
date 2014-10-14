@@ -22,14 +22,16 @@ style: [
 	".heading",
 	"	font-weight: 200",
 	"	font-size: 1em",
-	"	margin: .25em 0 0 0",
+	"	margin: .5em 0 0 0",
+
+	".inner-list",
+	"	color: black",
 
 	".inner-list li",
 	"	display: inline-block",
-	"	padding-left: 0.25em",
-	"	padding-right: 0.25em",
-	"	background-color: rgba(255, 255, 255, 0.5)",
-	"	color: black",
+	"	padding-left: 0.35em",
+	"	padding-right: 0.35em",
+	"	background-color: rgba(255, 255, 255, 0.65)",
 	"	border-radius: 0.25em",
 	"	margin: 0.15em 0.15em",
 ].join('\n'),
@@ -50,7 +52,7 @@ update: function(output, domEl) {
 
 	var _ = window.sto.libs.lodash;
 
-	var printers = window.sto.data.printers;
+	var printers = _.cloneDeep(window.sto.data.printers);
 	var printersInErrorState = _.chain(printers)
 		.reject({'Error': "No Error"})
 		.reject({'Error': "Paper Low"})
@@ -58,6 +60,21 @@ update: function(output, domEl) {
 			return printer['Printer'] && _.contains(printer['Printer'].toLowerCase(), 'mfc-')
 		})
 		.groupBy('Error')
+		.value()
+
+	printersInErrorState['Low Toner (< 10%)'] = _.chain(printers)
+		.filter(function(printer) {
+			return printer['Toner'] < 10
+		})
+		.map(function(printer) {
+			printer['Printer'] = printer['Printer'] + ' (' + printer['Toner'] + '%)'
+			if (printer['Toner'] < 5)
+				printer['CSSClass'] = 'bg-yellow'
+			if (printer['Toner'] <= 1)
+				printer['CSSClass'] = 'bg-orange'
+			return printer
+		})
+		.sortBy('Toner')
 		.value()
 
 	var details = domEl.querySelector('.details');
@@ -81,6 +98,7 @@ update: function(output, domEl) {
 		printerList.className = 'inner-list';
 		_.each(printers, function(printer) {
 			var printerAsElement = document.createElement('li');
+			if (printer['CSSClass']) printerAsElement.className = printer['CSSClass']
 			printerAsElement.textContent = printer['Printer'];
 			printerList.appendChild(printerAsElement);
 		})
