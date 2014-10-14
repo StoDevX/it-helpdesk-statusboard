@@ -19,16 +19,6 @@ style: [
 	"	opacity: 0.75",
 	"	justify-content: flex-start",
 
-	".w100 { font-weight: 100 }",
-	".w200 { font-weight: 200 }",
-	".w300 { font-weight: 300 }",
-	".w400 { font-weight: 400 }",
-	".w500 { font-weight: 500 }",
-	".w600 { font-weight: 600 }",
-	".w700 { font-weight: 700 }",
-	".w800 { font-weight: 800 }",
-	".w900 { font-weight: 900 }",
-
 	".counters li",
 	"	display: flex",
 	"	flex-flow: row nowrap",

@@ -92,3 +92,13 @@ body {
 .bg-red    { background-color: rgb(255,  48,   0) !important }
 .bg-silver { background-color: rgb(174, 183, 188) !important }
 .bg-yellow { background-color: rgb(255, 198,   0) !important }
+
+.w100 { font-weight: 100 }
+.w200 { font-weight: 200 }
+.w300 { font-weight: 300 }
+.w400 { font-weight: 400 }
+.w500 { font-weight: 500 }
+.w600 { font-weight: 600 }
+.w700 { font-weight: 700 }
+.w800 { font-weight: 800 }
+.w900 { font-weight: 900 }
