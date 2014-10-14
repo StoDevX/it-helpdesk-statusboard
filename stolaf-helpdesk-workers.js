@@ -23,14 +23,19 @@ style: [
 	"	font-weight: 500",
 	"	font-size: 1.25em",
 	"	color: rgba(255, 255, 255, 0.75)",
+
+	".wrapper",
+	"	color: inherit",
+	"	text-decoration: none",
+	"	cursor: pointer",
 ].join('\n'),
 
 render: function(output) {
 	return [
-		'<div class="wrapper">',
+		'<a class="wrapper" href="https://whentowork.com/cgi-bin/w2w.dll/login">',
 			'<div class="details"></div>',
 			'<h1 class="title">Next Up @Helpdesk</h1>',
-		'</div>',
+		'</a>',
 	].join('');
 },
 
