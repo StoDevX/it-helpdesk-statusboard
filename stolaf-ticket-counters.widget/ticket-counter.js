@@ -123,12 +123,6 @@ makeStaffTicketsRow: function(openTickets) {
 	return document.createElement('li');
 },
 
-makeUnansweredTickets: function(openTickets) {
-	var _ = window.sto.libs.lodash;
-	var tickets = _.filter(openTickets, {'notes': []});
-	return this.makeResultElements('unanswered', 'Unanswered Tickets', tickets.length);
-},
-
 calculateWarningColor: function calculateWarningColor(ticketCount) {
 	if (ticketCount > 0) {
 		return ' yellow';
@@ -210,5 +204,4 @@ update: function(output, domEl) {
 	counters.appendChild(this.makeEquipmentTicketsRow(openTickets));
 	counters.appendChild(this.makeNetworkTicketsRow(openTickets));
 	counters.appendChild(this.makeStaffTicketsRow(openTickets));
-	counters.appendChild(this.makeUnansweredTickets(openTickets));
 },
