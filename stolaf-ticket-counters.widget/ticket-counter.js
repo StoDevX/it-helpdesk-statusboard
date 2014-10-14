@@ -16,7 +16,8 @@ style: [
 	".details",
 	"	font-size: 2em",
 	"	font-weight: 100",
-	"	opacity: 0.5",
+	"	opacity: 0.75",
+	"	justify-content: flex-start",
 
 	".w100 { font-weight: 100 }",
 	".w200 { font-weight: 200 }",
@@ -28,20 +29,30 @@ style: [
 	".w800 { font-weight: 800 }",
 	".w900 { font-weight: 900 }",
 
+	".counters li",
+	"	display: flex",
+	"	flex-flow: row nowrap",
+	"	align-items: flex-end",
+
+	".count",
+	"	flex-basis: 1.25em",
+	"	text-align: right",
+
 	".count-group",
 	"	font-weight: 300",
 	"	font-size: 1em",
 	"	display: inline-block",
 	"	margin: 0",
-	"	margin-left: 0.25em"
+	"	margin-left: 0.75em"
 ].join('\n'),
 
 render: function(output) {
 	return [
 		'<div class="wrapper">',
-		'	<div class="details">',
-		'		<ul class="counters"></ul>',
-		'	</div>',
+			'<div class="details">',
+				'<ul class="counters"></ul>',
+			'</div>',
+			'<h1 class="title">Ticket Counters</h1>',
 		'</div>',
 		'<audio class="noise" src="inceptionbutton.mp3"></audio>',
 		'<audio class="happy" src="happy.out.m4a"></audio>',
@@ -124,7 +135,7 @@ makeStaffTicketsRow: function(openTickets) {
 },
 
 calculateWarningColor: function calculateWarningColor(ticketCount) {
-	if (ticketCount > 0) {
+	if (ticketCount > 5) {
 		return ' yellow';
 	}
 	else if (ticketCount === 0) {
