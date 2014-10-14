@@ -43,7 +43,10 @@ style: [
 	"	font-size: 0.85em",
 	"	display: inline-block",
 	"	margin: 0",
-	"	margin-left: 0.75em"
+	"	margin-left: 0.75em",
+	"	text-overflow: ellipsis",
+	"	overflow: hidden",
+	"	white-space: nowrap",
 ].join('\n'),
 
 render: function(output) {
