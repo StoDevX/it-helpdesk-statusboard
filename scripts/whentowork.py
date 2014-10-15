@@ -16,7 +16,7 @@ def get_sid_from_homepage_link(homepage_link):
 
 
 def main():
-	if not data_helpers.needs_reload('data/whentowork.json', if_minutes_since_last_load=60):
+	if not data_helpers.needs_reload('data/whentowork.json', hours=1):
 		return ""
 
 
