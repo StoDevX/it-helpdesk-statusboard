@@ -1,8 +1,6 @@
 command: 'echo ""',
 refreshFrequency: 10000,
 
-printerCount: 8,
-
 style: [
 	"left: 20vw",
 	"bottom: 3vh",
@@ -53,7 +51,7 @@ update: function(output, domEl) {
 	var _ = window.sto.libs.lodash;
 
 	var printers = _.cloneDeep(window.sto.data.printers);
-	var printersInErrorState = _.chain(printers)
+	var printerErrorStates = _.chain(printers)
 		.reject({'error': "No Error"})
 		.reject({'error': "Paper Low"})
 		.filter(function(printer) {
@@ -62,7 +60,7 @@ update: function(output, domEl) {
 		.groupBy('error')
 		.value();
 
-	printersInErrorState['Low Toner (< 10%)'] = _.chain(printers)
+	printerErrorStates['Low Toner (< 10%)'] = _.chain(printers)
 		.filter(function(printer) {
 			return printer.toner < 10
 		})
@@ -82,9 +80,9 @@ update: function(output, domEl) {
 	var contentList = document.createElement('ul');
 	contentList.className = 'list';
 
-	var printerCount = this.printerCount;
-	_.each(printersInErrorState, function(printers, key) {
-		printers = _.first(printers, printerCount);
+	var printerCount = 8;
+	_.each(printerErrorStates, function(printers, key) {
+		var printerlist = _.first(printers, printerCount);
 
 		var group = document.createElement('li');
 		group.className = 'group';
@@ -96,7 +94,7 @@ update: function(output, domEl) {
 
 		var printerList = document.createElement('ul');
 		printerList.className = 'inner-list';
-		_.each(printers, function(printer) {
+		_.each(printerlist, function(printer) {
 			var printerAsElement = document.createElement('li');
 			if (printer.className) printerAsElement.className = printer.className
 			printerAsElement.textContent = printer.name;
