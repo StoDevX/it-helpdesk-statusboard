@@ -4,7 +4,7 @@
 ## Ported to Python by Hawken Rives on 10/12/14
 
 from __future__ import print_function
-from subprocess import check_output as output
+from subprocess import check_output
 awk = '| awk \'NF>1{print $NF}\''
 
 printerNames = [
@@ -25,22 +25,22 @@ printerBaseUrl = '.printer.stolaf.edu'
 printerList = [(printer, printer + printerBaseUrl) for printer in printerNames]
 
 def snmpModel(printer_url):
-	model = output('snmpwalk -c public -v 1 %s 1.3.6.1.2.1.25.3.2.1.3.1' % (printer_url), shell=True)
+	model = check_output('snmpwalk -c public -v 1 %s 1.3.6.1.2.1.25.3.2.1.3.1' % (printer_url), shell=True)
 	return model.strip()
 
 
 def snmpMFCToner(printer_url):
-	toner_level = output('snmpwalk -c public -v 1 %s 1.3.6.1.2.1.43.11.1.1.9.1.1 %s' % (printer_url, awk), shell=True)
+	toner_level = check_output('snmpwalk -c public -v 1 %s 1.3.6.1.2.1.43.11.1.1.9.1.1 %s' % (printer_url, awk), shell=True)
 	return toner_level.strip()
 
 
 def snmpStatus(printer_url):
-	printerStatus = output('snmpwalk -c public -v 1 %s 1.3.6.1.2.1.25.3.5.1.1 %s' % (printer_url, awk), shell=True)
+	printerStatus = check_output('snmpwalk -c public -v 1 %s 1.3.6.1.2.1.25.3.5.1.1 %s' % (printer_url, awk), shell=True)
 	return printerStatus.strip()
 
 
 def snmpStatusCode(printer_url):
-	raw_code = output('snmpwalk -c public -v 1 %s 1.3.6.1.2.1.25.3.5.1.2 %s' % (printer_url, awk), shell=True)
+	raw_code = check_output('snmpwalk -c public -v 1 %s 1.3.6.1.2.1.25.3.5.1.2 %s' % (printer_url, awk), shell=True)
 
 	# Remove wrapping quotes, if present
 	code = raw_code.strip()
