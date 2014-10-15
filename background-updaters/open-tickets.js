@@ -1,12 +1,4 @@
-command: [
-	'curl --silent ',
-		'"https://help.stolaf.edu/helpdesk',
-		'/WebObjects/Helpdesk.woa/ra/Tickets?',
-		'style=details&',
-		'qualifier=(statustype.statusTypeName%3D%27Open%27)&',
-		'limit=50&',
-		'apiKey=dYqqjOjwkOd2k411ytv8G6rADIgpCbWZ59WouoEc"',
-].join(''),
+command: '/usr/bin/env python scripts/getTickets.py open 1&2> /dev/null | cat data/open-tickets.json',
 
 refreshFrequency: 60000,
 lastUpdateTime: undefined,
