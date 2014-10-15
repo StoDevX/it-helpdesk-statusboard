@@ -67,6 +67,6 @@ update: function(output, domEl) {
 
 	window.sto.data.shifts = shifts || [];
 
-	this.lastUpdateTime = new Date();
+	this.lastUpdateTime = moment(data.lastUpdated);
 	domEl.querySelector('.last-updated').textContent = moment(this.lastUpdateTime).calendar();
 },
