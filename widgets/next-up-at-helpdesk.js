@@ -57,7 +57,12 @@ update: function(output, domEl) {
 		return "";
 	}
 
-	var helpdeskShifts = _.reject(shifts, {'Position': 'Library'});
+	var onlyHelpdeskShifts = _.reject(shifts, {'Position': 'Library'});
+	var helpdeskShifts = _.chain(onlyHelpdeskShifts)
+		.groupBy('startTime')
+		.toArray()
+		.first()
+		.value();
 
 	var time = document.createElement('time');
 	time.className = 'time';
