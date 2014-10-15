@@ -1,4 +1,4 @@
-command: '/usr/bin/env python scripts/snmpGet.py | cat data/printer-status.csv',
+command: '/usr/bin/env python scripts/snmpGet.py | cat data/printer-status.json',
 
 refreshFrequency: 300000,
 lastUpdateTime: undefined,
