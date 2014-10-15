@@ -1,4 +1,4 @@
-command: '/usr/bin/env python scripts/whentowork.py',
+command: '/usr/bin/env python scripts/whentowork.py | cat data/whentowork.json',
 
 refreshFrequency: 3600000,
 lastUpdateTime: undefined,
