@@ -106,7 +106,7 @@ def main():
 		# printer['model']  = snmpModel(printerName)
 		printer['toner']  = snmpMFCToner(printer['url'])
 		printer['status'] = snmpStatus(printer['url'])
-		printer['code']   = snmpStatusCode(printer['url'])
+		printer['error']  = snmpStatusCode(printer['url'])
 
 	data_helpers.save_data('data/printer-status.json', printerList)
 
