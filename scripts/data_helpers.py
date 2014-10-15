@@ -19,7 +19,7 @@ def ensure_file_exists(path):
 		with open(path, 'w') as input_file:
 			input_file.write('')
 
-def needs_reload(path, if_minutes_since_last_load):
+def needs_reload(path, minutes=None, hours=None):
 	now = datetime.now()
 	if not os.path.exists(path):
 		return True
@@ -31,7 +31,10 @@ def needs_reload(path, if_minutes_since_last_load):
 
 		data = json.loads(input_data)
 		previous_update_time = datetime.strptime(data['lastUpdated'], "%Y-%m-%dT%H:%M:%S.%f")
-		if previous_update_time >= now.replace(minute=now.minute - if_minutes_since_last_load):
+		if minutes is not None and previous_update_time >= now.replace(minute=now.minute - minutes):
+			return False
+
+		elif hours is not None and previous_update_time >= now.replace(hour=now.hour - hours):
 			return False
 
 	return True
