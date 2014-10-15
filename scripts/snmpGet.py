@@ -5,6 +5,7 @@
 
 from __future__ import print_function
 from subprocess import check_output
+import data_helpers
 awk = '| awk \'NF>1{print $NF}\''
 
 printerNames = [
