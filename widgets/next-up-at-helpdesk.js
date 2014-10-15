@@ -57,7 +57,7 @@ update: function(output, domEl) {
 		return "";
 	}
 
-	var onlyHelpdeskShifts = _.reject(shifts, {'Position': 'Library'});
+	var onlyHelpdeskShifts = _.reject(shifts, {'location': 'Library'});
 	var helpdeskShifts = _.chain(onlyHelpdeskShifts)
 		.groupBy('startTime')
 		.toArray()
