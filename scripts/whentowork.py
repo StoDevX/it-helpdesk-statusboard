@@ -1,5 +1,6 @@
 from __future__ import print_function
 import subprocess
+import data_helpers
 
 def get_link_from_wtw_redirect_page(page_content):
 	link_start_pattern = '<a HREF="'
@@ -15,6 +16,8 @@ def get_sid_from_homepage_link(homepage_link):
 
 
 def main():
+	if not data_helpers.needs_reload('data/whentowork.json', if_minutes_since_last_load=60):
+		return ""
 
 
 	credentials = []
@@ -56,8 +59,7 @@ def main():
 	whos_on_later_page = subprocess.check_output(whos_on_later_curl, shell=True)
 
 
+	data_helpers.save_data('data/whentowork.json', whos_on_later_page)
 
-with open('data/whentowork.html', 'w+') as outputFile:
-	outputFile.write(whos_on_later_page)
 if __name__ == '__main__':
 	main()
