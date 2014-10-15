@@ -1,11 +1,9 @@
 command: 'echo ""',
 refreshFrequency: 3600000,
 
-style: [
-	'@import "/common/base.css"',
-	'@import "/common/fira/fira.css"',
-].join('\n'),
-
 render: function(output) {
-	return ''
+	return [
+		'<link rel="stylesheet" type="text/css" href="/common/base.css">',
+		'<link rel="stylesheet" type="text/css" href="/common/fira/fira.css">',
+	].join('\n')
 },
