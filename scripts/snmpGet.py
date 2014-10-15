@@ -99,7 +99,7 @@ def snmpStatusCode(printer_url):
 
 
 def main():
-	if not data_helpers.needs_reload('data/printer-status.json', if_minutes_since_last_load=5):
+	if not data_helpers.needs_reload('data/printer-status.json', minutes=5):
 		return ""
 
 	for printer in printerList:
