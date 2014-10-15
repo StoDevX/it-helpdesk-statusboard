@@ -23,7 +23,7 @@ printerNames = [
 	'mfc-toh3-west', 'mfc-ytt118']
 
 printerBaseUrl = '.printer.stolaf.edu'
-printerList = [(printer, printer + printerBaseUrl) for printer in printerNames]
+printerList = [{'name': printer, 'url': printer + printerBaseUrl} for printer in printerNames]
 
 def snmpModel(printer_url):
 	model = check_output('snmpwalk -c public -v 1 %s 1.3.6.1.2.1.25.3.2.1.3.1' % (printer_url), shell=True)
@@ -99,16 +99,16 @@ def snmpStatusCode(printer_url):
 
 
 def main():
-	output = "Printer,Toner,Status,Error" + '\n'
-	for printerName, printerUrl in printerList:
-		# model  = snmpModel(printerName)
-		toner  = snmpMFCToner(printerUrl)
-		status = snmpStatus(printerUrl)
-		code   = snmpStatusCode(printerUrl)
-		output += '%s,%s,%s,%s\n' % (printerName,toner,status,code)
+	if not data_helpers.needs_reload('data/printer-status.json', if_minutes_since_last_load=5):
+		return ""
 
-	with open('data/printer-status.csv', 'w+') as outputFile:
-		outputFile.write(output)
+	for printer in printerList:
+		# printer['model']  = snmpModel(printerName)
+		printer['toner']  = snmpMFCToner(printer['url'])
+		printer['status'] = snmpStatus(printer['url'])
+		printer['code']   = snmpStatusCode(printer['url'])
+
+	data_helpers.save_data('data/printer-status.json', printerList)
 
 if __name__ == '__main__':
 	main()
