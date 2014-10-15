@@ -25,8 +25,9 @@ update: function(output, domEl) {
 	var moment = window.sto.libs.moment;
 	window.sto.data = window.sto.data || {};
 
-	window.sto.data.closedTickets = JSON.parse(output);
+	var ticketData = JSON.parse(output);
+	window.sto.data.closedTickets = ticketData.data;
 
-	this.lastUpdateTime = new Date();
+	this.lastUpdateTime = moment(ticketData.lastUpdated);
 	domEl.querySelector('.last-updated').textContent = moment(this.lastUpdateTime).calendar();
 },
