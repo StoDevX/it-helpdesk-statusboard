@@ -2,7 +2,7 @@ from __future__ import print_function
 import subprocess
 
 credentials = []
-with open('stolaf-base/whentowork.credential', 'r') as when_to_work_credentials:
+with open('common/whentowork.credential', 'r') as when_to_work_credentials:
 	credentials = when_to_work_credentials.read().split('\n')
 
 def get_link_from_wtw_redirect_page(page_content):
