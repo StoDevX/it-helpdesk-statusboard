@@ -46,14 +46,23 @@ update: function(output, domEl) {
 			return _.zipObject(keys, _.chain(row.children).toArray().map('textContent').value())
 		})
 		.map(function(shift) {
+			// Example:
+			// Category: ""
+			// Description: ""
+			// Scheduled: "Mary Kraemer"
+			// Position: "Helpdesk"
+			// Time: "11:30am-1:30pm"
+
+			var times = shift['Time'].match(/(.*)-(.*)/);
 			return {
-				name: shift['Scheduled'],
-				time: shift['Time'],
-			}
+				name:      shift['Scheduled'],
+				location:  shift['Position'],
+				time:      shift['Time'],
+				startTime: times[1],
+				endTime:   times[2],
+			};
 		})
-		.groupBy('time')
-		.toArray()
-		.first()
+		.sortBy('startTime')
 		.value();
 
 	window.sto.data.shifts = shifts || [];
