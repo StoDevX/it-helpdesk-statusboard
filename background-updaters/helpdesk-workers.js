@@ -27,6 +27,8 @@ update: function(output, domEl) {
 
 	var _      = window.sto.libs.lodash;
 	var moment = window.sto.libs.moment;
+	window.sto.data = window.sto.data || {};
+
 
 	var parser = new DOMParser();
 	var whenToWork = parser.parseFromString(output, 'text/html');
