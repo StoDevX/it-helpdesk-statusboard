@@ -45,6 +45,8 @@ def snmpStatusCode(printer_url):
 
 	# Remove wrapping quotes, if present
 	code = raw_code.strip()
+	if len(code) is 0:
+		return ""
 
 	if (code[0] == code[-1]) and code.startswith('"'):
 		code = code[1:-1]
