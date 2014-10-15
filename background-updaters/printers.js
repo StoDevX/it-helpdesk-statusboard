@@ -1,6 +1,6 @@
 command: '/usr/bin/env python scripts/snmpGet.py | cat data/printer-status.json',
 
-refreshFrequency: 300000,
+refreshFrequency: 30000,
 lastUpdateTime: undefined,
 
 style: [
@@ -28,9 +28,8 @@ update: function(output, domEl) {
 	window.sto.data = window.sto.data || {};
 
 	var printerData = JSON.parse(output);
-	window.sto.data.printers = printerData;
-	// window.sto.data.printers = csv.parse(output, {header: true, cast: ['String', 'String', 'String', 'String']});;
+	window.sto.data.printers = printerData.data;
 
-	this.lastUpdateTime = new Date();
+	this.lastUpdateTime = moment(printerData.lastUpdated);
 	domEl.querySelector('.last-updated').textContent = moment(this.lastUpdateTime).calendar();
 },
