@@ -1,4 +1,4 @@
-command: '/usr/bin/env python common/snmpGet.py',
+command: '/usr/bin/env python scripts/snmpGet.py',
 
 refreshFrequency: 300000,
 lastUpdateTime: undefined,
