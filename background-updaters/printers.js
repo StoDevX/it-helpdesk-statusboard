@@ -27,7 +27,9 @@ update: function(output, domEl) {
 	var moment = window.sto.libs.moment;
 	window.sto.data = window.sto.data || {};
 
-	window.sto.data.printers = csv.parse(output, {header: true, cast: ['String', 'String', 'String', 'String']});;
+	var printerData = JSON.parse(output);
+	window.sto.data.printers = printerData;
+	// window.sto.data.printers = csv.parse(output, {header: true, cast: ['String', 'String', 'String', 'String']});;
 
 	this.lastUpdateTime = new Date();
 	domEl.querySelector('.last-updated').textContent = moment(this.lastUpdateTime).calendar();
