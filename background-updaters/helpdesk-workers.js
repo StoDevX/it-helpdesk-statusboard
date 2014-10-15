@@ -29,9 +29,10 @@ update: function(output, domEl) {
 	var moment = window.sto.libs.moment;
 	window.sto.data = window.sto.data || {};
 
+	var data = JSON.parse(output);
 
 	var parser = new DOMParser();
-	var whenToWork = parser.parseFromString(output, 'text/html');
+	var whenToWork = parser.parseFromString(data.data, 'text/html');
 
 	// turn the table into an array of objects of the workers
 	var table = whenToWork.querySelector('.bwgt > table > tbody');
