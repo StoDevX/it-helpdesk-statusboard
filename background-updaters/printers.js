@@ -25,6 +25,7 @@ update: function(output, domEl) {
 	if (!window.sto.libs.moment) return '';
 	var csv = window.sto.libs.csv;
 	var moment = window.sto.libs.moment;
+	window.sto.data = window.sto.data || {};
 
 	window.sto.data.printers = csv.parse(output, {header: true, cast: ['String', 'String', 'String', 'String']});;
 

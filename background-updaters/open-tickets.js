@@ -23,6 +23,7 @@ update: function(output, domEl) {
 	if (!window.sto)             return '';
 	if (!window.sto.libs.moment) return '';
 	var moment = window.sto.libs.moment;
+	window.sto.data = window.sto.data || {};
 
 	window.sto.data.openTickets = JSON.parse(output);
 
