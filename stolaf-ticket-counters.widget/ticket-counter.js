@@ -47,7 +47,7 @@ render: function(output) {
 			'</div>',
 			'<h1 class="title">Ticket Counters</h1>',
 		'</div>',
-		'<audio class="noise" src="inceptionbutton.mp3"></audio>',
+		'<audio class="noise" src="smw_riding_yoshi.mp3"></audio>',
 		'<audio class="happy" src="happy.out.m4a"></audio>',
 	].join('')
 },
