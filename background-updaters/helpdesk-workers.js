@@ -1,4 +1,4 @@
-command: '/usr/bin/env python common/whentowork.py',
+command: '/usr/bin/env python scripts/whentowork.py',
 
 refreshFrequency: 3600000,
 lastUpdateTime: undefined,
