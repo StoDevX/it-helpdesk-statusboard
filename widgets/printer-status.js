@@ -57,10 +57,10 @@ update: function(output, domEl) {
 		.reject({'error': "No Error"})
 		.reject({'error': "Paper Low"})
 		.filter(function(printer) {
-			return printer['Printer'] && _.contains(printer['Printer'].toLowerCase(), 'mfc-')
+			return printer.name && _.contains(printer.name.toLowerCase(), 'mfc-')
 		})
 		.groupBy('error')
-		.value()
+		.value();
 
 	printersInErrorState['Low Toner (< 10%)'] = _.chain(printers)
 		.filter(function(printer) {
@@ -74,8 +74,8 @@ update: function(output, domEl) {
 				printer.className = 'bg-orange'
 			return printer
 		})
-		.sortBy('Toner')
-		.value()
+		.sortBy('toner')
+		.value();
 
 	var details = domEl.querySelector('.details');
 
