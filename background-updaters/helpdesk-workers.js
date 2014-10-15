@@ -1,4 +1,4 @@
-command: 'python stolaf-base/whentowork.py',
+command: '/usr/bin/env python common/whentowork.py',
 
 refreshFrequency: 3600000,
 lastUpdateTime: undefined,

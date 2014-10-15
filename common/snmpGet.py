@@ -42,10 +42,10 @@ def snmpStatus(printer):
 
 def snmpStatusCode(printer):
 	raw_code = output('snmpwalk -c public -v 1 '+printer+' 1.3.6.1.2.1.25.3.5.1.2' + awk, shell=True)
-	
+
 	# Remove wrapping quotes, if present
 	code = raw_code.strip()
-	
+
 	if (code[0] == code[-1]) and code.startswith('"'):
 		code = code[1:-1]
 

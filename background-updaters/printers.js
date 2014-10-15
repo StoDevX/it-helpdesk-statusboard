@@ -1,4 +1,4 @@
-command: '/usr/bin/env python stolaf-base/snmpGet.py',
+command: '/usr/bin/env python common/snmpGet.py',
 
 refreshFrequency: 300000,
 lastUpdateTime: undefined,
