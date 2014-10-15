@@ -1,6 +1,6 @@
 command: '/usr/bin/env python scripts/whentowork.py | cat data/whentowork.json',
 
-refreshFrequency: 3600000,
+refreshFrequency: 30000,
 lastUpdateTime: undefined,
 
 style: [
