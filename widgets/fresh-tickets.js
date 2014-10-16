@@ -58,7 +58,6 @@ style: [
 	"	font-weight: 300",
 
 	".type-row",
-	"	font-family: Avenir Next Condensed",
 	"	font-size: 0.75em",
 	"	letter-spacing: 0.015em",
 
