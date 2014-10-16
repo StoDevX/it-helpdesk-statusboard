@@ -84,7 +84,8 @@ def snmpStatusCode(printer_url):
 		'C8': "Drawer Open",
 		'C0': "Tray 1 Empty",
 		'80': "Paper Low",
-		'88': "Toner Door Open (we think)"
+		'88': "Toner Door Open (we think)",
+		'04': "Paper Misfeed",
 	}
 
 	if code in codes:
