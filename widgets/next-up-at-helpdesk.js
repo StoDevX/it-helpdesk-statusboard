@@ -40,8 +40,15 @@ style: [
 render: function(output) {
 	return [
 		'<a class="wrapper" href="https://whentowork.com/cgi-bin/w2w.dll/login">',
-			'<div class="details"></div>',
-			'<h1 class="title">Next Up @Helpdesk</h1>',
+			'<div class="now">',
+				'<h1 class="title">Now @Helpdesk</h1>',
+				'<div class="details"></div>',
+			'</div>',
+			'<div class="next">',
+				'<h1 class="title">Next @Helpdesk</h1>',
+				'<div class="details"></div>',
+			'</div>',
+			'<h1 class="title">☠ The Helpdesk Crew ☠</h1>',
 		'</a>',
 	].join('');
 },
@@ -51,38 +58,72 @@ update: function(output, domEl) {
 	if (!window.sto.libs.lodash) return '';
 	if (!window.sto.libs.moment) return '';
 	if (!window.sto.data.shifts) return '';
+	if (!window.sto.data.shifts.now) return '';
+	if (!window.sto.data.shifts.later) return '';
 
 	var _      = window.sto.libs.lodash;
 	var moment = window.sto.libs.moment;
-	var shifts = window.sto.data.shifts;
 
-	var details = domEl.querySelector('.details');
-	details.innerHTML = "";
+	/////
 
-	if (shifts.length === 0) {
-		details.textContent = "No more shifts scheduled as of " + moment().format('ha[.]');
-		return "";
-	}
+	(function addLaterShifts() {
+		var laterShifts = window.sto.data.shifts.later;
+		var next = domEl.querySelector('.next .details');
+		next.innerHTML = "";
 
-	var onlyHelpdeskShifts = _.reject(shifts, {'location': 'Library'});
-	var helpdeskShifts = _.chain(onlyHelpdeskShifts)
-		.groupBy('startTime')
-		.toArray()
-		.first()
-		.value();
+		if (laterShifts.length === 0) {
+			next.textContent = "No more shifts scheduled as of " + moment().format('ha[.]');
+			return "";
+		}
 
-	var time = document.createElement('time');
-	time.className = 'time';
-	time.textContent = helpdeskShifts[0].time;
-	details.appendChild(time);
+		var onlyHelpdeskShifts = _.reject(laterShifts, {'location': 'Library'});
+		var helpdeskShifts = _.chain(onlyHelpdeskShifts)
+			.groupBy('startTime')
+			.toArray()
+			.first()
+			.value();
 
-	var list = document.createElement('ul');
-	list.className = 'workers';
-	_.each(helpdeskShifts, function(shift) {
-		var item = document.createElement('li');
-		item.textContent = shift.name;
-		list.appendChild(item);
-	})
+		var list = document.createElement('ul');
+		list.className = 'workers';
+		_.each(helpdeskShifts, function(shift) {
+			var item = document.createElement('li');
+			item.textContent = shift.name;
+			list.appendChild(item);
+		})
+		next.appendChild(list);
 
-	details.appendChild(list);
+		var time = document.createElement('time');
+		time.textContent = '⟨ ' + helpdeskShifts[0].time + ' ⟩';
+		next.appendChild(time);
+	})();
+
+	/////
+
+	(function addCurrentShifts() {
+		var currentShifts = window.sto.data.shifts.now;
+		var now = domEl.querySelector('.now .details');
+		now.innerHTML = "";
+
+		if (currentShifts.length === 0) {
+			now.textContent = "No-one is currently scheduled.";
+			return "";
+		}
+
+		var onlyHelpdeskShifts = _.reject(currentShifts, {'location': 'Library'});
+		var helpdeskShifts = _.chain(onlyHelpdeskShifts)
+			.groupBy('startTime')
+			.toArray()
+			.first()
+			.value();
+
+		var list = document.createElement('ul');
+		list.className = 'workers';
+		_.each(helpdeskShifts, function(shift) {
+			var item = document.createElement('li');
+			item.textContent = shift.name;
+			list.appendChild(item);
+		})
+
+		now.appendChild(list);
+	})();
 }
