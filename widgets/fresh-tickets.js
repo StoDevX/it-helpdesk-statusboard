@@ -60,6 +60,9 @@ style: [
 	".type-row",
 	"	font-size: 0.75em",
 	"	letter-spacing: 0.015em",
+	"	text-overflow: ellipsis",
+	"	overflow: hidden",
+	"	white-space: nowrap",
 
 	".client-name::after",
 	"	content: ' — '",
