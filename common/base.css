@@ -45,7 +45,7 @@ body {
 
 [id^='widgets'] .title {
 	color: rgb(128, 128, 128);
-	font-family: Avenir Next Condensed;
+	font-family: Fira Sans;
 	font-size: 1.75rem;
 	font-weight: 300;
 	margin: 0;
