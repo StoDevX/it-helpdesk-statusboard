@@ -5,7 +5,7 @@ style: [
 	"top:   0",
 	"right: 20%",
 
-	"width: 35%",
+	"width: 32%",
 	"height: 50vh",
 
 	"border-right: 0",

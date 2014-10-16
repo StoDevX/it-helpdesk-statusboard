@@ -5,7 +5,7 @@ style: [
 	"left: 25%",
 	"top: 0",
 
-	"width: 20%",
+	"width: 23%",
 	"height: 50vh",
 
 	"text-align: center",
