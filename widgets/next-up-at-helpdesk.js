@@ -13,21 +13,28 @@ style: [
 	".details",
 	"	padding-top: 0.5rem",
 
-	".time",
+	"time",
 	"	font-weight: 200",
-	"	font-size: 2em",
+	"	font-size: 1.5em",
 	"	color: rgba(255, 255, 255, 0.65)",
-	"	padding-bottom: 0.5rem",
+	"	padding-bottom: 0.25rem",
+
+	"div .title",
+	"	margin-bottom: 0em",
+	"	padding-bottom: 0em",
+	"	font-family: Fira Sans",
+	"	font-weight: 600",
 
 	".workers",
-	"	font-weight: 500",
-	"	font-size: 1.25em",
+	"	font-weight: 400",
+	"	font-size: 1.5em",
 	"	color: rgba(255, 255, 255, 0.75)",
 
 	".wrapper",
 	"	color: inherit",
 	"	text-decoration: none",
 	"	cursor: pointer",
+	"	padding-top: 2em",
 ].join('\n'),
 
 render: function(output) {
