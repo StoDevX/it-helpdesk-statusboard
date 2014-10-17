@@ -1,8 +1,6 @@
 command: 'echo ""',
 refreshFrequency: 10000,
 
-printerCount: 8,
-
 style: [
 	"left: 20vw",
 	"bottom: 3vh",
@@ -53,38 +51,38 @@ update: function(output, domEl) {
 	var _ = window.sto.libs.lodash;
 
 	var printers = _.cloneDeep(window.sto.data.printers);
-	var printersInErrorState = _.chain(printers)
-		.reject({'Error': "No Error"})
-		.reject({'Error': "Paper Low"})
+	var printerErrorStates = _.chain(printers)
+		.reject({'error': "No Error"})
+		.reject({'error': "Paper Low"})
 		.filter(function(printer) {
-			return printer['Printer'] && _.contains(printer['Printer'].toLowerCase(), 'mfc-')
+			return printer.name && _.contains(printer.name.toLowerCase(), 'mfc-')
 		})
-		.groupBy('Error')
-		.value()
+		.groupBy('error')
+		.value();
 
-	printersInErrorState['Low Toner (< 10%)'] = _.chain(printers)
+	printerErrorStates['Low Toner (< 10%)'] = _.chain(printers)
 		.filter(function(printer) {
-			return printer['Toner'] < 10
+			return printer.toner < 10
 		})
 		.map(function(printer) {
-			printer['Printer'] = printer['Printer'] + ' (' + printer['Toner'] + '%)'
-			if (printer['Toner'] < 5)
-				printer['CSSClass'] = 'bg-yellow'
-			if (printer['Toner'] <= 1)
-				printer['CSSClass'] = 'bg-orange'
+			printer.name = printer.name + ' (' + printer.toner + '%)'
+			if (printer.toner < 5)
+				printer.className = 'bg-yellow'
+			if (printer.toner <= 1)
+				printer.className = 'bg-orange'
 			return printer
 		})
-		.sortBy('Toner')
-		.value()
+		.sortBy('toner')
+		.value();
 
 	var details = domEl.querySelector('.details');
 
 	var contentList = document.createElement('ul');
 	contentList.className = 'list';
 
-	var printerCount = this.printerCount;
-	_.each(printersInErrorState, function(printers, key) {
-		printers = _.first(printers, printerCount);
+	var printerCount = 8;
+	_.each(printerErrorStates, function(printers, key) {
+		var printerlist = _.first(printers, printerCount);
 
 		var group = document.createElement('li');
 		group.className = 'group';
@@ -96,10 +94,10 @@ update: function(output, domEl) {
 
 		var printerList = document.createElement('ul');
 		printerList.className = 'inner-list';
-		_.each(printers, function(printer) {
+		_.each(printerlist, function(printer) {
 			var printerAsElement = document.createElement('li');
-			if (printer['CSSClass']) printerAsElement.className = printer['CSSClass']
-			printerAsElement.textContent = printer['Printer'];
+			if (printer.className) printerAsElement.className = printer.className
+			printerAsElement.textContent = printer.name;
 			printerList.appendChild(printerAsElement);
 		})
 

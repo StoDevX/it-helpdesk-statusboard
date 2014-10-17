@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 
-from __future__ import print_function
-
 ## Created by Phinehas Bynum on 10/1/14.
 ## Ported to Python by Hawken Rives on 10/12/14
 
-from subprocess import check_output as output
-awk = ' | awk \'NF>1{print $NF}\''
+from __future__ import print_function
+from subprocess import check_output
+import data_helpers
+awk = '| awk \'NF>1{print $NF}\''
 
-printerList = [
+printerNames = [
 	'mfc-bc110', 'mfc-bc147', 'mfc-casualreading',
 	'mfc-crossroads', 'mfc-ellingson', 'mfc-fireside',
 	'mfc-hh407', 'mfc-hillkitt', 'mfc-hoyme',
@@ -23,29 +23,31 @@ printerList = [
 	'mfc-toh3-west', 'mfc-ytt118']
 
 printerBaseUrl = '.printer.stolaf.edu'
-printerList = [(printer, printer + printerBaseUrl) for printer in printerList]
+printerList = [{'name': printer, 'url': printer + printerBaseUrl} for printer in printerNames]
 
-def snmpModel(printer):
-	model = output('snmpwalk -c public -v 1 '+printer+' 1.3.6.1.2.1.25.3.2.1.3.1', shell=True)
+def snmpModel(printer_url):
+	model = check_output('snmpwalk -c public -v 1 %s 1.3.6.1.2.1.25.3.2.1.3.1' % (printer_url), shell=True)
 	return model.strip()
 
 
-def snmpMFCToner(printer):
-	toner_level = output('snmpwalk -c public -v 1 '+printer+' 1.3.6.1.2.1.43.11.1.1.9.1.1' + awk, shell=True)
+def snmpMFCToner(printer_url):
+	toner_level = check_output('snmpwalk -c public -v 1 %s 1.3.6.1.2.1.43.11.1.1.9.1.1 %s' % (printer_url, awk), shell=True)
 	return toner_level.strip()
 
 
-def snmpStatus(printer):
-	printerStatus = output('snmpwalk -c public -v 1 '+printer+' 1.3.6.1.2.1.25.3.5.1.1' + awk, shell=True)
+def snmpStatus(printer_url):
+	printerStatus = check_output('snmpwalk -c public -v 1 %s 1.3.6.1.2.1.25.3.5.1.1 %s' % (printer_url, awk), shell=True)
 	return printerStatus.strip()
 
 
-def snmpStatusCode(printer):
-	raw_code = output('snmpwalk -c public -v 1 '+printer+' 1.3.6.1.2.1.25.3.5.1.2' + awk, shell=True)
-	
+def snmpStatusCode(printer_url):
+	raw_code = check_output('snmpwalk -c public -v 1 %s 1.3.6.1.2.1.25.3.5.1.2 %s' % (printer_url, awk), shell=True)
+
 	# Remove wrapping quotes, if present
 	code = raw_code.strip()
-	
+	if len(code) is 0:
+		return ""
+
 	if (code[0] == code[-1]) and code.startswith('"'):
 		code = code[1:-1]
 
@@ -82,7 +84,8 @@ def snmpStatusCode(printer):
 		'C8': "Drawer Open",
 		'C0': "Tray 1 Empty",
 		'80': "Paper Low",
-		'88': "Toner Door Open (we think)"
+		'88': "Toner Door Open (we think)",
+		'04': "Paper Misfeed",
 	}
 
 	if code in codes:
@@ -99,13 +102,16 @@ def snmpStatusCode(printer):
 
 
 def main():
-	print("Printer,Toner,Status,Error")
-	for printerName, printerUrl in printerList:
-		# model = snmpModel(printerName)
-		toner = snmpMFCToner(printerUrl)
-		status = snmpStatus(printerUrl)
-		code = snmpStatusCode(printerUrl)
-		print(printerName+','+toner+','+status+','+code)
+	if not data_helpers.needs_reload('data/printer-status.json', minutes=5):
+		return ""
+
+	for printer in printerList:
+		# printer['model']  = snmpModel(printerName)
+		printer['toner']  = snmpMFCToner(printer['url'])
+		printer['status'] = snmpStatus(printer['url'])
+		printer['error']  = snmpStatusCode(printer['url'])
+
+	data_helpers.save_data('data/printer-status.json', printerList)
 
 if __name__ == '__main__':
 	main()

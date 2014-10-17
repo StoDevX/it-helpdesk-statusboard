@@ -1,6 +1,6 @@
-command: '/usr/bin/env python stolaf-base/snmpGet.py',
+command: '/usr/bin/env python scripts/snmpGet.py | cat data/printer-status.json',
 
-refreshFrequency: 300000,
+refreshFrequency: 30000,
 lastUpdateTime: undefined,
 
 style: [
@@ -25,9 +25,11 @@ update: function(output, domEl) {
 	if (!window.sto.libs.moment) return '';
 	var csv = window.sto.libs.csv;
 	var moment = window.sto.libs.moment;
+	window.sto.data = window.sto.data || {};
 
-	window.sto.data.printers = csv.parse(output, {header: true, cast: ['String', 'String', 'String', 'String']});;
+	var printerData = JSON.parse(output);
+	window.sto.data.printers = printerData.data;
 
-	this.lastUpdateTime = new Date();
+	this.lastUpdateTime = moment(printerData.lastUpdated);
 	domEl.querySelector('.last-updated').textContent = moment(this.lastUpdateTime).calendar();
 },
