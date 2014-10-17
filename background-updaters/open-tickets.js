@@ -1,11 +1,11 @@
-command: '/usr/bin/env python stolaf-base/snmpGet.py',
+command: '/usr/bin/env python scripts/getTickets.py open 1&2> /dev/null | cat data/open-tickets.json',
 
-refreshFrequency: 300000,
+refreshFrequency: 30000,
 lastUpdateTime: undefined,
 
 style: [
 	"bottom: 0",
-	"left: 75%",
+	"left: 0",
 	"width: 25%",
 	"text-align: center",
 	"border: 0",
@@ -16,18 +16,18 @@ style: [
 ].join('\n'),
 
 render: function(argument) {
-	return 'Printers: <span class="last-updated"></span>';
+	return 'Open Tickets: <span class="last-updated"></span>';
 },
 
 update: function(output, domEl) {
 	if (!window.sto)             return '';
-	if (!window.sto.libs.csv)    return '';
 	if (!window.sto.libs.moment) return '';
-	var csv = window.sto.libs.csv;
 	var moment = window.sto.libs.moment;
+	window.sto.data = window.sto.data || {};
 
-	window.sto.data.printers = csv.parse(output, {header: true, cast: ['String', 'String', 'String', 'String']});;
+	var ticketData = JSON.parse(output);
+	window.sto.data.openTickets = ticketData.data;
 
-	this.lastUpdateTime = new Date();
+	this.lastUpdateTime = moment(ticketData.lastUpdated);
 	domEl.querySelector('.last-updated').textContent = moment(this.lastUpdateTime).calendar();
 },

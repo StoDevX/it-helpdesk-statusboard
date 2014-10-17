@@ -48,11 +48,11 @@ render: function(output) {
 },
 
 update: function(output, domEl) {
-	if (!window.sto)               return '';
-	if (!window.sto.libs.lodash)   return '';
-	if (!window.sto.data.openTickets) return '';
+	if (!window.sto)                    return '';
+	if (!window.sto.libs.lodash)        return '';
+	if (!window.sto.data.openTickets)   return '';
 	if (!window.sto.data.closedTickets) return '';
-	if (!window.sto.data.colors) return '';
+	if (!window.sto.data.colors)        return '';
 
 	var _ = window.sto.libs.lodash;
 

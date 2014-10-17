@@ -1,19 +1,11 @@
-command: [
-	'curl --silent ',
-		'"https://help.stolaf.edu/helpdesk',
-		'/WebObjects/Helpdesk.woa/ra/Tickets?',
-		'style=details&',
-		'qualifier=(statustype.statusTypeName%3D%27Open%27)&',
-		'limit=50&',
-		'apiKey=***REMOVED***"',
-].join(''),
+command: '/usr/bin/env python scripts/getTickets.py closed 1&2> /dev/null | cat data/closed-tickets.json',
 
-refreshFrequency: 60000,
+refreshFrequency: 30000,
 lastUpdateTime: undefined,
 
 style: [
 	"bottom: 0",
-	"left: 0",
+	"left: 25%",
 	"width: 25%",
 	"text-align: center",
 	"border: 0",
@@ -24,16 +16,18 @@ style: [
 ].join('\n'),
 
 render: function(argument) {
-	return 'Open Tickets: <span class="last-updated"></span>';
+	return 'Closed Tickets: <span class="last-updated"></span>';
 },
 
 update: function(output, domEl) {
 	if (!window.sto)             return '';
 	if (!window.sto.libs.moment) return '';
 	var moment = window.sto.libs.moment;
+	window.sto.data = window.sto.data || {};
 
-	window.sto.data.openTickets = JSON.parse(output);
+	var ticketData = JSON.parse(output);
+	window.sto.data.closedTickets = ticketData.data;
 
-	this.lastUpdateTime = new Date();
+	this.lastUpdateTime = moment(ticketData.lastUpdated);
 	domEl.querySelector('.last-updated').textContent = moment(this.lastUpdateTime).calendar();
 },
