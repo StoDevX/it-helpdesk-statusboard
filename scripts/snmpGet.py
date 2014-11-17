@@ -34,6 +34,11 @@ def snmpMFCToner(printer_url):
 	toner_level = check_output('snmpwalk -c public -v 1 %s 1.3.6.1.2.1.43.11.1.1.9.1.1 %s' % (printer_url, awk), shell=True)
 	return toner_level.strip()
 
+def snmpMFCAllToner(printer_url):
+	# needs work
+	toner_level = check_output('snmpwalk -c public -v 1 %s 1.3.6.1.2.1.43.11.1.1.9.1 %s' % (printer_url, awk), shell=True)
+	return toner_level.strip()
+
 
 def snmpStatus(printer_url):
 	printerStatus = check_output('snmpwalk -c public -v 1 %s 1.3.6.1.2.1.25.3.5.1.1 %s' % (printer_url, awk), shell=True)
@@ -86,6 +91,11 @@ def snmpStatusCode(printer_url):
 		'80': "Paper Low",
 		'88': "Toner Door Open (we think)",
 		'04': "Paper Misfeed",
+		'A0': "Black Toner Low",
+		'A': "Tray 2 Empty",
+		'L': "Paper Misfeed in Finisher",
+		'I': "Fuser Error (Call EO Johnson)",
+		'05': "Fuser Error (Call EO Johnson)",
 	}
 
 	if code in codes:

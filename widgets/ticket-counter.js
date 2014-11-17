@@ -105,6 +105,10 @@ makeEquipmentTicketsRow: function(openTickets) {
 	return this.makeRequestTypeRow(openTickets, 'Equipment Checkout', 'equipment');
 },
 
+makeUncategorizedTicketsRow: function(openTickets) {
+	return this.makeRequestTypeRow(openTickets, 'Email Submission (helpdesk@stolaf.edu)', 'uncategoprized', 'Needs Request Type');
+},
+
 makeNetworkTicketsRow: function(openTickets) {
 	return this.makeRequestTypeRow(openTickets, 'Network & Connectivity &#8226; Ethernet Activation Request', 'ethernet', 'Ethernet Requests');
 },
@@ -204,6 +208,7 @@ update: function(output, domEl) {
 
 	counters.innerHTML = "";
 	counters.appendChild(this.makeOpenTicketsRow(openTickets, domEl));
+	counters.appendChild(this.makeUncategorizedTicketsRow(openTickets, domEl));
 	counters.appendChild(this.makeClassTechTicketsRow(openTickets));
 	counters.appendChild(this.makeEquipmentTicketsRow(openTickets));
 	counters.appendChild(this.makeNetworkTicketsRow(openTickets));
