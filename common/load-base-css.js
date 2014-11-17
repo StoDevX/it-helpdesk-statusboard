@@ -1,5 +1,5 @@
 command: 'echo ""',
-refreshFrequency: 3600000,
+refreshFrequency: 36000000,
 
 render: function(output) {
 	return [

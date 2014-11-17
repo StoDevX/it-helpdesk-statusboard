@@ -57,18 +57,31 @@ update: function(output, domEl) {
 		.filter(function(printer) {
 			return printer.name && _.contains(printer.name.toLowerCase(), 'mfc-')
 		})
+		.map(function(printer) {
+			if (_.contains(printer.error, 'Call'))
+				printer.className = 'bg-red'
+			return printer
+		})
 		.groupBy('error')
 		.value();
 
-	printerErrorStates['Low Toner (< 10%)'] = _.chain(printers)
+	delete printerErrorStates[''];
+
+	printerErrorStates['Not Responding'] = _.chain(printers)
 		.filter(function(printer) {
-			return printer.toner < 10
+			return printer.error === ''
+		})
+		.value()
+
+	printerErrorStates['Low Toner (< 5%) [Replace]'] = _.chain(printers)
+		.filter(function(printer) {
+			return printer.toner !== '' && printer.toner < 5
 		})
 		.map(function(printer) {
 			printer.name = printer.name + ' (' + printer.toner + '%)'
-			if (printer.toner < 5)
+			if (printer.toner < 4)
 				printer.className = 'bg-yellow'
-			if (printer.toner <= 1)
+			if (printer.toner <= 2)
 				printer.className = 'bg-orange'
 			return printer
 		})
@@ -83,6 +96,8 @@ update: function(output, domEl) {
 	var printerCount = 8;
 	_.each(printerErrorStates, function(printers, key) {
 		var printerlist = _.first(printers, printerCount);
+		if (!printerlist.length)
+			return;
 
 		var group = document.createElement('li');
 		group.className = 'group';

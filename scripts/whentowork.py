@@ -64,7 +64,7 @@ def get_whos_on_now_page(SID):
 
 
 def main():
-	if not data_helpers.needs_reload('data/whentowork.json', hours=1): return ""
+	if not data_helpers.needs_reload('data/whentowork.json', minutes=30): return ""
 
 	credentials = get_credentials()
 	login_page = get_login_page(credentials)
