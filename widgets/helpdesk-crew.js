@@ -48,7 +48,7 @@ render: function(output) {
 				'<h1 class="title">Next @Helpdesk</h1>',
 				'<div class="details"></div>',
 			'</div>',
-			'<h1 class="title">The Helpdesk Crew ☠</h1>',
+			'<h1 class="title">☠ Helpdesk</h1>',
 		'</a>',
 	].join('');
 },
