@@ -83,6 +83,9 @@ update: function(output, domEl) {
 			.first()
 			.value();
 
+		if (!onlyHelpdeskShifts.length)
+			return;
+
 		var list = document.createElement('ul');
 		list.className = 'workers';
 		_.each(helpdeskShifts, function(shift) {
