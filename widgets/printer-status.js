@@ -66,6 +66,7 @@ update: function(output, domEl) {
 		.value();
 
 	delete printerErrorStates[''];
+	delete printerErrorStates['Drawer Open'];
 
 	printerErrorStates['Not Responding'] = _.chain(printers)
 		.filter(function(printer) {
