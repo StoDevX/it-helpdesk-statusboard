@@ -1,33 +1,31 @@
-command: '/usr/bin/env python scripts/getTickets.py closed 1&2> /dev/null | cat data/closed-tickets.json',
+command: '/usr/bin/env python scripts/get_tickets.py closed 1&2> /dev/null | cat data/closed-tickets.json',
 
 refreshFrequency: 30000,
 lastUpdateTime: undefined,
 
-style: [
-	"bottom: 0",
-	"left: 25%",
-	"width: 25%",
-	"text-align: center",
-	"border: 0",
-	"height: 3%",
-	"vertical-align: middle",
-	"color: rgba(255, 255, 255, 0.25)",
-	"font-weight: 300",
-].join('\n'),
+style: "left: 25%",
 
-render: function(argument) {
-	return 'Closed Tickets: <span class="last-updated"></span>';
+render: function() {
+	return '<status-widget>Closed Tickets: <last-updated/></status-widget>'
 },
 
 update: function(output, domEl) {
-	if (!window.sto)             return '';
-	if (!window.sto.libs.moment) return '';
-	var moment = window.sto.libs.moment;
-	window.sto.data = window.sto.data || {};
+	domEl.querySelector('last-updated').textContent = 'Initializing...'
 
-	var ticketData = JSON.parse(output);
-	window.sto.data.closedTickets = ticketData.data;
+	if (!window.loaded) {
+		var self = this
+		self.stop()
+		window.clearTimeout(self.setTimeoutId)
+		self.setTimeoutId = window.setTimeout(self.refresh, 1000)
+	}
 
-	this.lastUpdateTime = moment(ticketData.lastUpdated);
-	domEl.querySelector('.last-updated').textContent = moment(this.lastUpdateTime).calendar();
+	domEl.querySelector('last-updated').textContent = 'Loading...'
+
+	var ticketData = JSON.parse(output).data
+	window.data.closedTickets = ticketData
+	window.events.emit('closed-tickets', ticketData)
+
+	this.lastUpdateTime = moment(ticketData.lastUpdated)
+	domEl.querySelector('last-updated').textContent = moment(this.lastUpdateTime).calendar()
+	this.start()
 },

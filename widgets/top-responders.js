@@ -1,5 +1,5 @@
 command: 'echo ""',
-refreshFrequency: 10000,
+refreshFrequency: false,
 
 style: [
 	"left:  0",
@@ -47,19 +47,22 @@ render: function(output) {
 	].join('')
 },
 
-update: function(output, domEl) {
-	if (!window.sto)                    return '';
-	if (!window.sto.libs.lodash)        return '';
-	if (!window.sto.data.openTickets)   return '';
-	if (!window.sto.data.closedTickets) return '';
-	if (!window.sto.data.colors)        return '';
+afterRender: function(domEl) {
+	var self = this
+	if (!window.loaded) {
+		window.clearTimeout(self.setTimeoutId)
+		self.setTimeoutId = window.setTimeout(self.refresh, 1000)
+	}
 
-	var _ = window.sto.libs.lodash;
+	window.events.on('open-tickets', self.reloadWithData.bind(domEl))
+	window.events.on('closed-tickets', self.reloadWithData.bind(domEl))
+},
 
+reloadWithData: function(domEl) {
 	var details = domEl.querySelector('.details');
 
-	var openTickets = window.sto.data.openTickets;
-	var closedTickets = window.sto.data.closedTickets;
+	var openTickets = window.data.openTickets;
+	var closedTickets = window.data.closedTickets;
 	var tickets = _.flatten([openTickets, closedTickets]);
 
 	function hasTechNote(note) {
@@ -70,8 +73,8 @@ update: function(output, domEl) {
 		)
 	}
 
-	var colors = window.sto.data.colors;
-	var staff = window.sto.data.staff;
+	var colors = window.data.colors;
+	var staff = window.data.staff;
 
 	function isStaffMember(note) {
 		return _.contains(staff, responderName(note));

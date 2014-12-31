@@ -1,13 +1,10 @@
 command: 'echo ""',
-refreshFrequency: 3600000,
+refreshFrequency: false,
 
 style: "border: 0",
 
 render: function() {
-	window.sto = window.sto || {
-		libs: {},
-		data: {},
-	};
+	window.data = window.data || {}
 
 	var staff = [
 		'Mike Sjulstad',
@@ -36,7 +33,7 @@ render: function() {
 		'Dan Beach',
 		'Marc Thomas',
 	];
-	window.sto.data.staff = staff;
+	window.data.staff = staff
 
 	var colors = [
 		'red',
@@ -49,7 +46,5 @@ render: function() {
 		'aqua',
 		'silver',
 	]
-	window.sto.data.colors = colors;
-
-	return ''
+	window.data.colors = colors
 }

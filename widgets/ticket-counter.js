@@ -1,5 +1,5 @@
 command: 'echo ""',
-refreshFrequency: 10000,
+refreshFrequency: false,
 
 style: [
 	"top: 0",
@@ -194,13 +194,18 @@ playNoises: function(openTickets, domEl) {
 	this.priorTicketId = newestTicketId;
 },
 
-update: function(output, domEl) {
-	if (!window.sto)                  return '';
-	if (!window.sto.libs.lodash)      return '';
-	if (!window.sto.data.openTickets) return '';
+afterRender: function(domEl) {
+	var self = this
+	if (!window.loaded) {
+		window.clearTimeout(self.setTimeoutId)
+		self.setTimeoutId = window.setTimeout(self.refresh, 1000)
+	}
 
-	var _ = window.sto.libs.lodash;
-	var openTickets = window.sto.data.openTickets;
+	window.events.on('open-tickets', self.reloadWithData.bind(domEl))
+},
+
+reloadWithData: function(domEl) {
+	var openTickets = window.data.openTickets;
 
 	this.playNoises(openTickets, domEl);
 
