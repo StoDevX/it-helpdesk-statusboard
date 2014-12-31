@@ -1,5 +1,5 @@
 command: 'echo ""',
-refreshFrequency: 10000,
+refreshFrequency: false,
 
 style: [
 	"left: 20vw",
@@ -43,14 +43,18 @@ render: function(output) {
 	].join('')
 },
 
-update: function(output, domEl) {
-	if (!window.sto)               return '';
-	if (!window.sto.libs.lodash)   return '';
-	if (!window.sto.data.printers) return '';
+afterRender: function(domEl) {
+	var self = this
+	if (!window.loaded) {
+		window.clearTimeout(self.setTimeoutId)
+		self.setTimeoutId = window.setTimeout(self.refresh, 1000)
+	}
 
-	var _ = window.sto.libs.lodash;
+	window.events.on('printer-status', self.reloadWithData.bind(domEl))
+},
 
-	var printers = _.cloneDeep(window.sto.data.printers);
+reloadWithData: function(domEl) {
+	var printers = _.cloneDeep(window.data.printers);
 	var printerErrorStates = _.chain(printers)
 		.reject({'error': "No Error"})
 		.reject({'error': "Paper Low"})

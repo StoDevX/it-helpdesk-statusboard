@@ -1,5 +1,5 @@
 command: 'echo ""',
-refreshFrequency: 10000,
+refreshFrequency: false,
 
 style: [
 	"left: 25%",
@@ -53,21 +53,19 @@ render: function(output) {
 	].join('');
 },
 
-update: function(output, domEl) {
-	if (!window.sto)             return '';
-	if (!window.sto.libs.lodash) return '';
-	if (!window.sto.libs.moment) return '';
-	if (!window.sto.data.shifts) return '';
-	if (!window.sto.data.shifts.now) return '';
-	if (!window.sto.data.shifts.later) return '';
+afterRender: function(domEl) {
+	var self = this
+	if (!window.loaded) {
+		window.clearTimeout(self.setTimeoutId)
+		self.setTimeoutId = window.setTimeout(self.refresh, 1000)
+	}
 
-	var _      = window.sto.libs.lodash;
-	var moment = window.sto.libs.moment;
+	window.events.on('helpdesk-workers', self.reloadWithData.bind(domEl))
+},
 
-	/////
-
+reloadWithData: function(domEl) {
 	(function addLaterShifts() {
-		var laterShifts = window.sto.data.shifts.later;
+		var laterShifts = window.data.shifts.later;
 		var next = domEl.querySelector('.next .details');
 		next.innerHTML = "";
 
@@ -103,7 +101,7 @@ update: function(output, domEl) {
 	/////
 
 	(function addCurrentShifts() {
-		var currentShifts = window.sto.data.shifts.now;
+		var currentShifts = window.data.shifts.now;
 		var now = domEl.querySelector('.now .details');
 		now.innerHTML = "";
 
