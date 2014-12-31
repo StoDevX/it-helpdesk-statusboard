@@ -3,20 +3,10 @@ command: '/usr/bin/env python scripts/when_to_work.py | cat data/whentowork.json
 refreshFrequency: 30000,
 lastUpdateTime: undefined,
 
-style: [
-	"bottom: 0",
-	"left: 50%",
-	"width: 25%",
-	"text-align: center",
-	"border: 0",
-	"height: 3%",
-	"vertical-align: middle",
-	"color: rgba(255, 255, 255, 0.25)",
-	"font-weight: 300",
-].join('\n'),
+style: "left: 50%",
 
 render: function(argument) {
-	return 'Helpdesk Workers: <span class="last-updated"></span>';
+	return '<status-widget>Helpdesk Workers: <last-updated/></status-widget>'
 },
 
 prepareShiftTable: function(data) {

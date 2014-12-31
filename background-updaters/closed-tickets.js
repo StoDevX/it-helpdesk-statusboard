@@ -3,20 +3,10 @@ command: '/usr/bin/env python scripts/get_tickets.py closed 1&2> /dev/null | cat
 refreshFrequency: 30000,
 lastUpdateTime: undefined,
 
-style: [
-	"bottom: 0",
-	"left: 25%",
-	"width: 25%",
-	"text-align: center",
-	"border: 0",
-	"height: 3%",
-	"vertical-align: middle",
-	"color: rgba(255, 255, 255, 0.25)",
-	"font-weight: 300",
-].join('\n'),
+style: "left: 25%",
 
-render: function(argument) {
-	return 'Closed Tickets: <span class="last-updated"></span>';
+render: function() {
+	return '<status-widget>Closed Tickets: <last-updated/></status-widget>'
 },
 
 update: function(output, domEl) {

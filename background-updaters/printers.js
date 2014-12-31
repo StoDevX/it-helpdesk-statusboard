@@ -3,20 +3,10 @@ command: '/usr/bin/env python scripts/snmp_printer_update.py | cat data/printer-
 refreshFrequency: 30000,
 lastUpdateTime: undefined,
 
-style: [
-	"bottom: 0",
-	"left: 75%",
-	"width: 25%",
-	"text-align: center",
-	"border: 0",
-	"height: 3%",
-	"vertical-align: middle",
-	"color: rgba(255, 255, 255, 0.25)",
-	"font-weight: 300",
-].join('\n'),
+style: "left: 75%",
 
 render: function(argument) {
-	return 'Printers: <span class="last-updated"></span>';
+	return '<status-widget>Printers: <last-updated/></status-widget>'
 },
 
 update: function(output, domEl) {

@@ -3,20 +3,8 @@ command: '/usr/bin/env python scripts/get_tickets.py open 1&2> /dev/null | cat d
 refreshFrequency: 30000,
 lastUpdateTime: undefined,
 
-style: [
-	"bottom: 0",
-	"left: 0",
-	"width: 25%",
-	"text-align: center",
-	"border: 0",
-	"height: 3%",
-	"vertical-align: middle",
-	"color: rgba(255, 255, 255, 0.25)",
-	"font-weight: 300",
-].join('\n'),
+style: "left: 0",
 
-render: function(argument) {
-	return 'Open Tickets: <span class="last-updated"></span>';
 },
 
 update: function(output, domEl) {

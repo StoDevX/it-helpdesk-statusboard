@@ -78,6 +78,17 @@ body {
 	list-style: none;
 }
 
+status-widget {
+	bottom: 0;
+	width: 25%;
+	text-align: center;
+	border: 0;
+	height: 3%;
+	vertical-align: middle;
+	color: rgba(255, 255, 255, 0.25);
+	font-weight: 300;
+}
+
 .aqua   { color: rgb(  0, 159, 153) }
 .blue   { color: rgb(  0, 108, 230) }
 .green  { color: rgb(  0, 186,   0) }
