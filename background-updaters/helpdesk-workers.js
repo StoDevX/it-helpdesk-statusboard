@@ -10,8 +10,6 @@ render: function(argument) {
 },
 
 prepareShiftTable: function(data) {
-	var _ = window.sto.libs.lodash;
-
 	var parser = new DOMParser();
 	var whenToWork = parser.parseFromString(data, 'text/html');
 
@@ -29,7 +27,6 @@ prepareShiftTable: function(data) {
 },
 
 getLaterShifts: function(output) {
-	var _ = window.sto.libs.lodash;
 	var shiftRows = this.prepareShiftTable(output);
 
 	var shifts = _.chain(shiftRows)
@@ -57,7 +54,6 @@ getLaterShifts: function(output) {
 },
 
 getNowShifts: function(output) {
-	var _ = window.sto.libs.lodash;
 	var shiftRows = this.prepareShiftTable(output);
 
 	var currentWorkers = _.chain(shiftRows)
@@ -83,22 +79,26 @@ getNowShifts: function(output) {
 },
 
 update: function(output, domEl) {
-	if (!window.sto)                return '';
-	if (!window.sto.libs.lodash)    return '';
-	if (!window.sto.libs.moment)    return '';
-	if (!window.sto.libs.DOMParser) return '';
+	domEl.querySelector('last-updated').textContent = 'Initializing...'
 
-	var _      = window.sto.libs.lodash;
-	var moment = window.sto.libs.moment;
-	window.sto.data = window.sto.data || {};
-
-	var data = JSON.parse(output).data;
-
-	window.sto.data.shifts = {
-		later: this.getLaterShifts(data.later),
-		now: this.getNowShifts(data.now),
+	if (!window.loaded) {
+		var self = this
+		self.stop()
+		window.clearTimeout(self.setTimeoutId)
+		self.setTimeoutId = window.setTimeout(self.refresh, 1000)
 	}
 
-	this.lastUpdateTime = moment(data.lastUpdated);
-	domEl.querySelector('.last-updated').textContent = moment(this.lastUpdateTime).calendar();
+	domEl.querySelector('last-updated').textContent = 'Loading...'
+
+	var shiftData = JSON.parse(output).data
+	var shifts = {
+		later: this.getLaterShifts(shiftData.later),
+		now: this.getNowShifts(shiftData.now),
+	}
+	window.data.shifts = shifts
+	window.events.emit('helpdesk-workers', shifts)
+
+	this.lastUpdateTime = moment(data.lastUpdated)
+	domEl.querySelector('last-updated').textContent = moment(this.lastUpdateTime).calendar()
+	this.start()
 },

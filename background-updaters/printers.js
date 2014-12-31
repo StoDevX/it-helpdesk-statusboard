@@ -10,16 +10,21 @@ render: function(argument) {
 },
 
 update: function(output, domEl) {
-	if (!window.sto)             return '';
-	if (!window.sto.libs.csv)    return '';
-	if (!window.sto.libs.moment) return '';
-	var csv = window.sto.libs.csv;
-	var moment = window.sto.libs.moment;
-	window.sto.data = window.sto.data || {};
+	domEl.querySelector('last-updated').textContent = 'Initializing...'
 
-	var printerData = JSON.parse(output);
-	window.sto.data.printers = printerData.data;
+	if (!window.loaded) {
+		var self = this
+		self.stop()
+		window.clearTimeout(self.setTimeoutId)
+		self.setTimeoutId = window.setTimeout(self.refresh, 1000)
+	}
 
-	this.lastUpdateTime = moment(printerData.lastUpdated);
-	domEl.querySelector('.last-updated').textContent = moment(this.lastUpdateTime).calendar();
+	domEl.querySelector('last-updated').textContent = 'Loading...'
+
+	var printerData = JSON.parse(output).data
+	window.data.printers = printerData
+	window.events.emit('printer-status', printerData)
+
+	this.lastUpdateTime = moment(printerData.lastUpdated)
+	domEl.querySelector('last-updated').textContent = moment(this.lastUpdateTime).calendar()
 },
