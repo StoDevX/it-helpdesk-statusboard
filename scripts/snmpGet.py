@@ -9,7 +9,7 @@ import data_helpers
 awk = '| awk \'NF>1{print $NF}\''
 
 printerNames = [
-	'mfc-bc110', 'mfc-bc147', 'mfc-casualreading',
+	'mfc-bc110', 'mfc-casualreading',
 	'mfc-crossroads', 'mfc-ellingson', 'mfc-fireside',
 	'mfc-hh407', 'mfc-hillkitt', 'mfc-hoyme',
 	'mfc-kierk', 'mfc-kildahl', 'mfc-larson',
@@ -17,8 +17,7 @@ printerNames = [
 	'mfc-pastor', 'mfc-rand', 'mfc-rml-1st',
 	'mfc-rml115', 'mfc-rml330', 'mfc-rml386',
 	'mfc-rml433', 'mfc-rml560', 'mfc-rmlref',
-	'mfc-rns-2nd', 'mfc-rns258', 'mfc-rns358',
-	'mfc-sac', 'mfc-scilib', 'mfc-thorson',
+	'mfc-rns-2nd', 'mfc-rns258', 'mfc-rns358', 'mfc-scilib', 'mfc-thorson',
 	'mfc-toh101', 'mfc-toh3', 'mfc-toh3-east',
 	'mfc-toh3-west', 'mfc-ytt118']
 
