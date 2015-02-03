@@ -96,6 +96,9 @@ def snmpStatusCode(printer_url):
 		'L': "Paper Misfeed in Finisher",
 		'I': "Fuser Error (Call EO Johnson)",
 		'05': "Fuser Error (Call EO Johnson)",
+		'85': "Fuser Error (Call EO Johnson)",
+		'01': "Fatal Error (Call EO Johnson)",
+		'84': "Open the front door, and clean the slit glass and main charger"
 	}
 
 	if code in codes:
