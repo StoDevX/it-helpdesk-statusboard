@@ -47,8 +47,6 @@ render: function(output) {
 			'</div>',
 			'<h1 class="title">Ticket Counters</h1>',
 		'</div>',
-		'<audio class="noise" src="smw_riding_yoshi.mp3"></audio>',
-		'<audio class="happy" src="happy.out.m4a"></audio>',
 	].join('')
 },
 
@@ -70,7 +68,6 @@ makeResultElements: function(id, name, count) {
 },
 
 priorTicketId: 0,
-happyHasPlayed: 0,
 
 makeOpenTicketsRow: function(openTickets, domEl) {
 	return this.makeResultElements('open', 'Open Tickets', openTickets.length);
@@ -165,7 +162,7 @@ calculateFontWeight: function calculateFontWeight(ticketCount) {
 	return result;
 },
 
-playNoises: function(openTickets, domEl) {
+playNoises: function(openTickets) {
 	var _ = window.sto.libs.lodash;
 
 	var newestTicketId = 0;
@@ -175,20 +172,6 @@ playNoises: function(openTickets, domEl) {
 			.last()
 			.value()
 			.id;
-	}
-
-	var noise = domEl.querySelector('.noise');
-	var happy = domEl.querySelector('.happy');
-
-	if (newestTicketId > this.priorTicketId) {
-		noise.play();
-	}
-
-	if (openTickets.length === 0 && !this.happyHasPlayed) {
-		happy.play();
-		this.happyHasPlayed = true;
-	} else {
-		this.happyHasPlayed = false;
 	}
 
 	this.priorTicketId = newestTicketId;
@@ -202,7 +185,7 @@ update: function(output, domEl) {
 	var _ = window.sto.libs.lodash;
 	var openTickets = window.sto.data.openTickets;
 
-	this.playNoises(openTickets, domEl);
+	this.playNoises(openTickets);
 
 	var counters = domEl.querySelector('.counters');
 
