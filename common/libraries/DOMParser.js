@@ -1,5 +1,4 @@
-command: 'echo ""',
-refreshFrequency: 3600000,
+refreshFrequency: false,
 
 // from http://stackoverflow.com/questions/12980648/map-html-to-json
 

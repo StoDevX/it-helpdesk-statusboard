@@ -1,5 +1,4 @@
-command: 'echo ""',
-refreshFrequency: 3600000,
+refreshFrequency: false,
 
 // from https://github.com/knrz/CSV.js
 
