@@ -4,6 +4,11 @@ import sys
 from subprocess import check_output
 import data_helpers
 
+def get_credentials():
+	# returns 'api-key'
+	with open('credentials/webhelpdesk.credential', 'r') as credentials:
+		return credentials.read()
+
 def main():
 	if len(sys.argv) >= 2:
 		statustype = sys.argv[1]
@@ -12,7 +17,7 @@ def main():
 		exit(1)
 
 	whd_tickets = 'https://help.stolaf.edu/helpdesk/WebObjects/Helpdesk.woa/ra/Tickets'
-	apiKey = '***REMOVED***'
+	apiKey = get_credentials()
 	params = '?style=details&limit=50&qualifier=(statustype.statusTypeName%3D%27'+statustype.title()+'%27)&apiKey='+apiKey
 
 	if not data_helpers.needs_reload('data/' + filename, minutes=1):

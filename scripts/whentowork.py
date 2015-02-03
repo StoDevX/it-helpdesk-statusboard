@@ -28,7 +28,7 @@ def get_sid_from_homepage_link(homepage_link):
 
 def get_credentials():
 	# returns ['username', 'password']
-	with open('common/whentowork.credential', 'r') as when_to_work_credentials:
+	with open('credentials/whentowork.credential', 'r') as when_to_work_credentials:
 		return when_to_work_credentials.read().split('\n')
 
 

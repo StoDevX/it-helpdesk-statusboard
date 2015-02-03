@@ -25,5 +25,5 @@ There are several background widgets that pull in data and save it to global var
 
 What other files are needed?
 
-- WhenToWork needs a 'credential' file, called `whentowork.credential`, in `/common`. Put your username on one line, and your password on the second.
+- WhenToWork needs a 'credential' file, called `whentowork.credential`, in `/credentials`. Put your username on one line, and your password on the second.
 - For snmpGet to work, you must be on the IT network. That usually means being hard-wired in the helpdesk istelf.
