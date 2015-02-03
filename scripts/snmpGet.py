@@ -115,7 +115,7 @@ def snmpStatusCode(printer_url):
 
 
 def main():
-	if not data_helpers.needs_reload('data/printer-status.json', minutes=5):
+	if not data_helpers.needs_reload('printer-status.json', minutes=5):
 		return ""
 
 	for printer in printerList:
@@ -124,7 +124,7 @@ def main():
 		printer['status'] = snmpStatus(printer['url'])
 		printer['error']  = snmpStatusCode(printer['url'])
 
-	data_helpers.save_data('data/printer-status.json', printerList)
+	data_helpers.save_data('printer-status.json', printerList)
 
 if __name__ == '__main__':
 	main()

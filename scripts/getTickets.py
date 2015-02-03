@@ -20,12 +20,12 @@ def main():
 	apiKey = get_credentials()
 	params = '?style=details&limit=50&qualifier=(statustype.statusTypeName%3D%27'+statustype.title()+'%27)&apiKey='+apiKey
 
-	if not data_helpers.needs_reload('data/' + filename, minutes=1):
+	if not data_helpers.needs_reload(filename, minutes=1):
 		return ""
 
 	tickets = check_output('curl --silent "%s"' % (whd_tickets+params), shell=True)
 
-	data_helpers.save_data('data/'+filename, json.loads(tickets))
+	data_helpers.save_data(filename, json.loads(tickets))
 
 if __name__ == '__main__':
 	main()

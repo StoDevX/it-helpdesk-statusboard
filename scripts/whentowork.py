@@ -64,7 +64,8 @@ def get_whos_on_now_page(SID):
 
 
 def main():
-	if not data_helpers.needs_reload('data/whentowork.json', minutes=30): return ""
+	if not data_helpers.needs_reload('whentowork.json', minutes=30): 
+		return ""
 
 	credentials = get_credentials()
 	login_page = get_login_page(credentials)
@@ -77,7 +78,7 @@ def main():
 	whos_on_later_page = get_whos_on_later_page(SID)
 	whos_on_now_page = get_whos_on_now_page(SID)
 
-	data_helpers.save_data('data/whentowork.json',
+	data_helpers.save_data('whentowork.json',
 		{'later': whos_on_later_page, 'now': whos_on_now_page})
 
 if __name__ == '__main__':

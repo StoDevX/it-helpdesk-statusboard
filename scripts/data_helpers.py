@@ -19,7 +19,8 @@ def ensure_file_exists(path):
 		with open(path, 'w') as input_file:
 			input_file.write('')
 
-def needs_reload(path, minutes):
+def needs_reload(filename, minutes):
+	path = 'data/' + filename
 	now = datetime.now()
 	minutes = now.minute - minutes if (now.minute - minutes) >= 0 else 0
 
@@ -43,7 +44,8 @@ def needs_reload(path, minutes):
 
 	return True
 
-def save_data(path, data):
+def save_data(filename, data):
+	path = 'data/' + filename
 	ensure_file_exists(path)
 	data_to_save = {
 		'data': data,
