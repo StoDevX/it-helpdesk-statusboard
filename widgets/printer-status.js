@@ -48,12 +48,16 @@ afterRender: function(domEl) {
 	if (!window.loaded) {
 		window.clearTimeout(self.setTimeoutId)
 		self.setTimeoutId = window.setTimeout(self.refresh, 1000)
+		return;
 	}
 
 	window.events.on('printer-status', self.reloadWithData.bind(domEl))
 },
 
 reloadWithData: function(domEl) {
+	if (!domEl.querySelector('last-updated'))
+		this.render()
+
 	var printers = _.cloneDeep(window.data.printers);
 	var printerErrorStates = _.chain(printers)
 		.reject({'error': "No Error"})

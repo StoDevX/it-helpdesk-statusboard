@@ -87,12 +87,16 @@ afterRender: function(domEl) {
 	if (!window.loaded) {
 		window.clearTimeout(self.setTimeoutId)
 		self.setTimeoutId = window.setTimeout(self.refresh, 1000)
+		return;
 	}
 
 	window.events.on('open-tickets', self.reloadWithData.bind(domEl))
 },
 
 reloadWithData: function(domEl) {
+	if (!domEl.querySelector('last-updated'))
+		this.render()
+
 	var openTickets = window.data.openTickets;
 
 	var sortedTickets = _.chain(openTickets)

@@ -106,7 +106,7 @@ makeEquipmentTicketsRow: function(openTickets) {
 },
 
 makeUncategorizedTicketsRow: function(openTickets) {
-	return this.makeRequestTypeRow(openTickets, 'Email Submission (helpdesk@stolaf.edu)', 'uncategoprized', 'Needs Request Type');
+	return this.makeRequestTypeRow(openTickets, 'Email Submission (helpdesk@stolaf.edu)', 'uncategorized', 'Needs Request Type');
 },
 
 makeNetworkTicketsRow: function(openTickets) {
@@ -199,12 +199,16 @@ afterRender: function(domEl) {
 	if (!window.loaded) {
 		window.clearTimeout(self.setTimeoutId)
 		self.setTimeoutId = window.setTimeout(self.refresh, 1000)
+		return;
 	}
 
 	window.events.on('open-tickets', self.reloadWithData.bind(domEl))
 },
 
 reloadWithData: function(domEl) {
+	if (!domEl.querySelector('last-updated'))
+		this.render()
+
 	var openTickets = window.data.openTickets;
 
 	this.playNoises(openTickets, domEl);

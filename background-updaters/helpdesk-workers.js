@@ -79,6 +79,9 @@ getNowShifts: function(output) {
 },
 
 update: function(output, domEl) {
+	if (!domEl.querySelector('last-updated'))
+		this.render()
+
 	domEl.querySelector('last-updated').textContent = 'Initializing...'
 
 	if (!window.loaded) {
@@ -86,6 +89,7 @@ update: function(output, domEl) {
 		self.stop()
 		window.clearTimeout(self.setTimeoutId)
 		self.setTimeoutId = window.setTimeout(self.refresh, 1000)
+		return;
 	}
 
 	domEl.querySelector('last-updated').textContent = 'Loading...'

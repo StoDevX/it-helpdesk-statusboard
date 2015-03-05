@@ -58,12 +58,16 @@ afterRender: function(domEl) {
 	if (!window.loaded) {
 		window.clearTimeout(self.setTimeoutId)
 		self.setTimeoutId = window.setTimeout(self.refresh, 1000)
+		return;
 	}
 
 	window.events.on('helpdesk-workers', self.reloadWithData.bind(domEl))
 },
 
 reloadWithData: function(domEl) {
+	if (!domEl.querySelector('last-updated'))
+		this.render()
+
 	(function addLaterShifts() {
 		var laterShifts = window.data.shifts.later;
 		var next = domEl.querySelector('.next .details');

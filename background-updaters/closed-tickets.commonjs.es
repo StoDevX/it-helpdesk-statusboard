@@ -1,15 +1,15 @@
-command: '/usr/bin/env python scripts/get_tickets.py closed 1&2> /dev/null | cat data/closed-tickets.json',
+module.exports.command = '/usr/bin/env python scripts/get_tickets.py closed 1&2> /dev/null | cat data/closed-tickets.json'
 
-refreshFrequency: 30000,
-lastUpdateTime: undefined,
+module.exports.refreshFrequency = 30000
+var lastUpdateTime = undefined
 
-style: "left: 25%",
+module.exports.style = "left: 25%"
 
-render: function() {
+module.exports.render = function() {
 	return '<status-widget>Closed Tickets: <last-updated/></status-widget>'
-},
+}
 
-update: function(output, domEl) {
+module.exports.update = function(output, domEl) {
 	if (!domEl.querySelector('last-updated'))
 		this.render()
 
@@ -32,4 +32,4 @@ update: function(output, domEl) {
 	this.lastUpdateTime = moment(ticketData.lastUpdated)
 	domEl.querySelector('last-updated').textContent = moment(this.lastUpdateTime).calendar()
 	this.start()
-},
+}
