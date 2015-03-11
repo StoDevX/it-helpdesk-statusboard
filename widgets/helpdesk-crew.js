@@ -2,11 +2,11 @@ command: 'echo ""',
 refreshFrequency: 10000,
 
 style: [
-	"left: 25%",
+	"left: 0",
 	"top: 0",
 
-	"width: 23%",
-	"height: 50vh",
+	"width: 20%",
+	"height: 97vh",
 
 	"text-align: center",
 
@@ -30,6 +30,10 @@ style: [
 	"	font-size: 1.5em",
 	"	color: rgba(255, 255, 255, 0.75)",
 
+	// ".workers li",
+	// "	white-space: pre",
+	// "	overflow: ellipses",
+
 	".wrapper",
 	"	color: inherit",
 	"	text-decoration: none",
@@ -40,15 +44,23 @@ style: [
 render: function(output) {
 	return [
 		'<a class="wrapper" href="https://whentowork.com/cgi-bin/w2w.dll/login">',
-			'<div class="now">',
+			'<div class="now-helpdesk">',
 				'<h1 class="title">Now @Helpdesk</h1>',
 				'<div class="details"></div>',
 			'</div>',
-			'<div class="next">',
+			'<div class="now-library">',
+				'<h1 class="title">Now @Library</h1>',
+				'<div class="details"></div>',
+			'</div>',
+			'<div class="next-helpdesk">',
 				'<h1 class="title">Next @Helpdesk</h1>',
 				'<div class="details"></div>',
 			'</div>',
-			'<h1 class="title">☠ Helpdesk</h1>',
+			'<div class="next-library">',
+				'<h1 class="title">Next @Library</h1>',
+				'<div class="details"></div>',
+			'</div>',
+			'<h1 class="title">☠ Workers</h1>',
 		'</a>',
 	].join('');
 },
@@ -66,9 +78,9 @@ update: function(output, domEl) {
 
 	/////
 
-	(function addLaterShifts() {
+	function addLaterShifts(desk) {
 		var laterShifts = window.sto.data.shifts.later;
-		var next = domEl.querySelector('.next .details');
+		var next = domEl.querySelector('.next-'+desk.toLowerCase()+' .details');
 		next.innerHTML = "";
 
 		if (laterShifts.length === 0) {
@@ -76,7 +88,7 @@ update: function(output, domEl) {
 			return "";
 		}
 
-		var onlyHelpdeskShifts = _.reject(laterShifts, {'location': 'Library'});
+		var onlyHelpdeskShifts = _.filter(laterShifts, {'location': desk});
 		var helpdeskShifts = _.chain(onlyHelpdeskShifts)
 			.groupBy('startTime')
 			.toArray()
@@ -98,13 +110,15 @@ update: function(output, domEl) {
 		var time = document.createElement('time');
 		time.textContent = '⟨ ' + helpdeskShifts[0].time + ' ⟩';
 		next.appendChild(time);
-	})();
+	}
+	addLaterShifts('Library');
+	addLaterShifts('Helpdesk');
 
 	/////
 
-	(function addCurrentShifts() {
+	function addCurrentShifts(desk) {
 		var currentShifts = window.sto.data.shifts.now;
-		var now = domEl.querySelector('.now .details');
+		var now = domEl.querySelector('.now-'+desk.toLowerCase()+' .details');
 		now.innerHTML = "";
 
 		if (currentShifts.length === 0) {
@@ -112,7 +126,7 @@ update: function(output, domEl) {
 			return "";
 		}
 
-		var onlyHelpdeskShifts = _.reject(currentShifts, {'location': 'Library'});
+		var onlyHelpdeskShifts = _.filter(currentShifts, {'location': desk});
 		var helpdeskShifts = _.chain(onlyHelpdeskShifts)
 			.groupBy('startTime')
 			.toArray()
@@ -128,5 +142,7 @@ update: function(output, domEl) {
 		})
 
 		now.appendChild(list);
-	})();
+	}
+	addCurrentShifts('Library');
+	addCurrentShifts('Helpdesk');
 }

@@ -9,17 +9,40 @@ import data_helpers
 awk = '| awk \'NF>1{print $NF}\''
 
 printerNames = [
-	'mfc-bc110', 'mfc-casualreading',
-	'mfc-crossroads', 'mfc-ellingson', 'mfc-fireside',
-	'mfc-hh407', 'mfc-hillkitt', 'mfc-hoyme',
-	'mfc-kierk', 'mfc-kildahl', 'mfc-larson',
-	'mfc-mellby', 'mfc-mohn', 'mfc-om245',
-	'mfc-pastor', 'mfc-rand', 'mfc-rml-1st',
-	'mfc-rml115', 'mfc-rml330', 'mfc-rml386',
-	'mfc-rml433', 'mfc-rml560', 'mfc-rmlref',
-	'mfc-rns-2nd', 'mfc-rns258', 'mfc-rns358', 'mfc-scilib', 'mfc-thorson',
-	'mfc-toh101', 'mfc-toh3', 'mfc-toh3-east',
-	'mfc-toh3-west', 'mfc-ytt118']
+	'mfc-bc110', 
+	'mfc-casualreading', 
+	'mfc-it',
+	'mfc-crossroads', 
+	'mfc-ellingson', 
+	'mfc-fireside',
+	'mfc-hh407', 
+	'mfc-hillkitt', 
+	'mfc-hoyme',
+	'mfc-kierk', 
+	'mfc-kildahl', 
+	'mfc-larson',
+	'mfc-mellby', 
+	'mfc-mohn', 
+	'mfc-om245',
+	'mfc-pastor', 
+	'mfc-rand', 
+	'mfc-rml-1st',
+	'mfc-rml115', 
+	'mfc-rml330', 
+	'mfc-rml386',
+	'mfc-rml433', 
+	'mfc-rml560', 
+	'mfc-rmlref',
+	'mfc-rns-2nd', 
+	'mfc-rns258', 
+	'mfc-rns358', 
+	'mfc-scilib', 
+	'mfc-thorson',
+	'mfc-toh101', 
+	'mfc-toh3', 
+	'mfc-toh3-east',
+	'mfc-toh3-west', 
+	'mfc-ytt118']
 
 printerBaseUrl = '.printer.stolaf.edu'
 printerList = [{'name': printer, 'url': printer + printerBaseUrl} for printer in printerNames]
@@ -98,10 +121,14 @@ def snmpStatusCode(printer_url):
 		'05': "Fuser Error (Call EO Johnson)",
 		'85': "Fuser Error (Call EO Johnson)",
 		'01': "Fatal Error (Call EO Johnson)",
-		'84': "Open the front door, and clean the slit glass and main charger"
+		'84': "Open the front door, and clean the slit glass and main charger",
+		'90': "Black toner empty; replace cartridge now",
+		'81': "Fatal Error (Call EO Johnson)",
+		'08': "Finisher door open; please close door"
 	}
 
 	if code in codes:
+		print(printer_url, code, codes[code])
 		return codes[code]
 
 	# Turn something like C0 into [67 32]
@@ -123,6 +150,8 @@ def main():
 		printer['toner']  = snmpMFCToner(printer['url'])
 		printer['status'] = snmpStatus(printer['url'])
 		printer['error']  = snmpStatusCode(printer['url'])
+
+		# if printer['error'] is ''
 
 	data_helpers.save_data('printer-status.json', printerList)
 

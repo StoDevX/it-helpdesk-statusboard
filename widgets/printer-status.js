@@ -54,6 +54,8 @@ update: function(output, domEl) {
 	var printerErrorStates = _.chain(printers)
 		.reject({'error': "No Error"})
 		.reject({'error': "Paper Low"})
+		.reject({'error': "Tray 1 Empty"})
+		.reject({'error': "Tray 2 Empty"})
 		.filter(function(printer) {
 			return printer.name && _.contains(printer.name.toLowerCase(), 'mfc-')
 		})
