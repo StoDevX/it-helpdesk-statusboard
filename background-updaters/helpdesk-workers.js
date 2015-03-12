@@ -16,7 +16,7 @@ style: [
 ].join('\n'),
 
 render: function(argument) {
-	return 'Helpdesk Workers: <span class="last-updated"></span>';
+	return 'Workers: <span class="last-updated"></span>';
 },
 
 prepareShiftTable: function(data) {
@@ -56,8 +56,8 @@ getLaterShifts: function(output) {
 				name:      shift['Scheduled'],
 				location:  shift['Position'],
 				time:      shift['Time'],
-				startTime: times[1],
-				endTime:   times[2],
+				startTime: sto.libs.moment(times[1], 'h:ma'),
+				endTime:   sto.libs.moment(times[2], 'h:ma'),
 			}
 		})
 		.sortBy('startTime')
