@@ -1,14 +1,14 @@
-refreshFrequency: false,
+refreshFrequency: false
 
-style: "border: 0",
+style: "border: 0"
 
-render: function() {
-	window.sto = window.sto || {
+render: () ->
+	window.sto ?= {
 		libs: {},
 		data: {},
-	};
+	}
 
-	var staff = [
+	window.sto.data.staff = [
 		'Andy Prehall',
 		'Ben Gottfried',
 		'Bob Breid',
@@ -37,10 +37,9 @@ render: function() {
 		'Tim Isom',
 		'Tony Skalski',
 		'Wendy Woitalla',
-	];
-	window.sto.data.staff = staff;
+	]
 
-	var colors = [
+	window.sto.data.colors = [
 		'red',
 		'orange',
 		'yellow',
@@ -51,7 +50,3 @@ render: function() {
 		'aqua',
 		'silver',
 	]
-	window.sto.data.colors = colors;
-
-	return ''
-}

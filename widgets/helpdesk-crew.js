@@ -30,10 +30,6 @@ style: [
 	"	font-size: 1.5em",
 	"	color: rgba(255, 255, 255, 0.75)",
 
-	// ".workers li",
-	// "	white-space: pre",
-	// "	overflow: ellipses",
-
 	".wrapper",
 	"	color: inherit",
 	"	text-decoration: none",
