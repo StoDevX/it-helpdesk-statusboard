@@ -48,19 +48,19 @@ render: function(output) {
 },
 
 update: function(output, domEl) {
-	if (!window.sto)                    return '';
-	if (!window.sto.libs.lodash)        return '';
-	if (!window.sto.data.openTickets)   return '';
-	if (!window.sto.data.closedTickets) return '';
-	if (!window.sto.data.colors)        return '';
+	if (!window.sto)                    return ''
+	if (!window.sto.libs.lodash)        return ''
+	if (!window.sto.data.openTickets)   return ''
+	if (!window.sto.data.closedTickets) return ''
+	if (!window.sto.data.colors)        return ''
 
-	var _ = window.sto.libs.lodash;
+	var _ = window.sto.libs.lodash
 
-	var details = domEl.querySelector('.details');
+	var details = domEl.querySelector('.details')
 
-	var openTickets = window.sto.data.openTickets;
-	var closedTickets = window.sto.data.closedTickets;
-	var tickets = _.flatten([openTickets, closedTickets]);
+	var openTickets = window.sto.data.openTickets
+	var closedTickets = window.sto.data.closedTickets
+	var tickets = _.flatten([openTickets, closedTickets])
 
 	function hasTechNote(note) {
 		return (
@@ -70,11 +70,11 @@ update: function(output, domEl) {
 		)
 	}
 
-	var colors = window.sto.data.colors;
-	var staff = window.sto.data.staff;
+	var colors = window.sto.data.colors
+	var staff = window.sto.data.staff
 
 	function isStaffMember(note) {
-		return _.contains(staff, responderName(note));
+		return _.contains(staff, responderName(note))
 	}
 
 	function responderName(note) {
@@ -93,31 +93,31 @@ update: function(output, domEl) {
 		.sortBy(function(item) {
 			return item[1]
 		})
-		.value();
+		.value()
 
 	var topResponders = _.chain(responders)
 		.reverse()
 		.first(9)
-		.value();
+		.value()
 
-	var contentTable = document.createElement('ul');
-	contentTable.classList.add('colorful');
+	var contentTable = document.createElement('ul')
+	contentTable.classList.add('colorful')
 
 	_.each(topResponders, function(pair, index) {
-		var item = document.createElement('li');
-		var nameCell = document.createElement('span');
-		var numberCell = document.createElement('span');
+		var item = document.createElement('li')
+		var nameCell = document.createElement('span')
+		var numberCell = document.createElement('span')
 
-		item.classList.add(colors[index]);
+		item.classList.add(colors[index])
 
-		nameCell.textContent = pair[0];
-		numberCell.textContent = pair[1];
+		nameCell.textContent = pair[0]
+		numberCell.textContent = pair[1]
 
-		item.appendChild(nameCell);
-		item.appendChild(numberCell);
+		item.appendChild(nameCell)
+		item.appendChild(numberCell)
 
-		contentTable.appendChild(item);
+		contentTable.appendChild(item)
 	})
 
-	details.innerHTML = contentTable.outerHTML;
+	details.innerHTML = contentTable.outerHTML
 },
