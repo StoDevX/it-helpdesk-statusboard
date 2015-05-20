@@ -1,4 +1,3 @@
-from __future__ import print_function
 import json
 import sys
 from subprocess import check_output
