@@ -1,4 +1,4 @@
-command: '/usr/bin/env python scripts/getTickets.py closed 1&2> /dev/null | cat data/closed-tickets.json',
+command: '/usr/bin/env python scripts/getTickets.py closed 1&2> /dev/null && cat data/closed-tickets.json',
 
 refreshFrequency: 30000,
 lastUpdateTime: undefined,
