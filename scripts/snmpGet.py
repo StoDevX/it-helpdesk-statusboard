@@ -42,7 +42,8 @@ printerNames = [
 	'mfc-toh3', 
 	'mfc-toh3-east',
 	'mfc-toh3-west', 
-	'mfc-ytt118']
+	'mfc-ytt118',
+]
 
 printerBaseUrl = '.printer.stolaf.edu'
 printerList = [{'name': printer, 'url': printer + printerBaseUrl} for printer in printerNames]
@@ -124,7 +125,10 @@ def snmpStatusCode(printer_url):
 		'84': "Open the front door, and clean the slit glass and main charger",
 		'90': "Black toner empty; replace cartridge now",
 		'81': "Fatal Error (Call EO Johnson)",
-		'08': "Finisher door open; please close door"
+		'08': "Finisher door open; please close door",
+		'C4': "Paper Misfeed in Printer",
+		'h': "Black Toner Near Empty - Please Prepare New Toner Cartridge",
+		'D': "Paper Misfeed",
 	}
 
 	if code in codes:

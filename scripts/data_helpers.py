@@ -47,9 +47,10 @@ def needs_reload(filename, minutes):
 def save_data(filename, data):
 	path = 'data/' + filename
 	ensure_file_exists(path)
+	n = now()
 	data_to_save = {
 		'data': data,
-		'lastUpdated': now()
+		'lastUpdated': n if '.' in n else n + '.0000'
 	}
 	with open(path, 'w+') as output_file:
 		json_data = json.dumps(data_to_save, indent=2, separators=(',', ': '))

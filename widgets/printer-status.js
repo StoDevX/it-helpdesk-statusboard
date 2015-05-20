@@ -1,5 +1,5 @@
 command: 'echo ""',
-refreshFrequency: 10000,
+refreshFrequency: 1000000,
 
 style: [
 	"left: 20vw",
@@ -45,10 +45,7 @@ render: function(output) {
 
 update: function(output, domEl) {
 	if (!window.sto)               return '';
-	if (!window.sto.libs.lodash)   return '';
 	if (!window.sto.data.printers) return '';
-
-	var _ = window.sto.libs.lodash;
 
 	var printers = _.cloneDeep(window.sto.data.printers);
 	var printerErrorStates = _.chain(printers)
@@ -96,9 +93,17 @@ update: function(output, domEl) {
 	var contentList = document.createElement('ul');
 	contentList.className = 'list';
 
+	function recordPrinter(ev) {
+		console.log('clicked', JSON.stringify(ev))
+		window.sto.data.reportedPrinters.push({
+			name: ev.target.textContent,
+			reportedError: ev.target.dataset.error,
+		})
+	}
+
 	var printerCount = 8;
 	_.each(printerErrorStates, function(printers, key) {
-		var printerlist = _.first(printers, printerCount);
+		var printerlist = _.take(printers, printerCount);
 		if (!printerlist.length)
 			return;
 
@@ -113,9 +118,12 @@ update: function(output, domEl) {
 		var printerList = document.createElement('ul');
 		printerList.className = 'inner-list';
 		_.each(printerlist, function(printer) {
-			var printerAsElement = document.createElement('li');
-			if (printer.className) printerAsElement.className = printer.className
-			printerAsElement.textContent = printer.name;
+			var printerAsElement = document.createElement('li')
+			if (printer.className) 
+				printerAsElement.className = printer.className
+			printerAsElement.textContent = printer.name
+			printerAsElement.dataset.error = printer.error
+			// printerAsElement.style.cursor = 'pointer'
 			printerList.appendChild(printerAsElement);
 		})
 
