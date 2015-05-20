@@ -44,10 +44,10 @@ render: function(output) {
 },
 
 update: function(output, domEl) {
-	if (!window.sto)               return '';
-	if (!window.sto.data.printers) return '';
+	if (!window.sto)               return ''
+	if (!window.sto.data.printers) return ''
 
-	var printers = _.cloneDeep(window.sto.data.printers);
+	var printers = _.cloneDeep(window.sto.data.printers)
 	var printerErrorStates = _.chain(printers)
 		.reject({'error': "No Error"})
 		.reject({'error': "Paper Low"})
@@ -62,10 +62,10 @@ update: function(output, domEl) {
 			return printer
 		})
 		.groupBy('error')
-		.value();
+		.value()
 
-	delete printerErrorStates[''];
-	delete printerErrorStates['Drawer Open'];
+	delete printerErrorStates['']
+	delete printerErrorStates['Drawer Open']
 
 	printerErrorStates['Not Responding'] = _.chain(printers)
 		.filter(function(printer) {
@@ -86,12 +86,12 @@ update: function(output, domEl) {
 			return printer
 		})
 		.sortBy('toner')
-		.value();
+		.value()
 
-	var details = domEl.querySelector('.details');
+	var details = domEl.querySelector('.details')
 
-	var contentList = document.createElement('ul');
-	contentList.className = 'list';
+	var contentList = document.createElement('ul')
+	contentList.className = 'list'
 
 	function recordPrinter(ev) {
 		console.log('clicked', JSON.stringify(ev))
@@ -101,35 +101,35 @@ update: function(output, domEl) {
 		})
 	}
 
-	var printerCount = 8;
+	var printerCount = 8
 	_.each(printerErrorStates, function(printers, key) {
-		var printerlist = _.take(printers, printerCount);
+		var printerlist = _.take(printers, printerCount)
 		if (!printerlist.length)
-			return;
+			return
 
-		var group = document.createElement('li');
-		group.className = 'group';
+		var group = document.createElement('li')
+		group.className = 'group'
 
-		var title = document.createElement('h1');
+		var title = document.createElement('h1')
 		title.className = 'heading'
-		title.textContent = key;
-		group.appendChild(title);
+		title.textContent = key
+		group.appendChild(title)
 
-		var printerList = document.createElement('ul');
-		printerList.className = 'inner-list';
+		var printerList = document.createElement('ul')
+		printerList.className = 'inner-list'
 		_.each(printerlist, function(printer) {
 			var printerAsElement = document.createElement('li')
-			if (printer.className) 
+			if (printer.className)
 				printerAsElement.className = printer.className
 			printerAsElement.textContent = printer.name
 			printerAsElement.dataset.error = printer.error
 			// printerAsElement.style.cursor = 'pointer'
-			printerList.appendChild(printerAsElement);
+			printerList.appendChild(printerAsElement)
 		})
 
 		group.appendChild(printerList)
-		contentList.appendChild(group);
+		contentList.appendChild(group)
 	})
 
-	details.innerHTML = contentList.outerHTML
+	details.innerHTML = contentList.innerHTML.length ? contentList.outerHTML : "No problems"
 },
