@@ -15,19 +15,17 @@ style: """
 	font-weight: 300
 """
 
-render: () -> 'Printers: <span class="last-updated"></span>'
-
-update: (output, domEl) ->
+render: (output) ->
 	# console.log(output)
 	unless window.sto
-		return ''
+		return "Printers: sto-js is not loaded"
 	unless window.sto.libs.moment
-		return ''
+		return "Printers: moment is not loaded"
 
 	moment = window.sto.libs.moment
-	window.sto.data = window.sto.data || {}
+	window.sto.data ?= {}
 
-	window.sto.data.reportedPrinters = window.sto.data.reportedPrinters || []
+	window.sto.data.reportedPrinters ?= []
 
 	printerData = null
 	if output
@@ -36,10 +34,11 @@ update: (output, domEl) ->
 		catch e
 			console.log(output)
 			console.log(e)
-			printerData = {}
-		
+			printerData = {data: []}
+
 		window.sto.data.printers = printerData.data
 
 	@lastUpdateTime = moment(printerData.lastUpdated)
 
-	domEl.querySelector('.last-updated').textContent = moment(this.lastUpdateTime).calendar()
+	niceTime = moment(this.lastUpdateTime).calendar()
+	return "Printers: <span class='last-updated'>#{niceTime}</span>"
