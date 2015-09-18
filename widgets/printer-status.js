@@ -79,10 +79,12 @@ update: function(output, domEl) {
 		})
 		.map(function(printer) {
 			printer.name = printer.name + ' (' + printer.toner + '%)'
-			if (printer.toner < 4)
-				printer.className = 'bg-yellow'
-			if (printer.toner <= 2)
+			if (printer.toner <= 2) {
 				printer.className = 'bg-orange'
+			}
+			else if (printer.toner < 4) {
+				printer.className = 'bg-yellow'
+			}
 			return printer
 		})
 		.sortBy('toner')
