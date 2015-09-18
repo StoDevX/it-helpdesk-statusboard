@@ -6,6 +6,7 @@
 from __future__ import print_function
 from subprocess import check_output
 import data_helpers
+from sys import argv
 awk = '| awk \'NF>1{print $NF}\''
 
 printerNames = [
@@ -46,7 +47,6 @@ printerNames = [
 ]
 
 printerBaseUrl = '.printer.stolaf.edu'
-printerList = [{'name': printer, 'url': printer + printerBaseUrl} for printer in printerNames]
 
 def snmpModel(printer_url):
 	model = check_output('snmpwalk -c public -v 1 %s 1.3.6.1.2.1.25.3.2.1.3.1' % (printer_url), shell=True)
@@ -145,19 +145,30 @@ def snmpStatusCode(printer_url):
 	return 'Unknown Code ' + code + ' (raw list: ' + raw_code + ')'
 
 
-def main():
-	if not data_helpers.needs_reload('printer-status.json', minutes=5):
-		return ""
+def check_printers(printers):
+	printer_info = []
 
-	for printer in printerList:
-		# printer['model']  = snmpModel(printerName)
+	for printerName in printers:
+		printer = {'name': printerName, 'url': printerName + printerBaseUrl}
+
+		# printer['model']  = snmpModel(printer['name'])
 		printer['toner']  = snmpMFCToner(printer['url'])
 		printer['status'] = snmpStatus(printer['url'])
 		printer['error']  = snmpStatusCode(printer['url'])
 
-		# if printer['error'] is ''
+		printer_info.append(printer)
 
-	data_helpers.save_data('printer-status.json', printerList)
+	return printer_info
+
+
+def main():
+	if not data_helpers.needs_reload('printer-status.json', minutes=5):
+		return ""
+
+	data_helpers.save_data('printer-status.json', check_printers(printerNames))
 
 if __name__ == '__main__':
-	main()
+	if len(argv) > 1:
+		print(check_printers(argv[1:]))
+	else:
+		main()
