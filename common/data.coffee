@@ -50,3 +50,5 @@ render: () ->
 		'aqua',
 		'silver',
 	]
+
+	return ''
