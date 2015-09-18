@@ -44,16 +44,16 @@ render: function(output) {
 				'<h1 class="title">Now @Helpdesk</h1>',
 				'<div class="details"></div>',
 			'</div>',
-			'<div class="now-library">',
-				'<h1 class="title">Now @Library</h1>',
+			'<div class="now-tcar">',
+				'<h1 class="title">Now @TCAR</h1>',
 				'<div class="details"></div>',
 			'</div>',
 			'<div class="next-helpdesk">',
 				'<h1 class="title">Next @Helpdesk</h1>',
 				'<div class="details"></div>',
 			'</div>',
-			'<div class="next-library">',
-				'<h1 class="title">Next @Library</h1>',
+			'<div class="next-tcar">',
+				'<h1 class="title">Next @TCAR</h1>',
 				'<div class="details"></div>',
 			'</div>',
 			'<h1 class="title">☠ Workers</h1>',
@@ -107,7 +107,7 @@ update: function(output, domEl) {
 		time.textContent = '⟨ ' + helpdeskShifts[0].time + ' ⟩';
 		next.appendChild(time);
 	}
-	addLaterShifts('Library');
+	addLaterShifts('TCAR');
 	addLaterShifts('Helpdesk');
 
 	/////
@@ -139,6 +139,6 @@ update: function(output, domEl) {
 
 		now.appendChild(list);
 	}
-	addCurrentShifts('Library');
+	addCurrentShifts('TCAR');
 	addCurrentShifts('Helpdesk');
 }
