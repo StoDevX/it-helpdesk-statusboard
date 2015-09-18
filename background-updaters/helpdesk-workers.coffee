@@ -27,10 +27,12 @@ prepareShiftTable: (data) ->
 	headers = _.toArray(table.querySelectorAll('tr:first-child td'))
 	keys = _.map(headers, (heading) -> heading.textContent)
 
-	shiftRows = _.toArray(table.querySelectorAll('tr.underline'))
+	shiftRows = _.toArray(table.querySelectorAll('tr[title="View details"]'))
 
-	return _.map(shiftRows, (row) ->
-		_.zipObject(keys, _.chain(row.children).toArray().map('textContent').value()))
+	results = _.map(shiftRows, (row) ->
+		_.zipObject(keys, _.pluck(_.toArray(row.children), 'textContent')))
+
+	return results
 
 
 getLaterShifts: (output) ->
