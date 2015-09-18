@@ -98,6 +98,9 @@ update: function(output, domEl) {
 			ticket.lastUpdatedTime = new Date(ticket.lastUpdated);
 			return ticket;
 		})
+		.reject(function(ticket) {
+			return ticket.problemtype.detailDisplayName === 'IT (Internal) &#8226; Training Request Type'
+		})
 		.sortBy('lastUpdatedTime')
 		.reverse()
 		.first(7)
