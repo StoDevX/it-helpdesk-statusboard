@@ -2,10 +2,10 @@ command: 'echo ""',
 refreshFrequency: 10000,
 
 style: [
-	"top:   0",
-	"right: 20%",
+	"bottom: 3vh",
+	"left: 70vw",
 
-	"width: 32%",
+	"width: 30%",
 	"height: 50vh",
 
 	"border-right: 0",
@@ -30,20 +30,39 @@ update: function(output, domEl) {
 	if (!window.sto)                  return '';
 	if (!window.sto.libs.lodash)      return '';
 	if (!window.sto.data.openTickets) return '';
+	if (!window.sto.data.awaitingClientTickets) return '';
 
 	var _ = window.sto.libs.lodash;
+	var moment = window.sto.libs.moment;
 	var openTickets = window.sto.data.openTickets;
+	var awaitingClientTickets = window.sto.data.awaitingClientTickets;
 
-	var unansweredTickets = _.filter(openTickets, {'notes': []});
+	openTickets = _.filter(openTickets, function(ticket) {
+		return ticket.prioritytype && 
+			ticket.prioritytype.priorityTypeName === 'Normal Svc Req'
+	})
+
+	var unansweredTickets = _.filter(openTickets, {'notes': []})
 
 	var clientResponseTickets = _.chain(openTickets)
 		.reject({'notes': []})
 		.reject(function(ticket) {
-			return ticket.notes[0].isTechNote;
+			return ticket.notes[0].isTechNote
 		})
 		.value();
 
-	var ticketCount = unansweredTickets.length + clientResponseTickets.length;
+	// function extract(ticket) {
+		// return [ticket.id, ticket.subject || ticket.detail.split('\r').length ? ticket.detail.split('\r')[0] : '']
+		// return [ticket.id, ticket.prioritytype.priorityTypeName]
+	// }
+
+	// console.groupCollapsed('ticket names')
+	// _(unansweredTickets).map(extract).each(function(info){console.log(info)}).value()
+	// _(clientResponseTickets).map(extract).each(function(info){console.log(info)}).value()
+	// console.groupEnd('ticket names')
+
+	var ticketCount = unansweredTickets.length + 
+		clientResponseTickets.length
 
 	var wrapper = domEl.querySelector('.wrapper');
 	var details = domEl.querySelector('.details');

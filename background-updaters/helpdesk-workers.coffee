@@ -5,8 +5,8 @@ lastUpdateTime: undefined
 
 style: """
 	bottom: 0
-	left: 50%
-	width: 25%
+	left: 60%
+	width: 20%
 	text-align: center
 	border: 0
 	height: 3%

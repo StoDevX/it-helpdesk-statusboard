@@ -3,10 +3,10 @@ refreshFrequency: 1000000,
 
 style: [
 	"left: 20vw",
-	"bottom: 3vh",
+	"top: 0",
 
-	"height: 47vh",
-	"width: 60%",
+	"height: 97vh",
+	"width: 50%",
 
 	"text-align: center",
 	"font-size: 1.2em",
@@ -47,6 +47,8 @@ update: function(output, domEl) {
 	if (!window.sto)               return ''
 	if (!window.sto.data.printers) return ''
 
+	var _ = window.sto.libs.lodash
+
 	var printers = _.cloneDeep(window.sto.data.printers)
 	var printerErrorStates = _.chain(printers)
 		.reject({'error': "No Error"})
@@ -67,11 +69,9 @@ update: function(output, domEl) {
 	delete printerErrorStates['']
 	delete printerErrorStates['Drawer Open']
 
-	printerErrorStates['Not Responding'] = _.chain(printers)
-		.filter(function(printer) {
-			return printer.error === ''
-		})
-		.value()
+	printerErrorStates['Not Responding'] = _.filter(printers, function(printer) {
+		return printer.error === ''
+	})
 
 	printerErrorStates['Low Toner (< 5%) [Replace]'] = _.chain(printers)
 		.filter(function(printer) {
