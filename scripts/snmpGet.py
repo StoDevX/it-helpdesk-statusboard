@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
-## Created by Phinehas Bynum on 10/1/14.
-## Ported to Python by Hawken Rives on 10/12/14
+# Created by Phinehas Bynum on 10/1/14.
+# Ported to Python by Hawken Rives on 10/12/14
 
 from __future__ import print_function
 from subprocess import check_output
@@ -45,6 +45,7 @@ printerNames = [
 
 printerBaseUrl = '.printer.stolaf.edu'
 
+
 def snmpModel(printer_url):
 	model = check_output('snmpwalk -c public -v 1 %s 1.3.6.1.2.1.25.3.2.1.3.1' % (printer_url), shell=True)
 	return model.strip()
@@ -53,6 +54,7 @@ def snmpModel(printer_url):
 def snmpMFCToner(printer_url):
 	toner_level = check_output('snmpwalk -c public -v 1 %s 1.3.6.1.2.1.43.11.1.1.9.1.1 %s' % (printer_url, awk), shell=True)
 	return toner_level.strip()
+
 
 def snmpMFCAllToner(printer_url):
 	# needs work
@@ -149,9 +151,9 @@ def check_printers(printers):
 		printer = {'name': printerName, 'url': printerName + printerBaseUrl}
 
 		# printer['model']  = snmpModel(printer['name'])
-		printer['toner']  = snmpMFCToner(printer['url'])
+        printer['toner'] = snmpMFCToner(printer['url'])
 		printer['status'] = snmpStatus(printer['url'])
-		printer['error']  = snmpStatusCode(printer['url'])
+        printer['error'] = snmpStatusCode(printer['url'])
 
 		printer_info.append(printer)
 

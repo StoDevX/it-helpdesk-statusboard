@@ -4,10 +4,12 @@ import urllib
 from subprocess import check_output
 import data_helpers
 
+
 def get_credentials():
 	# returns 'api-key'
 	with open('credentials/webhelpdesk.credential', 'r') as credentials:
 		return credentials.read()
+
 
 def main():
 	if len(sys.argv) >= 2:
