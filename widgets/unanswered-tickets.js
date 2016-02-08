@@ -15,13 +15,19 @@ style: [
 
 	".details",
 	"	font-size: 15em",
+	"	padding-top: 0",
+	"	padding-bottom: 2rem",
+
+	".title",
+	"	padding-bottom: 0",
+	"	padding-top: 1rem",
 ].join('\n'),
 
 render: function(output) {
 	return [
 		'<div class="wrapper">',
-			'<div class="details"></div>',
 			'<h1 class="title">Unanswered Tickets</h1>',
+			'<div class="details"></div>',
 		'</div>',
 	].join('')
 },
