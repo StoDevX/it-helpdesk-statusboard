@@ -16,7 +16,6 @@ printerNames = [
 	'mfc-crossroads', 
 	'mfc-ellingson', 
 	'mfc-fireside',
-	'mfc-hh407', 
 	'mfc-hillkitt', 
 	'mfc-hoyme',
 	'mfc-kierk', 
