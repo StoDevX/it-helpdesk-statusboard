@@ -1,4 +1,4 @@
-command: '/usr/bin/env python scripts/getTickets.py "Awaiting Client" 1&2> /dev/null && cat data/awaiting-client-tickets.json',
+command: '/usr/bin/env python scripts/get_tickets.py "Awaiting Client" 1&2> /dev/null && cat data/awaiting-client-tickets.json',
 
 refreshFrequency: 30000,
 lastUpdateTime: undefined,
