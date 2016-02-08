@@ -1,5 +1,5 @@
 command: 'echo ""',
-refreshFrequency: 1000000,
+refreshFrequency: 10000,
 
 style: [
 	"left: 20vw",
