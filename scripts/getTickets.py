@@ -16,9 +16,11 @@ def main():
 	else:
 		exit(1)
 
+	ticket_count = 300
+
 	whd_tickets = 'https://help.stolaf.edu/helpdesk/WebObjects/Helpdesk.woa/ra/Tickets'
 	apiKey = get_credentials()
-	params = '?style=details&limit=50&qualifier=(statustype.statusTypeName%3D%27'+urllib.quote(statustype)+'%27)&apiKey='+apiKey
+	params = '?style=details&limit='+str(ticket_count)+'&qualifier=(statustype.statusTypeName%3D%27'+urllib.quote(statustype)+'%27)&apiKey='+apiKey
 
 	if not data_helpers.needs_reload(filename, minutes=1):
 		return ""
