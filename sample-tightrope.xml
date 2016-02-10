@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CarouselCommand xmlns="http://www.trms.com/CarouselRemoteCommand">
+	<CreatePage>
+		<!-- Login info -->
+		<UserName>John</UserName>
+		<Password>trms</Password>
+
+		<!-- This page will run on ZoneID 1. -->
+		<ZoneSet>
+			<ZoneID>1</ZoneID>
+		</ZoneSet>
+
+		<!-- This page will run on a schedule, defined below. -->
+		<AlwaysOn>true</AlwaysOn>
+
+		<!-- An optional description of this page. -->
+		<Description>
+			The status page for the Helpdesk.
+		</Description>
+
+		<!-- This is a standard page, not an alert page -->
+		<PageType>Standard</PageType>
+
+		<!-- Use the "Title Body" template -->
+		<PageTemplate>
+			<TemplateName>Helpdesk Status</TemplateName>
+
+			<!--
+				I'm not sure if you can define static blocks of text
+				in Tightrope, so I'm erring on the side of caution and
+				putting all the text that I want into here.
+				If you can do static text, then just put the Title blocks
+				in statically.
+			-->
+
+			<!-- Printers -->
+			<Block Name="Title-Printers" Value="Printer Status" />
+			<!-- How should we give it the status for multiple printers? -->
+			<!-- Newline-delimited? Comma? -->
+			<!-- A seperate block for each printer? Might be best. -->
+			<!-- I have groups of printers, grouped by error -->
+			<!-- Here I've embedded it as a JSON blob -->
+			<Block Name="Body-Printers" Value='{"Fuser Error (call EO Johnson)": ["mfc-ellingson"], "Not Responding": ["mfc-fireside"]}' />
+
+			<!-- Up Next -->
+			<Block Name="Title-Now at Helpdesk" Value="Now @Helpdesk" />
+			<Block Name="Body-Now at Helpdesk" Value="Andrew Reiter" />
+
+			<Block Name="Title-Now at TCAR" Value="Now @TCAR" />
+			<Block Name="Body-Now at TCAR" Value="ByungHyun (Michael) Ahn" />
+
+			<Block Name="Title-Next at Helpdesk" Value="Next @Helpdesk" />
+			<Block Name="Time-Next at Helpdesk" Value="3pm-4:30pm" />
+			<Block Name="Body-Next at Helpdesk" Value="Carly Fitzgerald\nSamuel Brodersen-Rodriguez" />
+
+			<Block Name="Title-Next at TCAR" Value="Next @TCAR" />
+			<Block Name="Time-Next at TCAR" Value="3pm-4:30pm" />
+			<Block Name="Body-Next at TCAR" Value="Nathan Maveus" />
+
+			<!-- Open Tickets -->
+			<Block Name="Title-Open Tickets" Value="Open Tickets" />
+			<Block Name="Body-Open Tickets" Value="27" />
+
+			<!-- Unanswered Tickets -->
+			<Block Name="Title-Unanswered Tickets" Value="Unanswered Tickets" />
+			<Block Name="Body-Unanswered Tickets" Value="11" />
+		</PageTemplate>
+	</CreatePage>
+</CarouselCommand>
