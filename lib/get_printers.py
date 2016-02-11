@@ -102,7 +102,7 @@ def snmp_model(printer_url):
 
 def snmp_mfc_toner(printer_url):
     toner_level = call_printer(printer_url, '1.3.6.1.2.1.43.11.1.1.9.1.1')  # | awk
-    return toner_level.strip()
+    return int(toner_level.strip())
 
 
 def snmp_mfc_all_toner(printer_url):
