@@ -18,3 +18,12 @@ Requires a `whentowork.credential` text file that looks like
     password
 
 where `username` and `password` are the user's username and password, respectively.
+
+
+## Tightrope
+Requires a `tightrope.credential` text file that looks like
+
+    username
+    password
+
+where `username` and `password` are the user's username and password, respectively.
