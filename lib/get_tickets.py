@@ -1,8 +1,9 @@
 import json
 import sys
-import urllib
+import requests
+from urllib.parse import quote, urlencode
 from subprocess import check_output
-import data_helpers
+from .data_helpers import load_data, save_data, needs_reload
 
 
 def get_credentials():
@@ -11,25 +12,28 @@ def get_credentials():
         return credentials.read()
 
 
-def main():
-    if len(sys.argv) >= 2:
-        statustype = sys.argv[1]
-        filename = '-'.join(statustype.lower().split()) + '-tickets.json'
-    else:
-        exit(1)
+def get_tickets(statustype):
+    if not statustype:
+        raise Error('statustype is required')
 
-    ticket_count = 300
+    ticket_count = 200
+    filename = '-'.join(statustype.lower().split()) + '-tickets.json'
+
+    if not needs_reload(filename, minutes=1):
+        return load_data(filename)
 
     apiKey = get_credentials()
-    whd_tickets = 'https://help.stolaf.edu/helpdesk/WebObjects/Helpdesk.woa/ra/Tickets'
-    params = '?style=details&limit='+str(ticket_count)+'&qualifier=(statustype.statusTypeName%3D%27'+urllib.quote(statustype)+'%27)&apiKey='+apiKey
+    base = 'https://help.stolaf.edu/helpdesk/WebObjects/Helpdesk.woa/ra/Tickets'
+    query = {
+        'style': 'details',
+        'limit': ticket_count,
+        'qualifier': 'statustype.statusTypeName="%s"' % statustype,
+        'apiKey': apiKey,
+    }
 
-    if not data_helpers.needs_reload(filename, minutes=1):
-        return ""
+    url = base + '?' + urlencode(query)
+    tickets = requests.get(url).json()
 
-    tickets = check_output('curl --silent "%s"' % (whd_tickets+params), shell=True)
+    saved_data = save_data(filename, tickets)
 
-    data_helpers.save_data(filename, json.loads(tickets))
-
-if __name__ == '__main__':
-    main()
+    return load_data(filename)

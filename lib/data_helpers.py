@@ -60,3 +60,10 @@ def save_data(filename, data):
     with open(path, 'w+') as output_file:
         json_data = json.dumps(data_to_save, indent=2, separators=(',', ': '))
         output_file.write(json_data)
+
+
+def load_data(filename):
+    path = 'data/' + filename
+    ensure_file_exists(path)
+    with open(path, 'r') as input_file:
+        return json.loads(input_file.read())['data']
