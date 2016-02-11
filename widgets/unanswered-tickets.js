@@ -1,4 +1,4 @@
-command: 'echo ""',
+command: 'python3 scripts/unanswered-tickets.py',
 refreshFrequency: 10000,
 
 style: [
@@ -35,40 +35,10 @@ render: function(output) {
 update: function(output, domEl) {
 	if (!window.sto)                  return '';
 	if (!window.sto.libs.lodash)      return '';
-	if (!window.sto.data.openTickets) return '';
-	if (!window.sto.data.awaitingClientTickets) return '';
 
 	var _ = window.sto.libs.lodash;
 	var moment = window.sto.libs.moment;
-	var openTickets = window.sto.data.openTickets;
-	var awaitingClientTickets = window.sto.data.awaitingClientTickets;
-
-	openTickets = _.filter(openTickets, function(ticket) {
-		return ticket.prioritytype && 
-			ticket.prioritytype.priorityTypeName === 'Normal Svc Req'
-	})
-
-	var unansweredTickets = _.filter(openTickets, {'notes': []})
-
-	var clientResponseTickets = _.chain(openTickets)
-		.reject({'notes': []})
-		.reject(function(ticket) {
-			return ticket.notes[0].isTechNote
-		})
-		.value();
-
-	// function extract(ticket) {
-		// return [ticket.id, ticket.subject || ticket.detail.split('\r').length ? ticket.detail.split('\r')[0] : '']
-		// return [ticket.id, ticket.prioritytype.priorityTypeName]
-	// }
-
-	// console.groupCollapsed('ticket names')
-	// _(unansweredTickets).map(extract).each(function(info){console.log(info)}).value()
-	// _(clientResponseTickets).map(extract).each(function(info){console.log(info)}).value()
-	// console.groupEnd('ticket names')
-
-	var ticketCount = unansweredTickets.length + 
-		clientResponseTickets.length
+	var ticketCount = parseInt(output);
 
 	var wrapper = domEl.querySelector('.wrapper');
 	var details = domEl.querySelector('.details');

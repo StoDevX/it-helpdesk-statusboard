@@ -1,4 +1,4 @@
-command: 'echo ""',
+command: 'python3 scripts/printer-status.py',
 refreshFrequency: 10000,
 
 style: [
@@ -49,59 +49,34 @@ update: function(output, domEl) {
 
 	var _ = window.sto.libs.lodash
 
-	var printers = _.cloneDeep(window.sto.data.printers)
+	var printers = JSON.parse(output)
 	var printerErrorStates = _.chain(printers)
-		.reject({'error': "No Error"})
-		.reject({'error': "Paper Low"})
-		.reject({'error': "Tray 1 Empty"})
-		.reject({'error': "Tray 2 Empty"})
-		.filter(function(printer) {
-			return printer.name && _.contains(printer.name.toLowerCase(), 'mfc-')
-		})
 		.map(function(printer) {
-			if (_.contains(printer.error, 'Call'))
+			if (_.contains(printer.error, 'Call')) {
 				printer.className = 'bg-red'
-			return printer
-		})
-		.groupBy('error')
-		.value()
+			}
 
-	delete printerErrorStates['']
-	delete printerErrorStates['Drawer Open']
+			if (printer.toner) {
+				printer.name = printer.name + ' (' + printer.toner + '%)'
+			}
 
-	printerErrorStates['Not Responding'] = _.filter(printers, function(printer) {
-		return printer.error === ''
-	})
-
-	printerErrorStates['Low Toner (< 5%) [Replace]'] = _.chain(printers)
-		.filter(function(printer) {
-			return printer.toner !== '' && printer.toner < 5
-		})
-		.map(function(printer) {
-			printer.name = printer.name + ' (' + printer.toner + '%)'
 			if (printer.toner <= 2) {
 				printer.className = 'bg-orange'
 			}
 			else if (printer.toner < 4) {
 				printer.className = 'bg-yellow'
 			}
+
 			return printer
 		})
 		.sortBy('toner')
+		.groupBy('error')
 		.value()
 
 	var details = domEl.querySelector('.details')
 
 	var contentList = document.createElement('ul')
 	contentList.className = 'list'
-
-	function recordPrinter(ev) {
-		console.log('clicked', JSON.stringify(ev))
-		window.sto.data.reportedPrinters.push({
-			name: ev.target.textContent,
-			reportedError: ev.target.dataset.error,
-		})
-	}
 
 	var printerCount = 8
 	_.each(printerErrorStates, function(printers, key) {
@@ -120,13 +95,12 @@ update: function(output, domEl) {
 		var printerList = document.createElement('ul')
 		printerList.className = 'inner-list'
 		_.each(printerlist, function(printer) {
-			var printerAsElement = document.createElement('li')
-			if (printer.className)
-				printerAsElement.className = printer.className
-			printerAsElement.textContent = printer.name
-			printerAsElement.dataset.error = printer.error
-			// printerAsElement.style.cursor = 'pointer'
-			printerList.appendChild(printerAsElement)
+			var el = document.createElement('li')
+			if (printer.className) {
+				el.className = printer.className
+			}
+			el.textContent = printer.name
+			printerList.appendChild(el)
 		})
 
 		group.appendChild(printerList)

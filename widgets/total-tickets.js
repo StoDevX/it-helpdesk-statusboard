@@ -1,4 +1,4 @@
-command: 'echo ""',
+command: 'python3 scripts/total-tickets.py',
 refreshFrequency: 10000,
 
 style: [
@@ -31,17 +31,8 @@ render: function(output) {
 update: function(output, domEl) {
 	if (!window.sto)                  return '';
 	if (!window.sto.libs.lodash)      return '';
-	if (!window.sto.data.openTickets) return '';
 
-	var openTickets = window.sto.data.openTickets;
-	var awaitingClientTickets = window.sto.data.awaitingClientTickets;
-
-	// openTickets = _.filter(openTickets, function(ticket) {
-	// 	return ticket.prioritytype && 
-	// 		ticket.prioritytype.priorityTypeName === 'Normal Svc Req'
-	// })
-
-	var ticketCount = openTickets.length
+	var ticketCount = output;
 
 	var wrapper = domEl.querySelector('.wrapper');
 	var details = domEl.querySelector('.details');

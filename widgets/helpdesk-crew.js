@@ -1,4 +1,4 @@
-command: 'echo ""',
+command: 'python3 scripts/helpdesk-crew.py',
 refreshFrequency: 10000,
 
 style: [
@@ -65,17 +65,16 @@ update: function(output, domEl) {
 	if (!window.sto)             return '';
 	if (!window.sto.libs.lodash) return '';
 	if (!window.sto.libs.moment) return '';
-	if (!window.sto.data.shifts) return '';
-	if (!window.sto.data.shifts.now) return '';
-	if (!window.sto.data.shifts.later) return '';
 
 	var _      = window.sto.libs.lodash;
 	var moment = window.sto.libs.moment;
 
+	var shifts = JSON.parse(output)
+
 	/////
 
+	var laterShifts = shifts.later;
 	function addLaterShifts(desk) {
-		var laterShifts = window.sto.data.shifts.later;
 		var next = domEl.querySelector('.next-'+desk.toLowerCase()+' .details');
 		next.innerHTML = "";
 
@@ -112,8 +111,8 @@ update: function(output, domEl) {
 
 	/////
 
+	var currentShifts = shifts.now;
 	function addCurrentShifts(desk) {
-		var currentShifts = window.sto.data.shifts.now;
 		var now = domEl.querySelector('.now-'+desk.toLowerCase()+' .details');
 		now.innerHTML = "";
 
