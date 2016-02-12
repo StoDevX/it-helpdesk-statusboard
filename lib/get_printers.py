@@ -98,7 +98,6 @@ def call_printer(url, numeric_path):
             ['snmpwalk', '-c', 'public', '-v', '1', url, numeric_path],
             stderr=DEVNULL)
         result = str(result, 'cp437')
-        print(result)
         result = result.strip()
         result = result.split(' ')[-1]
         return result
@@ -176,8 +175,6 @@ def check_printers(printers):
             'error': snmp_status_code(printer_url),
             # 'model': snmp_model(printer_url)
         })
-
-    print(printer_info)
 
     return printer_info
 
