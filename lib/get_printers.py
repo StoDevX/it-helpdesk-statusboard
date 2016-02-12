@@ -148,8 +148,10 @@ def snmp_status_code(printer_url):
             code = '@'
 
     # Look up the code
-    if code in codes or ord(code) in codes:
-        return codes.get(code, codes[ord(code)])
+    if code in codes:
+        return codes[code]
+    elif ord(code) in codes:
+        return codes[ord(code)]
 
     # Turn something like C0 into [67 32]
     raw_code = ''
