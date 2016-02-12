@@ -1,6 +1,49 @@
-import json
-import os
 from datetime import datetime
+import json
+import sys
+import os
+
+
+def check_pid(pid):
+    '''Check for the existence of a unix pid.'''
+    try:
+        os.kill(pid, 0)
+    except OSError:
+        return False
+    else:
+        return True
+
+
+def make_lock_filename(filename):
+    return 'data/' + filename + '.lock'
+
+
+def lock_data(filename):
+    lockname = make_lock_filename(filename)
+    if not os.path.exists(lockname):
+        ensure_file_exists(lockname)
+        with open(lockname, 'w') as input_file:
+            input_file.write(str(os.getpid()))
+        return
+
+    else:
+        with open(lockname, 'r') as input_file:
+            pid = input_file.read().strip()
+            if pid:
+                pid = int(pid)
+                if not check_pid(pid):
+                    with open(lockname, 'w') as f:
+                        f.write(str(os.getpid()))
+                        return
+
+        print('Lock file exists at %s' % lockname, file=sys.stderr)
+        print('Either another process is running, or the previous copy crashed.', file=sys.stderr)
+        print('Remove the lock file to continue.', file=sys.stderr)
+        sys.exit(1)
+
+
+def unlock_data(filename):
+    os.remove(make_lock_filename(filename))
 
 
 def now():
