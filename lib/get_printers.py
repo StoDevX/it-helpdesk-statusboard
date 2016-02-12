@@ -96,7 +96,8 @@ def call_printer(url, numeric_path):
         result = check_output(
             ['snmpwalk', '-c', 'public', '-v', '1', url, numeric_path],
             stderr=DEVNULL)
-        return result.strip()
+        result = result.strip()
+        result = result.split(' ')[-1]
     except CalledProcessError as err:
         if err.returncode is 1:
             return ''
@@ -117,7 +118,7 @@ def snmp_mfc_toner(printer_url):
 def snmp_mfc_all_toner(printer_url):
     # needs work
     toner_level = call_printer(printer_url, '1.3.6.1.2.1.43.11.1.1.9.1')  # | awk
-    return int(toner_level) if toner_level else ''
+    return toner_level
 
 
 def snmp_status(printer_url):
