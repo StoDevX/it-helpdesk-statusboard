@@ -3,8 +3,8 @@
 # Created by Phinehas Bynum on 10/1/14.
 # Ported to Python by Hawken Rives on 10/12/14.
 
-from subprocess import check_output
-from .data_helpers import save_data, load_data, needs_reload
+from subprocess import check_output, CalledProcessError, DEVNULL
+from .data_helpers import save_data, load_data, needs_reload, lock_data, unlock_data
 from sys import argv
 
 all_printers = [
@@ -174,20 +174,11 @@ def check_printers(printers):
 
 
 def check_all_printers():
-    # filename = 'printer-status.json'
-    filename = 'raw-printers.json'
-    return load_data(filename)
-    # if not needs_reload(filename, minutes=5):
-    #     return load_data(filename)
+    filename = 'printer-status.json'
+    if not needs_reload(filename, minutes=5):
+        return load_data(filename)
 
-    # save_data(filename, check_printers(all_printers))
-
-
-if __name__ == '__main__':
-    if len(argv) > 1:
-        results = check_printers(argv[1:])
-    else:
-        results = check_all_printers()
-
-    for result in results:
-        print('%(name)s: %(error)s (%(toner)s%%)' % result)
+    lock_data(filename)
+    data = check_printers(all_printers)
+    save_data(filename, data)
+    unlock_data(filename)

@@ -3,7 +3,7 @@ import sys
 import requests
 from urllib.parse import quote, urlencode
 from subprocess import check_output
-from .data_helpers import load_data, save_data, needs_reload
+from .data_helpers import load_data, save_data, needs_reload, lock_data, unlock_data
 
 
 def get_credentials():
@@ -22,6 +22,8 @@ def get_tickets(statustype):
     if not needs_reload(filename, minutes=1):
         return load_data(filename)
 
+    lock_data(filename)
+
     apiKey = get_credentials()
     base = 'https://help.stolaf.edu/helpdesk/WebObjects/Helpdesk.woa/ra/Tickets'
     query = {
@@ -35,5 +37,7 @@ def get_tickets(statustype):
     tickets = requests.get(url).json()
 
     saved_data = save_data(filename, tickets)
+
+    unlock_data(filename)
 
     return load_data(filename)

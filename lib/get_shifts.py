@@ -2,7 +2,7 @@ import re
 from datetime import time
 from requests import get, post
 from bs4 import NavigableString, BeautifulSoup as bs
-from .data_helpers import load_data, save_data, needs_reload
+from .data_helpers import load_data, save_data, needs_reload, lock_data, unlock_data
 
 
 def get_sid_from_homepage_text(page):
@@ -97,6 +97,8 @@ def get_shifts():
     if not needs_reload(filename, minutes=30):
         return load_data(filename)
 
+    lock_data(filename)
+
     credentials = get_credentials()
     homepage = login(credentials)
 
@@ -111,6 +113,7 @@ def get_shifts():
     }
 
     save_data(filename, data)
+    unlock_data(filename)
     return load_data(filename)
 
 if __name__ == '__main__':
