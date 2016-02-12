@@ -85,6 +85,7 @@ codes = {
     'C4': "Paper Misfeed in Printer",
     'h': "Black Toner Near Empty - Please Prepare New Toner Cartridge",
     'D': "Paper Misfeed",
+    9492: "Tray 2 Empty",
 }
 
 awk = "| awk 'NF>1{print $NF}'"
@@ -147,8 +148,8 @@ def snmp_status_code(printer_url):
             code = '@'
 
     # Look up the code
-    if code in codes:
-        return codes[code]
+    if code in codes ord(code) in codes:
+        return codes[code] or codes[ord(code)]
 
     # Turn something like C0 into [67 32]
     raw_code = ''
