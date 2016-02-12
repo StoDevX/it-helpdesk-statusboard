@@ -10,7 +10,7 @@ def is_unanswered(t):
 
 
 def is_client_response_ticket(t):
-    return len(t['notes']) and t['notes'][0]['isTechNote'] == True
+    return len(t['notes']) and t['notes'][0]['isTechNote'] is not True
 
 
 def count_unanswered_tickets():
