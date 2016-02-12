@@ -148,7 +148,7 @@ def snmp_status_code(printer_url):
             code = '@'
 
     # Look up the code
-    if code in codes ord(code) in codes:
+    if code in codes or ord(code) in codes:
         return codes[code] or codes[ord(code)]
 
     # Turn something like C0 into [67 32]
