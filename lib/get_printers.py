@@ -95,7 +95,8 @@ def call_printer(url, numeric_path):
     try:
         result = check_output(
             ['snmpwalk', '-c', 'public', '-v', '1', url, numeric_path],
-            stderr=DEVNULL)
+            stderr=DEVNULL,
+            universal_newlines=True)
         result = result.strip()
         result = result.split(' ')[-1]
     except CalledProcessError as err:
