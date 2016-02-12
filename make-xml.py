@@ -67,8 +67,12 @@ def group_printer_errors(printers):
     grouped_data = groupby(printers, key=by_error)
 
     data = {k: list(v) for k, v in grouped_data}
-    data['Not Responding'] = [p for p in printers if p['error'] == '']
-    data['Low Toner (< 5%) [Replace]'] = [p for p in printers if int(p['toner']) < 5]
+    not_responding = [p for p in printers if p['error'] == '']
+    if not_responding:
+        data['Not Responding'] = not_responding
+    toner = [p for p in printers if int(p['toner']) < 5]
+    if toner:
+        data['Low Toner (< 5%) [Replace]'] = toner
 
     return data
 
