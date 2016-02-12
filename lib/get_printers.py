@@ -97,7 +97,7 @@ def call_printer(url, numeric_path):
             ['snmpwalk', '-c', 'public', '-v', '1', url, numeric_path],
             stderr=DEVNULL)
         print(result)
-        result = str(result, 'utf-8')
+        result = str(result, 'cp437')
         print(result)
         result = result.strip()
         result = result.split(' ')[-1]
