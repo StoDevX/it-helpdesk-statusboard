@@ -55,13 +55,13 @@ def group_printer_errors(printers):
     def by_error(p):
         return p['error']
 
-    hidden_errors = {
+    hidden_errors = [
         'No Error',
         'Paper Low',
         'Tray 1 Empty',
         'Tray 2 Empty',
         'Drawer Open',
-    }
+    ]
     printers = [p for p in printers if p['error'] not in hidden_errors]
     sorted_data = sorted(printers, key=by_error)
     grouped_data = groupby(printers, key=by_error)

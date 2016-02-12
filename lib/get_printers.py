@@ -160,17 +160,15 @@ def check_printers(printers):
     printer_info = []
 
     for printer_name in printers:
-        printer = {
+        printer_url = printer_name + printer_base_url
+
+        printer_info.append({
             'name': printer_name,
-            'url': printer_name + printer_base_url,
-        }
-
-        # printer['model'] = snmp_model(printer['name'])
-        printer['toner'] = snmp_mfc_toner(printer['url'])
-        printer['status'] = snmp_status(printer['url'])
-        printer['error'] = snmp_status_code(printer['url'])
-
-        printer_info.append(printer)
+            'toner': snmp_mfc_toner(printer_url),
+            'status': snmp_status(printer_url),
+            'error': snmp_status_code(printer_url),
+            # 'model': snmp_model(printer_url)
+        })
 
     return printer_info
 
