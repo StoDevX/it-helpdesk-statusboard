@@ -189,3 +189,5 @@ def check_all_printers():
     data = check_printers(all_printers)
     save_data(filename, data)
     unlock_data(filename)
+
+    return load_data(filename)
