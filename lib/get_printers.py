@@ -99,6 +99,7 @@ def call_printer(url, numeric_path):
             universal_newlines=True)
         result = result.strip()
         result = result.split(' ')[-1]
+        return result
     except CalledProcessError as err:
         if err.returncode is 1:
             return ''
