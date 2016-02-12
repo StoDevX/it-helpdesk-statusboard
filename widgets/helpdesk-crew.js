@@ -64,11 +64,8 @@ render: function(output) {
 update: function(output, domEl) {
 	if (!window.sto)             return '';
 	if (!window.sto.libs.lodash) return '';
-	if (!window.sto.libs.moment) return '';
 
 	var _      = window.sto.libs.lodash;
-	var moment = window.sto.libs.moment;
-
 	var shifts = JSON.parse(output)
 
 	/////
@@ -79,7 +76,7 @@ update: function(output, domEl) {
 		next.innerHTML = "";
 
 		if (laterShifts.length === 0) {
-			next.textContent = "No more shifts scheduled as of " + moment().format('ha[.]');
+			next.textContent = "No more shifts scheduled";
 			return "";
 		}
 
@@ -117,7 +114,7 @@ update: function(output, domEl) {
 		now.innerHTML = "";
 
 		if (currentShifts.length === 0) {
-			now.textContent = "No-one is currently scheduled.";
+			now.textContent = "No one is currently scheduled.";
 			return "";
 		}
 
