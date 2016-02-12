@@ -92,37 +92,45 @@ printer_base_url = '.printer.stolaf.edu'
 
 
 def call_printer(url, numeric_path):
-    return check_output(['snmpwalk', '-c', 'public', '-v', 1, url, numeric_path])
+    try:
+        result = check_output(
+            ['snmpwalk', '-c', 'public', '-v', '1', url, numeric_path],
+            stderr=DEVNULL)
+        return result.strip()
+    except CalledProcessError as err:
+        if err.returncode is 1:
+            return ''
+        else:
+            raise err
 
 
 def snmp_model(printer_url):
     model = call_printer(printer_url, '1.3.6.1.2.1.25.3.2.1.3.1')
-    return model.strip()
+    return model
 
 
 def snmp_mfc_toner(printer_url):
     toner_level = call_printer(printer_url, '1.3.6.1.2.1.43.11.1.1.9.1.1')  # | awk
-    return int(toner_level.strip())
+    return int(toner_level) if toner_level else ''
 
 
 def snmp_mfc_all_toner(printer_url):
     # needs work
     toner_level = call_printer(printer_url, '1.3.6.1.2.1.43.11.1.1.9.1')  # | awk
-    return toner_level.strip()
+    return int(toner_level) if toner_level else ''
 
 
 def snmp_status(printer_url):
     printer_status = call_printer(printer_url, '1.3.6.1.2.1.25.3.5.1.1')  # | awk
-    return printer_status.strip()
+    return printer_status
 
 
 def snmp_status_code(printer_url):
-    raw_code = call_printer(printer_url, '1.3.6.1.2.1.25.3.5.1.2')  # | awk
+    code = call_printer(printer_url, '1.3.6.1.2.1.25.3.5.1.2')  # | awk
 
     # Remove wrapping quotes, if present
-    code = raw_code.strip()
     if len(code) is 0:
-        return ""
+        return ''
 
     if (code[0] == code[-1]) and code.startswith('"'):
         code = code[1:-1]
