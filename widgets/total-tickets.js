@@ -1,4 +1,4 @@
-command: 'python3 scripts/total-tickets.py',
+command: 'python3 total-tickets.py',
 refreshFrequency: 10000,
 
 style: [

@@ -1,4 +1,4 @@
-command: 'python3 scripts/unanswered-tickets.py',
+command: 'python3 unanswered-tickets.py',
 refreshFrequency: 10000,
 
 style: [

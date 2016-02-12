@@ -25,6 +25,3 @@ def count_unanswered_tickets():
     client_response = [t for t in tickets if is_client_response_ticket(t)]
 
     return len(unanswered_tickets) + len(client_response)
-
-if __name__ == '__main__':
-    print(count_unanswered_tickets())

@@ -1,4 +1,4 @@
-command: 'python3 scripts/printer-status.py',
+command: 'python3 printer-status.py',
 refreshFrequency: 10000,
 
 style: [

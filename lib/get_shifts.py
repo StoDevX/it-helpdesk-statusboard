@@ -115,6 +115,3 @@ def get_shifts():
     save_data(filename, data)
     unlock_data(filename)
     return load_data(filename)
-
-if __name__ == '__main__':
-    print(get_shifts())
