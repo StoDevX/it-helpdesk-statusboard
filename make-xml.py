@@ -1,5 +1,5 @@
 from xml.dom.minidom import Document
-from itertools import groupby
+from lib.functions import group_by, take, first
 from lib.count_unanswered_tickets import count_unanswered_tickets
 from lib.count_open_tickets import count_open_tickets
 from lib.get_shifts import get_shifts
@@ -52,9 +52,6 @@ def first(l, default):
 
 
 def group_printer_errors(printers):
-    def by_error(p):
-        return p['error']
-
     hidden_errors = [
         'No Error',
         'Paper Low',
@@ -62,11 +59,10 @@ def group_printer_errors(printers):
         'Tray 2 Empty',
         'Drawer Open',
     ]
-    printers = [p for p in printers if p['error'] not in hidden_errors]
-    sorted_data = sorted(printers, key=by_error)
-    grouped_data = groupby(printers, key=by_error)
 
-    data = {k: list(v) for k, v in grouped_data}
+    printers = [p for p in printers if p['error'] not in hidden_errors]
+    data = group_by(lambda p: p['error'], printers)
+
     not_responding = [p for p in printers if p['error'] == '']
     if not_responding:
         data['Not Responding'] = not_responding
