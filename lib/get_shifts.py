@@ -13,7 +13,7 @@ def get_sid_from_homepage_text(page):
 def get_credentials():
     # returns ['username', 'password']
     with open('credentials/whentowork.credential', 'r') as when_to_work_credentials:
-        return when_to_work_credentials.read().split('\n')
+        return when_to_work_credentials.read().split('\n')[0:2]
 
 
 def login(credentials):

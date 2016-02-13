@@ -9,7 +9,7 @@ from .data_helpers import load_data, save_data, needs_reload, lock_data, unlock_
 def get_credentials():
     # returns 'api-key'
     with open('credentials/webhelpdesk.credential', 'r') as credentials:
-        return credentials.read()
+        return credentials.read().split('\n')[0]
 
 
 def get_tickets(statustype):
