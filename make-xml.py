@@ -82,10 +82,10 @@ def format_printer_errors(printers):
 def collect():
     username, password = get_credentials()
 
+    unanswered_ticket_count = count_unanswered_tickets()
+    open_ticket_count = count_open_tickets()
     printers = check_all_printers()
     shifts = get_shifts()
-    open_ticket_count = count_open_tickets()
-    unanswered_ticket_count = count_unanswered_tickets()
 
     now_on_helpdesk = [s['name'] for s in shifts['now'] if s['location'] == 'Helpdesk']
     now_on_tcar = [s['name'] for s in shifts['now'] if s['location'] == 'TCAR']
