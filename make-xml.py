@@ -45,12 +45,6 @@ def to_xml(data):
 </CarouselCommand>''' % data
 
 
-def first(l, default):
-    if len(l) > 1:
-        return l[0]
-    return default
-
-
 def group_printer_errors(printers):
     hidden_errors = [
         'No Error',
