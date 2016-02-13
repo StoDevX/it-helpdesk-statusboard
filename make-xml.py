@@ -33,9 +33,9 @@ def to_xml(data):
 
             <Block Name="Body-Now at HD" Value="%(now_helpdesk_name)s" />
             <Block Name="Body-Now at TCAR" Value="%(now_tcar_name)s" />
-            <Block Name="Time-Next at HD" Value="%(next_helpdesk_time)s" />
+            <Block Name="Time-Next at HD" Value="⟨ %(next_helpdesk_time)s ⟩" />
             <Block Name="Body-Next at HD" Value="%(next_helpdesk_name)s" />
-            <Block Name="Time-Next at TCAR" Value="%(next_tcar_time)s" />
+            <Block Name="Time-Next at TCAR" Value="⟨ %(next_tcar_time)s ⟩" />
             <Block Name="Body-Next at TCAR" Value="%(next_tcar_name)s" />
 
             <Block Name="Body-Open Tickets" Value="%(open_tickets)d" />
