@@ -1,18 +1,20 @@
 from lib.get_printers import check_printers, check_all_printers
-from sys import argv
+from argparse import ArgumentParser
 import json
 
 if __name__ == '__main__':
-    if argv[0] == '--json':
-        json = True
+    parser = ArgumentParser(description='Get the status of campus printers')
+    parser.add_argument('--json', action='store_true', default=False)
+    parser.add_argument('printer', nargs='*', action='store', default=[])
+    args = parser.parse_args()
 
-    if len(argv) > 1:
-        results = check_printers(argv[1:])
+    if args.printer:
+        results = check_printers(args.printer)
     else:
         results = check_all_printers()
 
-    if not json:
+    if args.json:
+        print(json.dumps(results))
+    else:
         for result in results:
             print('%(name)s: %(error)s (%(toner)s%%)' % result)
-    else:
-        print(json.dumps(results))

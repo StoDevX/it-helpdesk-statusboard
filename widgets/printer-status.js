@@ -1,4 +1,4 @@
-command: 'python3 printer-status.py',
+command: 'python3 printer-status.py --json',
 refreshFrequency: 10000,
 
 style: [
@@ -44,8 +44,8 @@ render: function(output) {
 },
 
 update: function(output, domEl) {
-	if (!window.sto)               return ''
-	if (!window.sto.data.printers) return ''
+	if (!window.sto)             return ''
+	if (!window.sto.libs.lodash) return ''
 
 	var _ = window.sto.libs.lodash
 

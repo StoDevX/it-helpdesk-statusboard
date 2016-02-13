@@ -1,4 +1,4 @@
-command: 'python3 helpdesk-crew.py',
+command: 'python3 helpdesk-crew.py --json',
 refreshFrequency: 10000,
 
 style: [
