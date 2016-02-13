@@ -68,11 +68,12 @@ def group_printer_errors(printers):
 
 
 def format_printer_errors(printers):
+    printer_count = 8
     grouped = group_printer_errors(printers)
     string = ''
     for error, printers in grouped.items():
         string += error + '\\n'
-        string += ', '.join([p['name'] for p in printers])
+        string += ', '.join([p['name'] for p in take(printer_count, printers)])
     if len(string) is 0:
         return 'No Problems'
     return string
