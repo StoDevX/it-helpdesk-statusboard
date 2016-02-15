@@ -5,6 +5,7 @@
 
 from subprocess import check_output, CalledProcessError, DEVNULL
 from .data_helpers import save_data, load_data, needs_reload, lock_data, unlock_data
+from .functions import group_by
 from sys import argv
 
 all_printers = [
@@ -86,6 +87,7 @@ codes = {
     'h': "Black Toner Near Empty - Please Prepare New Toner Cartridge",
     'D': "Paper Misfeed",
     9492: "Tray 2 Empty",
+    9562: "Tray 1 Empty and Drawer Open",
 }
 
 awk = "| awk 'NF>1{print $NF}'"
@@ -115,7 +117,7 @@ def snmp_model(printer_url):
 
 def snmp_mfc_toner(printer_url):
     toner_level = call_printer(printer_url, '1.3.6.1.2.1.43.11.1.1.9.1.1')  # | awk
-    return int(toner_level) if toner_level else ''
+    return int(toner_level) if toner_level else 100
 
 
 def snmp_mfc_all_toner(printer_url):
@@ -190,3 +192,31 @@ def check_all_printers():
     unlock_data(filename)
 
     return load_data(filename)
+
+
+hidden_errors = [
+    'No Error',
+    'Paper Low',
+    'Tray 1 Empty',
+    'Tray 2 Empty',
+    'Drawer Open',
+]
+
+
+def group_printer_errors(printers=[], hidden_errors=hidden_errors):
+    if not printers:
+        printers = check_all_printers()
+
+    # get toner levels before filtering error messages
+    toner = [p for p in printers if int(p['toner']) < 2]
+
+    printers = [p for p in printers if p['error'] not in hidden_errors]
+    data = group_by(lambda p: p['error'], printers)
+
+    not_responding = [p for p in printers if p['error'] == '']
+    if not_responding:
+        data['Not Responding'] = not_responding
+    if toner:
+        data['Low Toner (< 2%) [Replace]'] = toner
+
+    return data

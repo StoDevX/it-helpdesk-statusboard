@@ -40,10 +40,13 @@ def get_whos_on_now_page(SID):
 
 def timestring_to_time(ts):
     timelist = ts.strip(r'(am|pm)').split(':')
-    offset = 12 if 'pm' in ts else 0
     hour = int(timelist[0])
+    offset = 12 if 'pm' in ts and hour is not 12 else 0
     minute = int(timelist[1]) if len(timelist) >= 2 else 0
-    return time(hour + offset, minute)
+    hour = hour + offset
+    if hour >= 24:
+        hour = hour - 24
+    return time(hour, minute)
 
 
 def process_shift(shift):

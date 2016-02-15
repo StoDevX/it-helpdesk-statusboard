@@ -10,7 +10,7 @@ def take(num, iterable):
 
 
 def first(l, default):
-    if len(l) > 1:
+    if len(l) >= 1:
         return l[0]
     return default
 
@@ -18,4 +18,4 @@ def first(l, default):
 def group_by(predicate, iterable):
     sorted_iterable = sorted(iterable, key=predicate)
     grouped = groupby(sorted_iterable, key=predicate)
-    return {k: list(v) for k, v in grouped_data}
+    return {k: list(v) for k, v in grouped}
