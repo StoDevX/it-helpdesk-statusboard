@@ -1,5 +1,5 @@
-command: 'python3 total-tickets.py',
-refreshFrequency: 10000,
+command: '/usr/local/bin/python3 total-tickets.py',
+refreshFrequency: '1m',
 
 style: [
 	"top: 0",

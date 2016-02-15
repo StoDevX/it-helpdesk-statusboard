@@ -1,5 +1,5 @@
-command: 'python3 printer-status.py --json',
-refreshFrequency: 10000,
+command: '/usr/local/bin/python3 printer-status.py --json',
+refreshFrequency: '1m',
 
 style: [
 	"left: 20vw",
@@ -51,7 +51,7 @@ update: function(output, domEl) {
 
 	var printers = JSON.parse(output)
 	var printerErrorStates = _.chain(printers)
-		.map(function(printer) {
+		.mapValues(function(printer) {
 			if (_.contains(printer.error, 'Call')) {
 				printer.className = 'bg-red'
 			}
@@ -69,8 +69,6 @@ update: function(output, domEl) {
 
 			return printer
 		})
-		.sortBy('toner')
-		.groupBy('error')
 		.value()
 
 	var details = domEl.querySelector('.details')

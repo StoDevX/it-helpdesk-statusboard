@@ -1,5 +1,5 @@
-command: 'python3 helpdesk-crew.py --json',
-refreshFrequency: 10000,
+command: '/usr/local/bin/python3 helpdesk-crew.py --json',
+refreshFrequency: '1m',
 
 style: [
 	"left: 0",
@@ -82,7 +82,7 @@ update: function(output, domEl) {
 
 		var onlyHelpdeskShifts = _.filter(laterShifts, {'location': desk});
 		var helpdeskShifts = _.chain(onlyHelpdeskShifts)
-			.groupBy('startTime')
+			.groupBy('start_time')
 			.toArray()
 			.first()
 			.value();
@@ -120,7 +120,7 @@ update: function(output, domEl) {
 
 		var onlyHelpdeskShifts = _.filter(currentShifts, {'location': desk});
 		var helpdeskShifts = _.chain(onlyHelpdeskShifts)
-			.groupBy('startTime')
+			.groupBy('start_time')
 			.toArray()
 			.first()
 			.value();
