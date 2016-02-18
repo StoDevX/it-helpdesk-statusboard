@@ -20,9 +20,12 @@ def format_printer_errors(printers):
 def get_first_shift(shifts):
     grouped = group_by(lambda s: s['start_time'], shifts)
     s = sorted(grouped.items(), key=lambda k: k[0])
-    
-    # the first shift, and the shifts, not the time.
-    return s[0][1]
+
+    if s:
+        # the first shift, and the shifts, not the time.
+        return s[0][1]
+
+    return []
 
 
 
