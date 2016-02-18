@@ -2,18 +2,13 @@ import re
 from datetime import time
 from requests import get, post
 from bs4 import NavigableString, BeautifulSoup as bs
-from .data_helpers import load_data, save_data, needs_reload, lock_data, unlock_data
+from .data_helpers import load_data, save_data, needs_reload, \
+                          lock_data, unlock_data, get_userpass_pair
 
 
 def get_sid_from_homepage_text(page):
     sid_matches = re.search(r'\?SID=([a-zA-Z0-9]+)', page)
     return sid_matches.group(1)
-
-
-def get_credentials():
-    # returns ['username', 'password']
-    with open('credentials/whentowork.credential', 'r') as when_to_work_credentials:
-        return when_to_work_credentials.read().split('\n')[0:2]
 
 
 def login(credentials):
@@ -102,7 +97,7 @@ def get_shifts():
 
     lock_data(filename)
 
-    credentials = get_credentials()
+    credentials = get_userpass_pair('whentowork')
     homepage = login(credentials)
 
     SID = get_sid_from_homepage_text(homepage)

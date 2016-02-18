@@ -4,7 +4,20 @@ import sys
 import os
 
 
-def check_pid(pid):
+def get_userpass_pair(name):
+    # returns ['username', 'password']
+    filename = os.path.join(os.path.dirname(__file__), '..', 'credentials', '%s.credential' % name)
+    with open(filename, 'r') as credentials:
+        return credentials.read().split('\n')[0:2]
+
+def get_api_key(name):
+    # returns 'apikey'
+    filename = os.path.join(os.path.dirname(__file__), '..', 'credentials', '%s.credential' % name)
+    with open(filename, 'r') as credentials:
+        return credentials.read().split('\n')[0]
+
+
+def pid_is_running(pid):
     '''Check for the existence of a unix pid.'''
     try:
         os.kill(pid, 0)

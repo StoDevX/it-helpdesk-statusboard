@@ -3,13 +3,8 @@ import sys
 import requests
 from urllib.parse import quote, urlencode
 from subprocess import check_output
-from .data_helpers import load_data, save_data, needs_reload, lock_data, unlock_data
-
-
-def get_credentials():
-    # returns 'api-key'
-    with open('credentials/webhelpdesk.credential', 'r') as credentials:
-        return credentials.read().split('\n')[0]
+from .data_helpers import load_data, save_data, needs_reload, \
+                          lock_data, unlock_data, get_api_key
 
 
 def get_tickets(statustype):
@@ -24,7 +19,7 @@ def get_tickets(statustype):
 
     lock_data(filename)
 
-    apiKey = get_credentials()
+    apiKey = get_api_key('webhelpdesk')
     base = 'https://help.stolaf.edu/helpdesk/WebObjects/Helpdesk.woa/ra/Tickets'
     query = {
         'style': 'details',

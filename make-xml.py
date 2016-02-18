@@ -1,11 +1,6 @@
 from lib.tightrope import create_page, delete_page, clear_pages
+from lib.data_helpers import get_userpass_pair
 from argparse import ArgumentParser
-
-
-def get_credentials():
-    # returns ['username', 'password']
-    with open('credentials/tightrope.credential', 'r') as credentials:
-        return credentials.read().split('\n')[0:2]
 
 
 def main():
@@ -15,7 +10,7 @@ def main():
     parser.add_argument('--clear-pages', action='store_true', default=False)
     args = parser.parse_args()
 
-    credentials = get_credentials()
+    credentials = get_userpass_pair('tightrope')
 
     if args.create_page:
         print(create_page(credentials))
