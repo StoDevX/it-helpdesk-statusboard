@@ -1,5 +1,6 @@
 from .collect_data import collect
 from xml.sax.saxutils import escape
+from datetime import datetime, timedelta
 
 def clear_pages_xml(data):
     return '''
@@ -30,6 +31,13 @@ def create_page_xml(data):
     for key, value in data.items():
         if type(value) == 'str':
             value = escape(value)
+    
+    on_time = datetime.now()
+    off_time = on_time + timedelta(minutes=5)
+
+    data['on'] = on_time.strftime('%Y-%m-%dT%H:%M:%S')
+    data['off'] = off_time.strftime('%Y-%m-%dT%H:%M:%S')
+
     return '''
     <?xml version="1.0" encoding="utf-8"?>
     <CarouselCommand xmlns="http://www.trms.com/CarouselRemoteCommand">
@@ -42,8 +50,8 @@ def create_page_xml(data):
             </ZoneSet>
 
             <AlwaysOn>false</AlwaysOn>
-            <DateTimeOn>2016-02-15T14:40:00</DateTimeOn>
-            <DateTimeOff>2016-02-15T14:45:00</DateTimeOff>
+            <DateTimeOn>%(on)s</DateTimeOn>
+            <DateTimeOff>%(off)s</DateTimeOff>
             <DisplayDuration>60</DisplayDuration>
 
             <PageType>Standard</PageType>
