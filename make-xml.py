@@ -19,7 +19,7 @@ def main():
     elif args.clear_pages:
         print(clear_pages(credentials))
     else:
-        raise Error('no argument given')
+        assert False, 'no argument given'
 
 
 if __name__ == '__main__':
