@@ -29,8 +29,12 @@ def pid_is_running(pid):
         return True
 
 
+def make_data_filename(filename):
+    return os.path.join(os.path.dirname(__file__), '..', 'data/%s' % filename)
+
+
 def make_lock_filename(filename):
-    return 'data/' + filename + '.lock'
+    return make_data_filename(filename + '.lock')
 
 
 def lock_data(filename, depth=0):
@@ -105,7 +109,7 @@ def ensure_file_exists(path):
 
 
 def needs_reload(filename, minutes):
-    path = 'data/' + filename
+    path = make_data_filename(filename)
     now = datetime.now()
     minutes = now.minute - minutes if (now.minute - minutes) >= 0 else 0
 
@@ -131,7 +135,7 @@ def needs_reload(filename, minutes):
 
 
 def save_data(filename, data):
-    path = 'data/' + filename
+    path = make_data_filename(filename)
     ensure_file_exists(path)
     n = now()
     data_to_save = {
@@ -144,7 +148,7 @@ def save_data(filename, data):
 
 
 def load_data(filename):
-    path = 'data/' + filename
+    path = make_data_filename(filename)
     ensure_file_exists(path)
     with open(path, 'r') as input_file:
         return json.loads(input_file.read())['data']
