@@ -3,10 +3,14 @@
 # Created by Phinehas Bynum on 10/1/14.
 # Ported to Python by Hawken Rives on 10/12/14.
 
+from concurrent.futures import ThreadPoolExecutor
 from subprocess import check_output, CalledProcessError, DEVNULL
 from .data_helpers import save_data, load_data, needs_reload, lock_data, unlock_data
 from .functions import group_by
-from sys import argv
+from sys import stderr
+from math import ceil
+import time
+import re
 
 all_printers = [
     'mfc-bc110',
@@ -44,66 +48,40 @@ all_printers = [
 ]
 
 codes = {
-    '00': 'No Error',
-    '0': 'Low Paper',
-    '1': "No Paper",
-    '2': "Low Toner",
-    '3': "No Toner",
-    '4': "Door Open",
-    '5': "Printer Jammed",
-    '6': "Printer Offline",
-    '7': "Service Requested",
-    '8': "Input Tray Missing",
-    '9': "Output Tray Missing",
-    '10': "Marker Supply Missing",
-    '11': "Output Tray Nearly Full",
-    '12': "Output Tray Full",
-    '13': "Input Tray Empty",
-    '14': "Preventative Maintenance Overdue",
-    # TOSHIBA printers have compound status codes based on
-    # paper_empty, paper_nearly_empty, and paper_available.
-    # We don't care. All of these will print as "paper_empty" for our purposes.
-    '@': "Tray 1 Empty",
-    '?': "Tray 2 Empty",
-    'H': "Drawer Open",
-    'C': "Drawer Open",
-    'C8': "Drawer Open",
-    'C0': "Tray 1 Empty",
-    'C1': "Tray 1 Empty",
-    '80': "Paper Low",
-    '88': "Toner Door Open (we think)",
-    '04': "Paper Misfeed",
-    'A0': "Black Toner Low",
-    'A': "Tray 2 Empty",
-    'L': "Paper Misfeed in Finisher",
-    'I': "Fuser Error (Call EO Johnson)",
-    '05': "Fuser Error (Call EO Johnson)",
-    '85': "Fuser Error (Call EO Johnson)",
-    '01': "Fatal Error (Call EO Johnson)",
-    '84': "Open the front door, and clean the slit glass and main charger",
-    '90': "Black toner empty; replace cartridge now",
-    '81': "Fatal Error (Call EO Johnson)",
-    '08': "Finisher door open; please close door",
-    'C4': "Paper Misfeed in Printer",
-    'h': "Black Toner Near Empty - Please Prepare New Toner Cartridge",
-    'D': "Paper Misfeed",
-    9492: "Tray 2 Empty",
-    9562: "Tray 1 Empty and Drawer Open",
+    0x0: 'No Error',
+    0x48: 'Tray 1 Empty & Tray 1 Open',
+    0x80: 'No Error',
+    0xC0: 'Tray 1 Empty',
+    0x40: 'Tray 1 Empty',
 }
 
-awk = "| awk 'NF>1{print $NF}'"
 printer_base_url = '.printer.stolaf.edu'
 
 
 def call_printer(url, numeric_path):
     try:
-        result = check_output(
-            ['snmpwalk', '-c', 'public', '-v', '1', url, numeric_path],
-            stderr=DEVNULL)
-        result = str(result, 'cp437')
-        result = result.strip()
-        result = result.split(' ')[-1]
-        return result
+        cmd = ['snmpwalk', '-c', 'public', '-v', '2c', url, numeric_path]
+        result = check_output(cmd, stderr=DEVNULL)
+        result = result.decode('unicode_escape').strip().split(' = ')[-1]
+
+        kind, value = result.split(': ')
+
+        if kind == 'INTEGER':
+            # there are some values that look like "idle(3)" or "other(1)"
+            # which are not integers
+            if '(' in value:
+                return value
+            return int(value)
+
+        elif kind == 'Hex-STRING':
+            return [int(ch, 16) for ch in value.split(" ")]
+
+        elif kind == 'STRING':
+            value = value.strip('"')
+            return [ord(ch) for ch in value]
+
+        return value
+
     except CalledProcessError as err:
         if err.returncode is 1:
             return ''
@@ -117,67 +95,68 @@ def snmp_model(printer_url):
 
 
 def snmp_mfc_toner(printer_url):
-    toner_level = call_printer(printer_url, '1.3.6.1.2.1.43.11.1.1.9.1.1')  # | awk
+    toner_level = call_printer(printer_url, '1.3.6.1.2.1.43.11.1.1.9.1.1')
     return int(toner_level) if toner_level else 100
 
 
 def snmp_mfc_all_toner(printer_url):
     # needs work
-    toner_level = call_printer(printer_url, '1.3.6.1.2.1.43.11.1.1.9.1')  # | awk
+    toner_level = call_printer(printer_url, '1.3.6.1.2.1.43.11.1.1.9.1')
     return toner_level
 
 
 def snmp_status(printer_url):
-    printer_status = call_printer(printer_url, '1.3.6.1.2.1.25.3.5.1.1')  # | awk
+    printer_status = call_printer(printer_url, '1.3.6.1.2.1.25.3.5.1.1')
     return printer_status
 
 
 def snmp_status_code(printer_url):
-    code = call_printer(printer_url, '1.3.6.1.2.1.25.3.5.1.2')  # | awk
+    raw_code = call_printer(printer_url, '1.3.6.1.2.1.25.3.5.1.2')
 
-    # Remove wrapping quotes, if present
-    if len(code) is 0:
-        return ''
+    if len(raw_code) is 0:
+        return 'Not Responding'
+    elif len(raw_code) is not 1:
+        raise ValueError(raw_code)
 
-    if (code[0] == code[-1]) and code.startswith('"'):
-        code = code[1:-1]
-
-    # Fix some odd encoding issues
-    if len(code) is 1:
-        if ord(code) is 200:
-            code = '?'
-        if ord(code) is 192:
-            code = '@'
+    code = raw_code[0]
 
     # Look up the code
     if code in codes:
         return codes[code]
-    elif ord(code) in codes:
-        return codes[ord(code)]
 
     # Turn something like C0 into [67 32]
-    raw_code = ''
-    for ch in code:
-        raw_code += str(ord(ch)) + ' '
-    raw_code = raw_code.strip()
-    raw_code = '[' + raw_code + ']'
+    str_code = ' '.join([hex(ch) for ch in raw_code])
+    str_code = '[' + str_code.strip() + ']'
 
-    return 'Unknown Code %s (raw code: %s)' % (code, raw_code)
+    return 'Unknown Code {}'.format(str_code)
+
+
+def check_printer(printer_name):
+    printer_url = printer_name + printer_base_url
+
+    start = time.time()
+    retval =  {
+        'name': printer_name,
+        'toner': snmp_mfc_toner(printer_url),
+        'status': snmp_status(printer_url),
+        'error': snmp_status_code(printer_url),
+        # 'model': snmp_model(printer_url)
+    }
+    end = time.time()
+
+    # print('{} took {} secs'.format(printer_name, end - start))
+
+    return retval
 
 
 def check_printers(printers):
     printer_info = []
-
-    for printer_name in printers:
-        printer_url = printer_name + printer_base_url
-
-        printer_info.append({
-            'name': printer_name,
-            'toner': snmp_mfc_toner(printer_url),
-            'status': snmp_status(printer_url),
-            'error': snmp_status_code(printer_url),
-            # 'model': snmp_model(printer_url)
-        })
+    worker_count = ceil(len(printers)/2)
+    # print('using {} workers'.format(worker_count))
+    with ThreadPoolExecutor(max_workers=worker_count) as executor:
+        for printer in executor.map(check_printer, printers):
+            # print(printer)
+            printer_info.append(printer)
 
     return printer_info
 
@@ -209,15 +188,17 @@ def group_printer_errors(printers=[], hidden_errors=hidden_errors):
         printers = check_all_printers()
 
     # get toner levels before filtering error messages
-    toner = [p for p in printers if int(p['toner']) < 2]
+    toner_warnings = [p for p in printers if int(p['toner']) < 5]
+    for p in toner_warnings:
+        p['name'] += " ({}%)".format(p['toner'])
 
     printers = [p for p in printers if p['error'] not in hidden_errors]
     data = group_by(lambda p: p['error'], printers)
 
-    not_responding = [p for p in printers if p['error'] == '']
-    if not_responding:
-        data['Not Responding'] = not_responding
-    if toner:
-        data['Low Toner (< 2%) [Replace]'] = toner
+    if toner_warnings:
+        data['Low Toner (< 5%) [Replace below 2%]'] = toner_warnings
+
+    if '' in data:
+        del data['']
 
     return data
