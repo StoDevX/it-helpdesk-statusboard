@@ -1,8 +1,8 @@
-command: 'echo ""',
-refreshFrequency: 10000,
+command: '/usr/local/bin/python3 top-responders.py --json',
+refreshFrequency: '1m',
 
 style: [
-	"left:  25%",
+	"left: 22%",
 	"top: 0%",
 
 	"width: 23%",
@@ -49,61 +49,17 @@ render: function(output) {
 
 update: function(output, domEl) {
 	if (!window.sto)                    return ''
-	if (!window.sto.libs.lodash)        return ''
-	if (!window.sto.data.openTickets)   return ''
-	if (!window.sto.data.closedTickets) return ''
 	if (!window.sto.data.colors)        return ''
 
-	var _ = window.sto.libs.lodash
-
+	var topResponders = JSON.parse(output)
 	var details = domEl.querySelector('.details')
 
-	var openTickets = window.sto.data.openTickets
-	var closedTickets = window.sto.data.closedTickets
-	var tickets = _.flatten([openTickets, closedTickets])
-
-	function hasTechNote(note) {
-		return (
-			    note.isTechNote
-			&& !note.isHidden
-			&&  note.mobileNoteText.length > 10
-		)
-	}
-
 	var colors = window.sto.data.colors
-	var staff = window.sto.data.staff
-
-	function isStaffMember(note) {
-		return _.contains(staff, responderName(note))
-	}
-
-	function responderName(note) {
-		return note.prettyUpdatedString.replace(/.*<strong>(.+)<\/strong>.*/gm, "$1")
-	}
-
-	var responders = _.chain(tickets)
-		.reject({notes: []})
-		.pluck('notes')
-		.flatten()
-		.filter(hasTechNote)
-		.reject(isStaffMember)
-		.groupBy(responderName)
-		.mapValues(_.size)
-		.pairs()
-		.sortBy(function(item) {
-			return item[1]
-		})
-		.value()
-
-	var topResponders = _.chain(responders)
-		.reverse()
-		.first(9)
-		.value()
 
 	var contentTable = document.createElement('ul')
 	contentTable.classList.add('colorful')
 
-	_.each(topResponders, function(pair, index) {
+	topResponders.forEach(function(pair, index) {
 		var item = document.createElement('li')
 		var nameCell = document.createElement('span')
 		var numberCell = document.createElement('span')

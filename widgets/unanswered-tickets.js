@@ -2,8 +2,8 @@ command: '/usr/local/bin/python3 unanswered-tickets.py',
 refreshFrequency: '1m',
 
 style: [
-	"bottom: 3vh",
-	"left: 70vw",
+	"top: 50vh",
+	"right: 0",
 
 	"width: 30%",
 	"height: 50vh",
@@ -15,19 +15,13 @@ style: [
 
 	".details",
 	"	font-size: 15em",
-	"	padding-top: 0",
-	"	padding-bottom: 2rem",
-
-	".title",
-	"	padding-bottom: 0",
-	"	padding-top: 1rem",
 ].join('\n'),
 
 render: function(output) {
 	return [
 		'<div class="wrapper">',
-			'<h1 class="title">Unanswered Tickets</h1>',
 			'<div class="details"></div>',
+			'<h1 class="title">Unanswered Tickets</h1>',
 		'</div>',
 	].join('')
 },

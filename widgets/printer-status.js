@@ -3,9 +3,9 @@ refreshFrequency: '1m',
 
 style: [
 	"left: 20vw",
-	"top: 0",
+	"top: 50vh",
 
-	"height: 97vh",
+	"height: 50vh",
 	"width: 50%",
 
 	"text-align: center",
@@ -46,6 +46,8 @@ render: function(output) {
 update: function(output, domEl) {
 	if (!window.sto)             return ''
 	if (!window.sto.libs.lodash) return ''
+
+	console.log(output)
 
 	var _ = window.sto.libs.lodash
 

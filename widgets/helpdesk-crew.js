@@ -6,7 +6,7 @@ style: [
 	"top: 0",
 
 	"width: 20%",
-	"height: 97vh",
+	"height: 100vh",
 
 	"text-align: center",
 

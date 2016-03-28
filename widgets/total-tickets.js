@@ -3,7 +3,7 @@ refreshFrequency: '1m',
 
 style: [
 	"top: 0",
-	"left: 70vw",
+	"right: 0",
 
 	"width: 30%",
 	"height: 50vh",
