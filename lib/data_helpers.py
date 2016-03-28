@@ -48,18 +48,21 @@ def lock_data(filename, depth=0):
     
     # lockfile exists
     except FileExistsError as err:
-        with open(lockname, 'r') as f:
-            pid = f.read().strip()
-            # sometimes pid hasn't been written yet,
-            # so we wait for 1 second so the other process
-            # can write.
-            if not pid and depth == 0:
-                time.sleep(1)
-                return lock_data(filename, depth + 1)
-            elif depth == 3:
-                print('lockfile has no pid: %s' % lockname, file=sys.stderr)
-                sys.exit(1)
-            pid = int(pid)
+        try:
+            with open(lockname, 'r') as f:
+                pid = f.read().strip()
+                # sometimes pid hasn't been written yet,
+                # so we wait for 1 second so the other process
+                # can write.
+                if not pid and depth == 0:
+                    time.sleep(1)
+                    return lock_data(filename, depth + 1)
+                elif depth == 3:
+                    print('lockfile has no pid: %s' % lockname, file=sys.stderr)
+                    sys.exit(1)
+                pid = int(pid)
+        except FileNotFoundError as err:
+            return
 
         # pid running; spin for rand() seconds
         time_slept = 0
