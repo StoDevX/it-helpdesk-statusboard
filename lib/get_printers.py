@@ -13,6 +13,7 @@ all_printers = [
     'mfc-casualreading',
     'mfc-it',
     'mfc-crossroads',
+    'mfc-dc204',
     'mfc-ellingson',
     'mfc-fireside',
     'mfc-hillkitt',
