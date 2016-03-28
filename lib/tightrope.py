@@ -1,10 +1,11 @@
 from .collect_data import collect
 from xml.sax.saxutils import escape
 from datetime import datetime, timedelta
+from textwrap import dedent
 import socket
 
 def clear_pages_xml(data):
-    return '''
+    return dedent('''
     <?xml version="1.0" encoding="utf-8"?>
     <CarouselCommand xmlns="http://www.trms.com/CarouselRemoteCommand">
         <DeleteAllUserPages>
@@ -12,11 +13,11 @@ def clear_pages_xml(data):
                 <Password>%(password)s</Password>
         </DeleteAllUserPages>
     </CarouselCommand>
-    ''' % data
+    ''' % data).strip()
 
 
 def delete_page_xml(data):
-    return '''
+    return dedent('''
     <?xml version="1.0" encoding="utf-8"?>
     <CarouselCommand xmlns="http://www.trms.com/CarouselRemoteCommand">
         <DeletePage>
@@ -25,21 +26,28 @@ def delete_page_xml(data):
                 <GUID>%(guid)s</GUID>
         </DeletePage>
     </CarouselCommand>
-    ''' % data
+    ''' % data).strip()
 
 
 def create_page_xml(data):
     for key, value in data.items():
         if type(value) == 'str':
             value = escape(value)
+
+    data['printers'] = escape(data['printers'])
     
     on_time = datetime.now()
-    off_time = on_time + timedelta(minutes=5)
+    off_time = on_time + timedelta(minutes=1)
 
     data['on'] = on_time.strftime('%Y-%m-%dT%H:%M:%S')
     data['off'] = off_time.strftime('%Y-%m-%dT%H:%M:%S')
 
-    return '''
+    if data['next_helpdesk_time']:
+        data['next_helpdesk_time'] = '( {} )'.format(data['next_helpdesk_time'])
+    if data['next_tcar_time']:
+        data['next_tcar_time'] = '( {} )'.format(data['next_tcar_time'])
+
+    return dedent('''
     <?xml version="1.0" encoding="utf-8"?>
     <CarouselCommand xmlns="http://www.trms.com/CarouselRemoteCommand">
         <CreatePage>
@@ -53,7 +61,7 @@ def create_page_xml(data):
             <AlwaysOn>false</AlwaysOn>
             <DateTimeOn>%(on)s</DateTimeOn>
             <DateTimeOff>%(off)s</DateTimeOff>
-            <DisplayDuration>60</DisplayDuration>
+            <DisplayDuration>30</DisplayDuration>
 
             <PageType>Standard</PageType>
 
@@ -64,17 +72,44 @@ def create_page_xml(data):
 
                 <Block Name="Body-Now at HD" Value="%(now_helpdesk_name)s" />
                 <Block Name="Body-Now at TCAR" Value="%(now_tcar_name)s" />
-                <Block Name="Time-Next at HD" Value="( %(next_helpdesk_time)s )" />
+                <Block Name="Time-Next at HD" Value="%(next_helpdesk_time)s" />
                 <Block Name="Body-Next at HD" Value="%(next_helpdesk_name)s" />
-                <Block Name="Time-Next at TCAR" Value="( %(next_tcar_time)s )" />
+                <Block Name="Time-Next at TCAR" Value="%(next_tcar_time)s" />
                 <Block Name="Body-Next at TCAR" Value="%(next_tcar_name)s" />
 
                 <Block Name="Body-Open Tickets" Value="%(open_tickets)d" />
                 <Block Name="Body-Unanswered Tix" Value="%(unanswered_tickets)d" />
             </PageTemplate>
         </CreatePage>
+
+        <!--<CreatePage>
+            <UserName>%(username)s</UserName>
+            <Password>%(password)s</Password>
+
+            <ZoneSet>
+                <ZoneID>1073</ZoneID>
+            </ZoneSet>
+
+            <AlwaysOn>false</AlwaysOn>
+            <DateTimeOn>%(on)s</DateTimeOn>
+            <DateTimeOff>%(off)s</DateTimeOff>
+            <DisplayDuration>30</DisplayDuration>
+
+            <PageType>Standard</PageType>
+
+            <PageTemplate>
+                <TemplateName>Helpers Status</TemplateName>
+
+                <Block Name="Body-Now at HD" Value="%(now_helpdesk_name)s" />
+                <Block Name="Body-Now at TCAR" Value="%(now_tcar_name)s" />
+                <Block Name="Time-Next at HD" Value="%(next_helpdesk_time)s" />
+                <Block Name="Body-Next at HD" Value="%(next_helpdesk_name)s" />
+                <Block Name="Time-Next at TCAR" Value="%(next_tcar_time)s" />
+                <Block Name="Body-Next at TCAR" Value="%(next_tcar_name)s" />
+            </PageTemplate>
+        </CreatePage>-->
     </CarouselCommand>
-    ''' % data
+    ''' % data).strip()
 
 
 
@@ -87,6 +122,7 @@ def delete_page(credentials, guid):
     username, password = credentials
     data = {'username': username, 'password': password, 'guid': guid}
     return delete_page_xml(data)
+
 
 def clear_pages(credentials):
     username, password = credentials
