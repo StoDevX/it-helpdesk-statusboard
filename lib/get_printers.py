@@ -39,6 +39,7 @@ all_printers = [
     'mfc-rns-2nd',
     'mfc-rns258',
     'mfc-scilib',
+    'mfc-skoglund',
     'mfc-thorson',
     'mfc-toh101',
     'mfc-toh3',
