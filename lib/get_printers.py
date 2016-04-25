@@ -50,10 +50,19 @@ all_printers = [
 
 codes = {
     0x0: 'No Error',
-    0x48: 'Tray 1 Empty & Tray 1 Open',
-    0x80: 'No Error',
-    0xC0: 'Tray 1 Empty',
+    0x1: 'Fatal Error - Please Contact Service Technician',
+    0x4: 'Paper Jam in Finisher',
+    0xC: 'Paper Insertion Misfeed',
     0x40: 'Tray 1 Empty',
+    0x41: 'Paper Empty in Drawer',
+    0x44: 'Paper Misfeed in Printer',
+    0x48: 'Tray 1 Empty & Drawer Open',
+    0x4C: 'Paper Insertion Misfeed',
+    0x80: 'No Error',
+    0x88: 'Cover Open',
+    0xC0: 'Tray 1 Empty',
+    0xC1: 'Paper Empty in Drawer 1',
+    0xC8: 'Tray 1 Empty & Drawer Open',
 }
 
 printer_base_url = '.printer.stolaf.edu'
@@ -179,6 +188,7 @@ hidden_errors = [
     'No Error',
     'Paper Low',
     'Tray 1 Empty',
+    'Tray 1 Empty & Drawer Open',
     'Tray 2 Empty',
     'Drawer Open',
 ]
