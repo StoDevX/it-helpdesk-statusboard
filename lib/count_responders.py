@@ -10,6 +10,7 @@ staff = [
     'Dan Beach',
     'Dana Thompson',
     'Doug Hamilton',
+    'Ezra Plemons',
     'Heather Malecha',
     'Jason Menard',
     'Jeff Dixon',
