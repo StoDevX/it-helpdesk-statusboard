@@ -9,8 +9,8 @@ def clear_pages_xml(data):
     <?xml version="1.0" encoding="utf-8"?>
     <CarouselCommand xmlns="http://www.trms.com/CarouselRemoteCommand">
         <DeleteAllUserPages>
-                <UserName>%(username)s</UserName>
-                <Password>%(password)s</Password>
+            <UserName>%(username)s</UserName>
+            <Password>%(password)s</Password>
         </DeleteAllUserPages>
     </CarouselCommand>
     ''' % data).strip()
@@ -21,101 +21,97 @@ def delete_page_xml(data):
     <?xml version="1.0" encoding="utf-8"?>
     <CarouselCommand xmlns="http://www.trms.com/CarouselRemoteCommand">
         <DeletePage>
-                <UserName>%(username)s</UserName>
-                <Password>%(password)s</Password>
-                <GUID>%(guid)s</GUID>
+            <UserName>%(username)s</UserName>
+            <Password>%(password)s</Password>
+            <GUID>%(guid)s</GUID>
         </DeletePage>
     </CarouselCommand>
     ''' % data).strip()
 
 
-def create_page_xml(data):
+def create_page(credentials, template):
+    on_time = datetime.now()
+    off_time = on_time + timedelta(minutes=1)
+
+    on = on_time.strftime('%Y-%m-%dT%H:%M:%S')
+    off = off_time.strftime('%Y-%m-%dT%H:%M:%S')
+
+    username, password = credentials
+
+    return dedent('''
+    <?xml version="1.0" encoding="utf-8"?>
+    <CarouselCommand xmlns="http://www.trms.com/CarouselRemoteCommand">
+        <CreatePage>
+            <UserName>{username}</UserName>
+            <Password>{password}</Password>
+
+            <ZoneSet>
+                <ZoneID>1073</ZoneID>
+            </ZoneSet>
+
+            <AlwaysOn>false</AlwaysOn>
+            <DateTimeOn>{on}</DateTimeOn>
+            <DateTimeOff>{off}</DateTimeOff>
+            <DisplayDuration>30</DisplayDuration>
+
+            <PageType>Standard</PageType>
+
+            {template}
+        </CreatePage>
+    </CarouselCommand>
+    '''.format(on=on, off=off, 
+               template=template, 
+               username=username, password=password)).strip()
+
+
+def fill_status_template(data):
     for key, value in data.items():
         if type(value) == 'str':
             value = escape(value)
 
     data['printers'] = escape(data['printers'])
-    
-    on_time = datetime.now()
-    off_time = on_time + timedelta(minutes=1)
 
-    data['on'] = on_time.strftime('%Y-%m-%dT%H:%M:%S')
-    data['off'] = off_time.strftime('%Y-%m-%dT%H:%M:%S')
+    return dedent('''
+        <PageTemplate>
+            <TemplateName>Helpdesk Status</TemplateName>
+            <Block Name="Body-Printers" Value="%(printers)s" />
+            <Block Name="Body-Open Tickets" Value="%(open_tickets)d" />
+            <Block Name="Body-Unanswered Tix" Value="%(unanswered_tickets)d" />
+            <Block Name="Body-Now at HD" Value="%(now_helpdesk_name)s" />
+            <Block Name="Body-Now at TCAR" Value="%(now_tcar_name)s" />
+            <Block Name="Time-Next at HD" Value="%(next_helpdesk_time)s" />
+            <Block Name="Body-Next at HD" Value="%(next_helpdesk_name)s" />
+            <Block Name="Time-Next at TCAR" Value="%(next_tcar_time)s" />
+            <Block Name="Body-Next at TCAR" Value="%(next_tcar_name)s" />
+        </PageTemplate>
+    ''' % data).strip()
 
+
+def fill_helpers_template(data):
     if data['next_helpdesk_time']:
         data['next_helpdesk_time'] = '( {} )'.format(data['next_helpdesk_time'])
     if data['next_tcar_time']:
         data['next_tcar_time'] = '( {} )'.format(data['next_tcar_time'])
 
     return dedent('''
-    <?xml version="1.0" encoding="utf-8"?>
-    <CarouselCommand xmlns="http://www.trms.com/CarouselRemoteCommand">
-        <CreatePage>
-            <UserName>%(username)s</UserName>
-            <Password>%(password)s</Password>
+        <PageTemplate>
+            <TemplateName>Helpers Status</TemplateName>
 
-            <ZoneSet>
-                <ZoneID>1073</ZoneID>
-            </ZoneSet>
-
-            <AlwaysOn>false</AlwaysOn>
-            <DateTimeOn>%(on)s</DateTimeOn>
-            <DateTimeOff>%(off)s</DateTimeOff>
-            <DisplayDuration>30</DisplayDuration>
-
-            <PageType>Standard</PageType>
-
-            <PageTemplate>
-                <TemplateName>Helpdesk Status</TemplateName>
-
-                <Block Name="Body-Printers" Value="%(printers)s" />
-
-                <Block Name="Body-Now at HD" Value="%(now_helpdesk_name)s" />
-                <Block Name="Body-Now at TCAR" Value="%(now_tcar_name)s" />
-                <Block Name="Time-Next at HD" Value="%(next_helpdesk_time)s" />
-                <Block Name="Body-Next at HD" Value="%(next_helpdesk_name)s" />
-                <Block Name="Time-Next at TCAR" Value="%(next_tcar_time)s" />
-                <Block Name="Body-Next at TCAR" Value="%(next_tcar_name)s" />
-
-                <Block Name="Body-Open Tickets" Value="%(open_tickets)d" />
-                <Block Name="Body-Unanswered Tix" Value="%(unanswered_tickets)d" />
-            </PageTemplate>
-        </CreatePage>
-
-        <!--<CreatePage>
-            <UserName>%(username)s</UserName>
-            <Password>%(password)s</Password>
-
-            <ZoneSet>
-                <ZoneID>1073</ZoneID>
-            </ZoneSet>
-
-            <AlwaysOn>false</AlwaysOn>
-            <DateTimeOn>%(on)s</DateTimeOn>
-            <DateTimeOff>%(off)s</DateTimeOff>
-            <DisplayDuration>30</DisplayDuration>
-
-            <PageType>Standard</PageType>
-
-            <PageTemplate>
-                <TemplateName>Helpers Status</TemplateName>
-
-                <Block Name="Body-Now at HD" Value="%(now_helpdesk_name)s" />
-                <Block Name="Body-Now at TCAR" Value="%(now_tcar_name)s" />
-                <Block Name="Time-Next at HD" Value="%(next_helpdesk_time)s" />
-                <Block Name="Body-Next at HD" Value="%(next_helpdesk_name)s" />
-                <Block Name="Time-Next at TCAR" Value="%(next_tcar_time)s" />
-                <Block Name="Body-Next at TCAR" Value="%(next_tcar_name)s" />
-            </PageTemplate>
-        </CreatePage>-->
-    </CarouselCommand>
+            <Block Name="Body-Now at HD" Value="%(now_helpdesk_name)s" />
+            <Block Name="Body-Now at TCAR" Value="%(now_tcar_name)s" />
+            <Block Name="Time-Next at HD" Value="%(next_helpdesk_time)s" />
+            <Block Name="Body-Next at HD" Value="%(next_helpdesk_name)s" />
+            <Block Name="Time-Next at TCAR" Value="%(next_tcar_time)s" />
+            <Block Name="Body-Next at TCAR" Value="%(next_tcar_name)s" />
+        </PageTemplate>
     ''' % data).strip()
 
 
-
-def create_page(credentials):
-    data = collect(credentials)
-    return create_page_xml(data)
+def create_pages(credentials):
+    data = collect()
+    status = fill_status_template(data)
+    helpers = fill_helpers_template(data)
+    return [create_page(credentials, status), create_page(credentials, helpers)]
 
 
 def delete_page(credentials, guid):

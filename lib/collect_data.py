@@ -29,9 +29,7 @@ def get_first_shift(shifts):
 
 
 
-def collect(credentials):
-    username, password = credentials
-
+def collect():
     unanswered_ticket_count = count_unanswered_tickets()
     open_ticket_count = count_open_tickets()
     printers = group_printer_errors()
@@ -60,6 +58,4 @@ def collect(credentials):
         'next_tcar_name': '\\n'.join(next_tcar_names) or 'No more shifts scheduled',
         'open_tickets': open_ticket_count,
         'unanswered_tickets': unanswered_ticket_count,
-        'username': username,
-        'password': password,
     }

@@ -1,6 +1,7 @@
-from lib.tightrope import create_page, delete_page, clear_pages, send_page
+from lib.tightrope import create_pages, delete_page, clear_pages, send_page
 from lib.data_helpers import get_userpass_pair
 from argparse import ArgumentParser
+import sys
 
 
 def main():
@@ -13,21 +14,21 @@ def main():
 
     credentials = get_userpass_pair('tightrope')
 
+    pages = []
     if args.create_page:
-        page = create_page(credentials)
+        pages = create_pages(credentials)
     elif args.delete_page:
-        page = delete_page(credentials, args.delete_page)
+        pages = [delete_page(credentials, args.delete_page)]
     elif args.clear_pages:
-        page = clear_pages(credentials)
+        pages = [clear_pages(credentials)]
     else:
-        print('python3 make-xml.py [--create-page|--delete-page|--clear-pages]')
+        print('python3 make-xml.py [--create-page|--delete-page|--clear-pages] [--send]')
         sys.exit(1)
 
     if args.send:
-        print(send_page(page))
+        replies = [send_page(p) for p in pages]
     else:
-        print(page)
-
+        [print(p) for p in pages]
 
 
 if __name__ == '__main__':
