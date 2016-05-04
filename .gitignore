@@ -2,4 +2,4 @@
 *.credential
 data/
 *.pyc
-cron.log
+cron*.log
