@@ -5,6 +5,9 @@ import json
 import sys
 import os
 
+class LockFileError(Exception):
+    pass
+
 
 def get_userpass_pair(name):
     # returns ['username', 'password']
@@ -47,43 +50,43 @@ def lock_data(filename, depth=0):
         return
     
     # lockfile exists
-    except FileExistsError as err:
-        try:
-            with open(lockname, 'r') as f:
-                pid = f.read().strip()
-                # sometimes pid hasn't been written yet,
-                # so we wait for 1 second so the other process
-                # can write.
-                if not pid and depth == 0:
-                    time.sleep(1)
-                    return lock_data(filename, depth + 1)
-                elif depth == 3:
-                    print('lockfile has no pid: %s' % lockname, file=sys.stderr)
-                    sys.exit(1)
-                pid = int(pid)
-        except FileNotFoundError as err:
-            return
+    except FileExistsError:
+        pass
 
-        # pid running; spin for rand() seconds
-        time_slept = 0
-        while pid_is_running(pid) and time_slept < 60:
-            sleepy_time = random.randrange(1, 10)
-            time_slept += sleepy_time
-            time.sleep(sleepy_time)
+    try:
+        with open(lockname, 'r') as f:
+            pid = f.read().strip()
+            # sometimes pid hasn't been written yet, so we wait for 1
+            # second so the other process can write.
+            if not pid and depth == 0:
+                time.sleep(1)
+                return lock_data(filename, depth + 1)
+            elif depth >= 2:
+                raise LockFileError('lockfile has no pid: %s' % lockname)
+            pid = int(pid)
+    except FileNotFoundError:
+        return
 
-        if pid_is_running(pid):
-            print('Lock file exists at %s' % lockname, file=sys.stderr)
-            print('Either another process is running, or the previous copy crashed.', file=sys.stderr)
-            print('Remove the lock file to continue.', file=sys.stderr)
-            sys.exit(1)
+    # pid running; spin for rand() seconds
+    time_slept = 0
+    while pid_is_running(pid) and time_slept < 60:
+        sleepy_time = random.randrange(1, 10)
+        time_slept += sleepy_time
+        time.sleep(sleepy_time)
 
-        # if the pid is gone:
-        # - pid was dead from beginning,
-        # - or pid closed while spinning,
-        # = so change pid and continue
-        with open(lockname, 'w') as f:
-            f.write(str(os.getpid()))
-            return
+    if pid_is_running(pid):
+        err  = 'Lock file exists at %s.'
+        err += 'Either another process is running, or the previous copy crashed.'
+        err += 'Remove the lock file to continue.'
+        raise LockFileError(err % lockname)
+
+    # if the pid is gone:
+    # - pid was dead from beginning,
+    # - or pid closed while spinning,
+    # = so change pid and continue
+    with open(lockname, 'w') as f:
+        f.write(str(os.getpid()))
+        return
         
 
 
@@ -105,7 +108,8 @@ def ensure_dir_exists(folder):
 def ensure_file_exists(path):
     ensure_dir_exists(path)
     try:
-        open(path, 'r')
+        f = open(path, 'r')
+        f.close()
     except:
         with open(path, 'w') as input_file:
             input_file.write('')
