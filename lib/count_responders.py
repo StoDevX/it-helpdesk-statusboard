@@ -37,18 +37,6 @@ staff = [
     'Cathie Skluzacek',
 ]
 
-colors = [
-    'red',
-    'orange',
-    'yellow',
-    'green',
-    'blue',
-    'purple',
-    'pink',
-    'aqua',
-    'silver',
-]
-
 
 def has_tech_note(note):
     return (note['isTechNote']

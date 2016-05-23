@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 # Created by Phinehas Bynum on 10/1/14.
 # Ported to Python by Hawken Rives on 10/12/14.
 
@@ -52,17 +50,25 @@ codes = {
     0x0: 'No Error',
     0x1: 'Fatal Error - Please Contact Service Technician',
     0x4: 'Paper Jam in Finisher',
-    0xC: 'Paper Insertion Misfeed',
-    0x40: 'Tray 1 Empty',
-    0x41: 'Paper Empty in Drawer',
+    0xC: 'Paper Misfeed',
+    0x40: 'Tray Empty',
+    0x41: 'Tray Empty',
     0x44: 'Paper Misfeed in Printer',
-    0x48: 'Tray 1 Empty & Drawer Open',
-    0x4C: 'Paper Insertion Misfeed',
+    0x48: 'Tray Empty & Drawer Open',
+    0x49: 'Tray 1 & 2 Empty; Tray 2 Open',
+    0x4C: 'Paper Misfeed',
     0x80: 'No Error',
+    0x81: 'Fuser Error',
+    0x84: 'Paper Misfeed',
+    0x85: 'Fuser Error',
     0x88: 'Cover Open',
-    0xC0: 'Tray 1 Empty',
-    0xC1: 'Paper Empty in Drawer 1',
-    0xC8: 'Tray 1 Empty & Drawer Open',
+    0x89: 'Fuser Error', # yes, yet another one
+    0x8C: 'Paper Misfeed; Transport Unit Open; Duplexer Open',
+    0xA0: 'Black Toner Near Empty',
+    0xC0: 'Tray Empty',
+    0xC1: 'Tray Empty',
+    0xC8: 'Tray Empty & Drawer Open',
+    0xCC: 'Paper Misfeed',
 }
 
 printer_base_url = '.printer.stolaf.edu'
@@ -187,9 +193,8 @@ def check_all_printers():
 hidden_errors = [
     'No Error',
     'Paper Low',
-    'Tray 1 Empty',
-    'Tray 1 Empty & Drawer Open',
-    'Tray 2 Empty',
+    'Tray Empty',
+    'Tray Empty & Drawer Open',
     'Drawer Open',
 ]
 
