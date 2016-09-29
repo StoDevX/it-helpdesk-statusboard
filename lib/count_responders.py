@@ -23,8 +23,6 @@ staff = [
     'Myron Engle',
     'Nancy Aarsvold',
     'Nolan Arnold',
-    'Nhia Lee',
-    'Perrin Bishop-Wright',
     'Phinehas Bynum',
     'Rich Graves',
     'Roberta Lembke',
@@ -35,6 +33,7 @@ staff = [
     'Wendy Woitalla',
     'Derek Hanson',
     'Cathie Skluzacek',
+    'Kurtis Gibson',
 ]
 
 

@@ -30,7 +30,6 @@ all_printers = [
     'mfc-rml-1st',
     'mfc-rml115',
     'mfc-rml330',
-    'mfc-rml386',
     'mfc-rml433',
     'mfc-rml560',
     'mfc-rmlref',
