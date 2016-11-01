@@ -45,18 +45,24 @@ all_printers = [
     'mfc-ytt118',
 ]
 
+# If you see an Unknown Code, the easiest way to figure out how it should be
+# defined is to browse to:
+# http://<all_printers['theprintername']>.printer.stolaf.edu.
 codes = {
     0x0: 'No Error',
     0x1: 'Fatal Error - Please Contact Service Technician',
     0x4: 'Paper Jam in Finisher',
     0xC: 'Paper Misfeed',
+    0x10: 'Toner Empty',
     0x40: 'Tray Empty',
     0x41: 'Tray Empty',
     0x44: 'Paper Misfeed in Printer',
+    0x45: 'Paper Insertion Misfeed',
     0x48: 'Tray Empty & Drawer Open',
-    0x49: 'Tray 1 & 2 Empty; Tray 2 Open',
+    0x49: 'Tray 1 & 2 Empty & Tray 2 Open',
     0x4C: 'Paper Misfeed',
-    0x80: 'No Error',
+    0x60: 'Tray 1 Empty & Toner Low',
+    0x80: 'No Error', # yes, that's an error
     0x81: 'Fuser Error',
     0x84: 'Paper Misfeed',
     0x85: 'Fuser Error',
@@ -69,6 +75,15 @@ codes = {
     0xC8: 'Tray Empty & Drawer Open',
     0xCC: 'Paper Misfeed',
 }
+
+hidden_errors = [
+    'No Error',
+    'Paper Low',
+    'Tray Empty',
+    'Drawer Open',
+    'Tray Empty & Drawer Open',
+    'Tray 1 & 2 Empty & Tray 2 Open',
+]
 
 printer_base_url = '.printer.stolaf.edu'
 
@@ -187,15 +202,6 @@ def check_all_printers():
     unlock_data(filename)
 
     return load_data(filename)
-
-
-hidden_errors = [
-    'No Error',
-    'Paper Low',
-    'Tray Empty',
-    'Tray Empty & Drawer Open',
-    'Drawer Open',
-]
 
 
 def group_printer_errors(printers=[], hidden_errors=hidden_errors):
