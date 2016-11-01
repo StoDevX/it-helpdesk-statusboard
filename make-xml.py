@@ -27,7 +27,6 @@ def main():
 
     if args.send:
         replies = [send_page(p) for p in pages]
-        print(replies) #DEBUG
     else:
         [print(p) for p in pages]
 

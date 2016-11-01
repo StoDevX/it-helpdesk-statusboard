@@ -45,7 +45,6 @@ all_printers = [
     'mfc-ytt118',
 ]
 
-
 # If you see an Unknown Code, the easiest way to figure out how it should be
 # defined is to browse to:
 # http://<all_printers['theprintername']>.printer.stolaf.edu.
@@ -63,7 +62,7 @@ codes = {
     0x49: 'Tray 1 & 2 Empty & Tray 2 Open',
     0x4C: 'Paper Misfeed',
     0x60: 'Tray 1 Empty & Toner Low',
-    0x80: 'No Error',
+    0x80: 'No Error', # yes, that's an error
     0x81: 'Fuser Error',
     0x84: 'Paper Misfeed',
     0x85: 'Fuser Error',
