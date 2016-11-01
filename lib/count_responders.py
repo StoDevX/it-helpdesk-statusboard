@@ -3,12 +3,15 @@ from .functions import flatten, group_by, take
 import re
 
 staff = [
+    'Andy Kreienkamp',
     'Andy Prehall',
     'Ben Gottfried',
     'Bob Breid',
+    'Cathie Skluzacek',
     'Craig Rice',
     'Dan Beach',
     'Dana Thompson',
+    'Derek Hanson',
     'Doug Hamilton',
     'Ezra Plemons',
     'Heather Malecha',
@@ -16,6 +19,7 @@ staff = [
     'Jeff Dixon',
     'Jennie Moberg',
     'Kelly Kloos',
+    'Kurtis Gibson',
     'Marc Thomas',
     'Michael Strand',
     'Myron Engle',
@@ -28,9 +32,6 @@ staff = [
     'Tim Isom',
     'Tony Skalski',
     'Wendy Woitalla',
-    'Derek Hanson',
-    'Cathie Skluzacek',
-    'Kurtis Gibson',
 ]
 
 
