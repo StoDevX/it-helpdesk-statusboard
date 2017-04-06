@@ -74,6 +74,7 @@ codes = {
     0xC1: 'Tray Empty',
     0xC8: 'Tray Empty & Drawer Open',
     0xCC: 'Paper Misfeed',
+    0xC9: 'Fuser Error',
 }
 
 hidden_errors = [
