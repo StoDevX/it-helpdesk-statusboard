@@ -12,8 +12,8 @@ import re
 
 all_printers = [
     'mfc-bc110',
-    'mfc-casualreading',
-    'mfc-it',
+    'mfc-rml-openstudyspace',
+    #'mfc-it',
     'mfc-crossroads',
     'mfc-dc204',
     'mfc-ellingson',
@@ -30,11 +30,11 @@ all_printers = [
     'mfc-rml-1st',
     'mfc-rml115',
     'mfc-rml330',
-    'mfc-rml433',
+    'mfc-rml-3-artgallery',
     'mfc-rml560',
-    'mfc-rmlref',
+    'mfc-rml329',
     'mfc-rns-2nd',
-    'mfc-rns258',
+    #'mfc-rns258',
     'mfc-scilib',
     'mfc-skoglund',
     'mfc-thorson',
@@ -54,6 +54,7 @@ codes = {
     0x4: 'Paper Jam in Finisher',
     0xC: 'Paper Misfeed',
     0x10: 'Toner Empty',
+    0x20: 'Color Toner Near Empty',
     0x40: 'Tray Empty',
     0x41: 'Tray Empty',
     0x44: 'Paper Misfeed in Printer',
@@ -61,6 +62,7 @@ codes = {
     0x48: 'Tray Empty & Drawer Open',
     0x49: 'Tray 1 & 2 Empty & Tray 2 Open',
     0x4C: 'Paper Misfeed',
+    0x4D: 'Tray 1 & 2 Empty',
     0x60: 'Tray 1 Empty & Toner Low',
     0x80: 'No Error', # yes, that's an error
     0x81: 'Fuser Error',
@@ -69,12 +71,13 @@ codes = {
     0x88: 'Cover Open',
     0x89: 'Fuser Error', # yes, yet another one
     0x8C: 'Paper Misfeed; Transport Unit Open; Duplexer Open',
-    0xA0: 'Black Toner Near Empty',
+    0xA0: 'Some Toner Near Empty',
     0xC0: 'Tray Empty',
     0xC1: 'Tray Empty',
     0xC8: 'Tray Empty & Drawer Open',
     0xCC: 'Paper Misfeed',
     0xC9: 'Fuser Error',
+    0xE0: 'Tray Empty & Toner Low',
 }
 
 hidden_errors = [

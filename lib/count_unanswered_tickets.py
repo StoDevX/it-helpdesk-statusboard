@@ -2,7 +2,7 @@ from .get_tickets import get_tickets
 
 
 def is_normal_priority(t):
-    return t['prioritytype'] and t['prioritytype']['priorityTypeName'] == 'Normal Svc Req'
+    return t['prioritytype'] and t['prioritytype']['priorityTypeName'] == 'Normal'
 
 
 def is_unanswered(t):

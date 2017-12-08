@@ -14,6 +14,8 @@ staff = [
     'Derek Hanson',
     'Doug Hamilton',
     'Ezra Plemons',
+    'Gunnar Halseth',
+    'Hawken Rives',
     'Heather Malecha',
     'Jason Menard',
     'Jeff Dixon',
@@ -22,6 +24,7 @@ staff = [
     'Kurtis Gibson',
     'Marc Thomas',
     'Michael Strand',
+    'Mike Strand',
     'Myron Engle',
     'Nolan Arnold',
     'Phinehas Bynum',
@@ -37,7 +40,7 @@ staff = [
 
 def has_tech_note(note):
     return (note['isTechNote']
-            and not note['isHidden']
+            # and not note['isHidden']
             and len(note['mobileNoteText']) > 10)
 
 
@@ -61,12 +64,16 @@ def count_responders():
     closed_tickets = get_tickets('closed')
     tickets = flatten(open_tickets, awaiting_client_tickets, closed_tickets)
 
-    all_notes = flatten([t['notes'] for t in tickets if 'notes' in t])
-    tech_notes = [n for n in all_notes if has_tech_note(n)]
-    only_helpdesker_notes = [n for n in tech_notes if not is_staff_member(n)]
-    grouped_by_responder = group_by(responder_name, only_helpdesker_notes)
-    counted = {name: len(responses)
-               for name, responses in grouped_by_responder.items()}
+    counted = {}
+    for t in tickets:
+        if 'notes' not in t:
+            continue
+        responders = set()
+        for n in t['notes']:
+            if has_tech_note(n) and not is_staff_member(n):
+                responders.add(responder_name(n))
+        for name in responders:
+            counted[name] = counted.get(name, 0) + 1
 
     sorted_by_count = sorted(counted.items(), key=sort_responders)
 

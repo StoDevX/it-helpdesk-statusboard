@@ -11,7 +11,7 @@ def get_tickets(statustype):
     if not statustype:
         raise Error('statustype is required')
 
-    ticket_count = 200
+    ticket_count = 250
     filename = '-'.join(statustype.lower().split()) + '-tickets.json'
 
     if not needs_reload(filename, minutes=1):
