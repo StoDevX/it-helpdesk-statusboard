@@ -32,6 +32,7 @@ staff = [
     'Roberta Lembke',
     'Sean Tonko',
     'System',
+    'Kristofer Rye',
     'Tim Isom',
     'Tony Skalski',
     'Wendy Woitalla',
