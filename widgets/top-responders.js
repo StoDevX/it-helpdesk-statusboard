@@ -75,5 +75,6 @@ update: function(output, domEl) {
 		contentTable.appendChild(item)
 	})
 
-	details.innerHTML = contentTable.outerHTML
+	details.innerHTML = ''
+	details.appendChild(contentTable)
 },
