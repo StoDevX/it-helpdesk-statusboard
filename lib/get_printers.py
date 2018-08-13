@@ -23,6 +23,7 @@ all_printers = [
     'mfc-kierk',
     'mfc-kildahl',
     'mfc-larson',
+    'mfc-library',
     'mfc-mellby',
     'mfc-mohn',
     'mfc-pastor',
