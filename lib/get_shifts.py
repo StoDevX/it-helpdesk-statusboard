@@ -70,7 +70,7 @@ def process_shift(shift):
 
 def extract_shifts(page):
     soup = bs(page, 'html.parser')
-    table = soup.select('.bwgt > table')[0]
+    table = soup.select('.bWGT > table')[0]
 
     headers = table.select('tr:nth-of-type(1) td')
     keys = [h.get_text() for h in headers]
