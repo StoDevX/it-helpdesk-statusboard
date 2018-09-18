@@ -34,6 +34,7 @@ def get_whos_on_now_page(SID):
 
 
 def timestring_to_time(ts):
+    ts = ts.strip()
     timelist = ts.strip(r'(am|pm)').split(':')
     hour = int(timelist[0])
     offset = 12 if 'pm' in ts and hour is not 12 else 0
@@ -72,15 +73,18 @@ def extract_shifts(page):
     soup = bs(page, 'html.parser')
     table = soup.select('.bWGT > table')[0]
 
-    headers = table.select('tr:nth-of-type(1) td')
+    headers = table.select('thead th')
     keys = [h.get_text() for h in headers]
 
-    shift_rows = table.find_all('tr', attrs={'title': 'View details'})
+    shift_rows = table.select('tbody')[0].find_all('tr', attrs={'title': 'View details'})
     shift_rows = [
-        [cell.get_text().strip()
-         for cell in row
-         if not isinstance(cell, NavigableString)]
-        for row in shift_rows]
+        [
+            cell.get_text().strip()
+            for cell in row
+            if not isinstance(cell, NavigableString)
+        ]
+        for row in shift_rows
+    ]
 
     shifts = [{keys[i]: value for i, value in enumerate(row)} for row in shift_rows]
     shifts = [process_shift(s) for s in shifts]
