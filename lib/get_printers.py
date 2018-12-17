@@ -89,7 +89,7 @@ hidden_errors = [
 printer_base_url = '.printer.stolaf.edu'
 
 
-def call_printer(url, numeric_path):
+def call_printer(url, numeric_path, as_string=False):
     try:
         cmd = ['snmpwalk', '-c', 'public', '-v', '2c', url, numeric_path]
         result = check_output(cmd, stderr=DEVNULL)
@@ -107,7 +107,7 @@ def call_printer(url, numeric_path):
         elif kind == 'Hex-STRING':
             return [int(ch, 16) for ch in value.split(" ")]
 
-        elif kind == 'STRING':
+        elif kind == 'STRING' and not as_string:
             value = value.strip('"')
             return [ord(ch) for ch in value]
 
