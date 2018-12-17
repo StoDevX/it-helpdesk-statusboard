@@ -171,11 +171,8 @@ def check_printer(printer_name):
         'toner': snmp_mfc_toner(printer_url),
         'status': snmp_status(printer_url),
         'error': snmp_status_code(printer_url),
-        # 'model': snmp_model(printer_url)
     }
-    end = time.time()
-
-    # print('{} took {} secs'.format(printer_name, end - start))
+    retval['duration'] = f'{time.time() - start:0.02}s'
 
     return retval
 
