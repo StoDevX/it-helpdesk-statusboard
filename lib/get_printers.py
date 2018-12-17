@@ -153,6 +153,7 @@ def snmp_status(printer_url):
 
 def snmp_status_code(printer_url):
     raw_code = call_printer(printer_url, '1.3.6.1.2.1.25.3.5.1.2')
+    model = snmp_model(printer_url)
 
     if len(raw_code) is 0:
         return 'Not Responding'
@@ -162,8 +163,10 @@ def snmp_status_code(printer_url):
     code = raw_code[0]
 
     # Look up the code
-    if code in codes:
-        return codes[code]
+    if model in codes_by_model:
+        codes = codes_by_model[model]
+        if code in codes:
+            return codes[code]
 
     # Turn something like C0 into [67 32]
     str_code = ' '.join([hex(ch) for ch in raw_code])
