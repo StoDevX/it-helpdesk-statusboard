@@ -121,7 +121,7 @@ def call_printer(url, numeric_path, as_string=False):
 
 
 def snmp_model(printer_url):
-    model = call_printer(printer_url, '1.3.6.1.2.1.25.3.2.1.3.1')
+    model = call_printer(printer_url, '1.3.6.1.2.1.25.3.2.1.3.1', as_string=True)
     return model
 
 
