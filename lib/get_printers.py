@@ -13,7 +13,7 @@ import re
 all_printers = [
     'mfc-bc110',
     'mfc-crossroads',
-    'mfc-dc204',
+    'mfc-cad204',
     'mfc-ellingson',
     'mfc-fireside',
     'mfc-hillkitt',
