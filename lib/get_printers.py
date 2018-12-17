@@ -12,10 +12,8 @@ import re
 
 all_printers = [
     'mfc-bc110',
-    'mfc-rml-openstudyspace',
-    #'mfc-it',
     'mfc-crossroads',
-    'mfc-dc204',
+    'mfc-cad204',
     'mfc-ellingson',
     'mfc-fireside',
     'mfc-hillkitt',
@@ -23,20 +21,18 @@ all_printers = [
     'mfc-kierk',
     'mfc-kildahl',
     'mfc-larson',
-    #'mfc-library',
     'mfc-mellby',
     'mfc-mohn',
     'mfc-pastor',
     'mfc-rand',
     'mfc-rml-1st',
+    'mfc-rml-3-artgallery',
+    'mfc-rml-4-disco',
+    'mfc-rml-openstudyspace',
     'mfc-rml115',
     'mfc-rml330',
-    'mfc-rml-3-artgallery',
     'mfc-rml560',
-    'mfc-rml-4-disco',
     'mfc-rns-2nd',
-    #'mfc-rns258',
-    #'mfc-scilib',
     'mfc-skoglund',
     'mfc-thorson',
     'mfc-toh101',
@@ -49,36 +45,46 @@ all_printers = [
 # If you see an Unknown Code, the easiest way to figure out how it should be
 # defined is to browse to:
 # http://<all_printers['theprintername']>.printer.stolaf.edu.
-codes = {
-    0x0: 'No Error',
-    0x1: 'Fatal Error - Please Contact Service Technician',
-    0x4: 'Paper Jam in Finisher',
-    0xC: 'Paper Misfeed',
-    0x10: 'Toner Empty',
-    0x20: 'Color Toner Near Empty',
-    0x40: 'Tray Empty',
-    0x41: 'Tray Empty',
-    0x44: 'Paper Misfeed in Printer',
-    0x45: 'Paper Insertion Misfeed',
-    0x48: 'Tray Empty & Drawer Open',
-    0x49: 'Tray 1 & 2 Empty & Tray 2 Open',
-    0x4C: 'Paper Misfeed',
-    0x4D: 'Tray 1 & 2 Empty',
-    0x60: 'Tray 1 Empty & Toner Low',
-    0x80: 'No Error', # yes, that's an error
-    0x81: 'Fuser Error',
-    0x84: 'Paper Misfeed',
-    0x85: 'Fuser Error',
-    0x88: 'Cover Open',
-    0x89: 'Fuser Error', # yes, yet another one
-    0x8C: 'Paper Misfeed; Transport Unit Open; Duplexer Open',
-    0xA0: 'Some Toner Near Empty',
-    0xC0: 'Tray Empty',
-    0xC1: 'Tray Empty',
-    0xC8: 'Tray Empty & Drawer Open',
-    0xCC: 'Paper Misfeed',
-    0xC9: 'Fuser Error',
-    0xE0: 'Tray Empty & Toner Low',
+codes_by_model = {
+    'TOSHIBA e-STUDIO506': {
+        0x0: 'No Error',
+        0x1: 'Fatal Error - Please Contact Service Technician',
+        0x4: 'Paper Jam in Finisher',
+        0xC: 'Paper Misfeed',
+        0x10: 'Toner Empty',
+        0x20: 'Color Toner Near Empty',
+        0x40: 'Tray Empty',
+        0x41: 'Tray Empty',
+        0x44: 'Paper Misfeed in Printer',
+        0x45: 'Paper Insertion Misfeed',
+        0x48: 'Tray Empty & Drawer Open',
+        0x49: 'Tray 1 & 2 Empty & Tray 2 Open',
+        0x4C: 'Paper Misfeed',
+        0x4D: 'Tray 1 & 2 Empty',
+        0x60: 'Tray 1 Empty & Toner Low',
+        0x80: 'No Error', # yes, that's an error
+        0x81: 'Fuser Error',
+        0x84: 'Paper Misfeed',
+        0x85: 'Fuser Error',
+        0x88: 'Cover Open',
+        0x89: 'Fuser Error', # yes, yet another one
+        0x8C: 'Paper Misfeed; Transport Unit Open; Duplexer Open',
+        0xA0: 'Some Toner Near Empty',
+        0xC0: 'Tray Empty',
+        0xC1: 'Tray Empty',
+        0xC8: 'Tray Empty & Drawer Open',
+        0xCC: 'Paper Misfeed',
+        0xC9: 'Fuser Error',
+        0xE0: 'Tray Empty & Toner Low',
+    },
+    'TOSHIBA e-STUDIO5008A': {
+        0x80: 'No Error',
+        0x81: 'No Error',
+    },
+    'TOSHIBA e-STUDIO4505AC': {
+        0x80: 'No Error',
+        0x81: 'No Error',
+    },
 }
 
 hidden_errors = [
@@ -93,13 +99,16 @@ hidden_errors = [
 printer_base_url = '.printer.stolaf.edu'
 
 
-def call_printer(url, numeric_path):
+def call_printer(url, numeric_path, as_string=False):
     try:
         cmd = ['snmpwalk', '-c', 'public', '-v', '2c', url, numeric_path]
         result = check_output(cmd, stderr=DEVNULL)
         result = result.decode('unicode_escape').strip().split(' = ')[-1]
 
-        kind, value = result.split(': ')
+        try:
+            kind, value = result.split(': ')
+        except ValueError:
+            return f'error processing result "{result}" for {url}'
 
         if kind == 'INTEGER':
             # there are some values that look like "idle(3)" or "other(1)"
@@ -111,7 +120,7 @@ def call_printer(url, numeric_path):
         elif kind == 'Hex-STRING':
             return [int(ch, 16) for ch in value.split(" ")]
 
-        elif kind == 'STRING':
+        elif kind == 'STRING' and not as_string:
             value = value.strip('"')
             return [ord(ch) for ch in value]
 
@@ -125,7 +134,7 @@ def call_printer(url, numeric_path):
 
 
 def snmp_model(printer_url):
-    model = call_printer(printer_url, '1.3.6.1.2.1.25.3.2.1.3.1')
+    model = call_printer(printer_url, '1.3.6.1.2.1.25.3.2.1.3.1', as_string=True)
     return model
 
 
@@ -147,6 +156,7 @@ def snmp_status(printer_url):
 
 def snmp_status_code(printer_url):
     raw_code = call_printer(printer_url, '1.3.6.1.2.1.25.3.5.1.2')
+    model = snmp_model(printer_url)
 
     if len(raw_code) is 0:
         return 'Not Responding'
@@ -156,14 +166,15 @@ def snmp_status_code(printer_url):
     code = raw_code[0]
 
     # Look up the code
-    if code in codes:
-        return codes[code]
+    if model in codes_by_model:
+        codes = codes_by_model[model]
+        if code in codes:
+            return codes[code]
 
     # Turn something like C0 into [67 32]
     str_code = ' '.join([hex(ch) for ch in raw_code])
-    str_code = '[' + str_code.strip() + ']'
 
-    return 'Unknown Code {}'.format(str_code)
+    return f'Unknown Code [{str_code.strip()}] for {model}'
 
 
 def check_printer(printer_name):
@@ -175,25 +186,17 @@ def check_printer(printer_name):
         'toner': snmp_mfc_toner(printer_url),
         'status': snmp_status(printer_url),
         'error': snmp_status_code(printer_url),
-        # 'model': snmp_model(printer_url)
     }
-    end = time.time()
-
-    # print('{} took {} secs'.format(printer_name, end - start))
+    retval['duration'] = f'{time.time() - start:0.02}s'
 
     return retval
 
 
 def check_printers(printers):
-    printer_info = []
     worker_count = ceil(len(printers)/2)
-    # print('using {} workers'.format(worker_count))
     with ThreadPoolExecutor(max_workers=worker_count) as executor:
         for printer in executor.map(check_printer, printers):
-            # print(printer)
-            printer_info.append(printer)
-
-    return printer_info
+            yield printer
 
 
 def check_all_printers():
@@ -202,7 +205,7 @@ def check_all_printers():
         return load_data(filename)
 
     lock_data(filename)
-    data = check_printers(all_printers)
+    data = list(check_printers(all_printers))
     save_data(filename, data)
     unlock_data(filename)
 
@@ -216,7 +219,7 @@ def group_printer_errors(printers=[], hidden_errors=hidden_errors):
     # get toner levels before filtering error messages
     toner_warnings = [p for p in printers if int(p['toner']) < 5]
     for p in toner_warnings:
-        p['name'] += " ({}%)".format(p['toner'])
+        p['name'] += f" ({p['toner']}%)"
 
     printers = [p for p in printers if p['error'] not in hidden_errors]
     data = group_by(lambda p: p['error'], printers)
