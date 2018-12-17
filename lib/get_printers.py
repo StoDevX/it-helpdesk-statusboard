@@ -177,15 +177,10 @@ def check_printer(printer_name):
 
 
 def check_printers(printers):
-    printer_info = []
     worker_count = ceil(len(printers)/2)
-    # print('using {} workers'.format(worker_count))
     with ThreadPoolExecutor(max_workers=worker_count) as executor:
         for printer in executor.map(check_printer, printers):
-            # print(printer)
-            printer_info.append(printer)
-
-    return printer_info
+            yield printer
 
 
 def check_all_printers():
@@ -194,7 +189,7 @@ def check_all_printers():
         return load_data(filename)
 
     lock_data(filename)
-    data = check_printers(all_printers)
+    data = list(check_printers(all_printers))
     save_data(filename, data)
     unlock_data(filename)
 
