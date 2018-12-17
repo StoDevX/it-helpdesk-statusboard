@@ -45,36 +45,46 @@ all_printers = [
 # If you see an Unknown Code, the easiest way to figure out how it should be
 # defined is to browse to:
 # http://<all_printers['theprintername']>.printer.stolaf.edu.
-codes = {
-    0x0: 'No Error',
-    0x1: 'Fatal Error - Please Contact Service Technician',
-    0x4: 'Paper Jam in Finisher',
-    0xC: 'Paper Misfeed',
-    0x10: 'Toner Empty',
-    0x20: 'Color Toner Near Empty',
-    0x40: 'Tray Empty',
-    0x41: 'Tray Empty',
-    0x44: 'Paper Misfeed in Printer',
-    0x45: 'Paper Insertion Misfeed',
-    0x48: 'Tray Empty & Drawer Open',
-    0x49: 'Tray 1 & 2 Empty & Tray 2 Open',
-    0x4C: 'Paper Misfeed',
-    0x4D: 'Tray 1 & 2 Empty',
-    0x60: 'Tray 1 Empty & Toner Low',
-    0x80: 'No Error', # yes, that's an error
-    0x81: 'Fuser Error',
-    0x84: 'Paper Misfeed',
-    0x85: 'Fuser Error',
-    0x88: 'Cover Open',
-    0x89: 'Fuser Error', # yes, yet another one
-    0x8C: 'Paper Misfeed; Transport Unit Open; Duplexer Open',
-    0xA0: 'Some Toner Near Empty',
-    0xC0: 'Tray Empty',
-    0xC1: 'Tray Empty',
-    0xC8: 'Tray Empty & Drawer Open',
-    0xCC: 'Paper Misfeed',
-    0xC9: 'Fuser Error',
-    0xE0: 'Tray Empty & Toner Low',
+codes_by_model = {
+    'TOSHIBA e-STUDIO506': {
+        0x0: 'No Error',
+        0x1: 'Fatal Error - Please Contact Service Technician',
+        0x4: 'Paper Jam in Finisher',
+        0xC: 'Paper Misfeed',
+        0x10: 'Toner Empty',
+        0x20: 'Color Toner Near Empty',
+        0x40: 'Tray Empty',
+        0x41: 'Tray Empty',
+        0x44: 'Paper Misfeed in Printer',
+        0x45: 'Paper Insertion Misfeed',
+        0x48: 'Tray Empty & Drawer Open',
+        0x49: 'Tray 1 & 2 Empty & Tray 2 Open',
+        0x4C: 'Paper Misfeed',
+        0x4D: 'Tray 1 & 2 Empty',
+        0x60: 'Tray 1 Empty & Toner Low',
+        0x80: 'No Error', # yes, that's an error
+        0x81: 'Fuser Error',
+        0x84: 'Paper Misfeed',
+        0x85: 'Fuser Error',
+        0x88: 'Cover Open',
+        0x89: 'Fuser Error', # yes, yet another one
+        0x8C: 'Paper Misfeed; Transport Unit Open; Duplexer Open',
+        0xA0: 'Some Toner Near Empty',
+        0xC0: 'Tray Empty',
+        0xC1: 'Tray Empty',
+        0xC8: 'Tray Empty & Drawer Open',
+        0xCC: 'Paper Misfeed',
+        0xC9: 'Fuser Error',
+        0xE0: 'Tray Empty & Toner Low',
+    },
+    'TOSHIBA e-STUDIO5008A': {
+        0x80: 'No Error',
+        0x81: 'No Error',
+    },
+    'TOSHIBA e-STUDIO4505AC': {
+        0x80: 'No Error',
+        0x81: 'No Error',
+    },
 }
 
 hidden_errors = [
