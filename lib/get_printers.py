@@ -105,7 +105,10 @@ def call_printer(url, numeric_path, as_string=False):
         result = check_output(cmd, stderr=DEVNULL)
         result = result.decode('unicode_escape').strip().split(' = ')[-1]
 
-        kind, value = result.split(': ')
+        try:
+            kind, value = result.split(': ')
+        except ValueError:
+            return f'error processing result "{result}" for {url}'
 
         if kind == 'INTEGER':
             # there are some values that look like "idle(3)" or "other(1)"
