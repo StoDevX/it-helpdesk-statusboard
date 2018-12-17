@@ -157,9 +157,8 @@ def snmp_status_code(printer_url):
 
     # Turn something like C0 into [67 32]
     str_code = ' '.join([hex(ch) for ch in raw_code])
-    str_code = '[' + str_code.strip() + ']'
 
-    return 'Unknown Code {}'.format(str_code)
+    return f'Unknown Code [{str_code.strip()}] for {model}'
 
 
 def check_printer(printer_name):
@@ -209,7 +208,7 @@ def group_printer_errors(printers=[], hidden_errors=hidden_errors):
     # get toner levels before filtering error messages
     toner_warnings = [p for p in printers if int(p['toner']) < 5]
     for p in toner_warnings:
-        p['name'] += " ({}%)".format(p['toner'])
+        p['name'] += f" ({p['toner']}%)"
 
     printers = [p for p in printers if p['error'] not in hidden_errors]
     data = group_by(lambda p: p['error'], printers)
