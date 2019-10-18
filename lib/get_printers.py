@@ -3,7 +3,7 @@
 
 from concurrent.futures import ThreadPoolExecutor
 from subprocess import check_output, CalledProcessError, DEVNULL
-from .data_helpers import save_data, load_data, needs_reload, lock_data, unlock_data
+from .data_helpers import load_data, needs_reload, persist_data
 from .functions import group_by
 from sys import stderr
 from math import ceil
@@ -204,10 +204,8 @@ def check_all_printers():
     if not needs_reload(filename, minutes=5):
         return load_data(filename)
 
-    lock_data(filename)
     data = list(check_printers(all_printers))
-    save_data(filename, data)
-    unlock_data(filename)
+    persist_data(filename, data)
 
     return load_data(filename)
 

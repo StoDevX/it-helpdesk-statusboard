@@ -1,12 +1,11 @@
 from datetime import datetime
+from contextlib import contextmanager
+import sqlite3
 import random
 import time
 import json
 import sys
 import os
-
-class LockFileError(Exception):
-    pass
 
 
 def get_userpass_pair(name):
@@ -22,140 +21,46 @@ def get_api_key(name):
         return credentials.read().split('\n')[0]
 
 
-def pid_is_running(pid):
-    '''Check for the existence of a unix pid.'''
-    try:
-        os.kill(pid, 0)
-    except OSError:
-        return False
-    else:
-        return True
+def needs_reload(filename, *, minutes):
+    with get_db() as c:
+        c.execute("select (julianday('now') - julianday(last_updated)) * 24 * 60 >= ? as needs_refresh from data where filename = ?", [minutes, filename])
+        row = c.fetchone()
+        return row is None or row['needs_refresh'] == 1
 
 
-def make_data_filename(filename):
-    return os.path.join(os.path.dirname(__file__), '..', 'data/%s' % filename)
-
-
-def make_lock_filename(filename):
-    return make_data_filename(filename + '.lock')
-
-
-def lock_data(filename, depth=0):
-    lockname = make_lock_filename(filename)
-
-    # no lockfile, so make it
-    try:
-        with open(lockname, 'x') as input_file:
-            input_file.write(str(os.getpid()))
-        return
-    
-    # lockfile exists
-    except FileExistsError:
-        pass
-
-    try:
-        with open(lockname, 'r') as f:
-            pid = f.read().strip()
-            # sometimes pid hasn't been written yet, so we wait for 1
-            # second so the other process can write.
-            if not pid and depth == 0:
-                time.sleep(1)
-                return lock_data(filename, depth + 1)
-            elif depth >= 2:
-                raise LockFileError('lockfile has no pid: %s' % lockname)
-            pid = int(pid)
-    except FileNotFoundError:
-        return
-
-    # pid running; spin for rand() seconds
-    time_slept = 0
-    while pid_is_running(pid) and time_slept < 60:
-        sleepy_time = random.randrange(1, 10)
-        time_slept += sleepy_time
-        time.sleep(sleepy_time)
-
-    if pid_is_running(pid):
-        err  = 'Lock file exists at %s.'
-        err += 'Either another process is running, or the previous copy crashed.'
-        err += 'Remove the lock file to continue.'
-        raise LockFileError(err % lockname)
-
-    # if the pid is gone:
-    # - pid was dead from beginning,
-    # - or pid closed while spinning,
-    # = so change pid and continue
-    with open(lockname, 'w') as f:
-        f.write(str(os.getpid()))
-        return
-        
-
-
-def unlock_data(filename):
-    os.remove(make_lock_filename(filename))
-
-
-def now():
-    return datetime.now().isoformat()
-
-
-def ensure_dir_exists(folder):
-    # Make sure that a folder exists.
-    d = os.path.dirname(folder)
-    if not os.path.exists(d):
-        os.makedirs(d)
-
-
-def ensure_file_exists(path):
-    ensure_dir_exists(path)
-    try:
-        f = open(path, 'r')
-        f.close()
-    except:
-        with open(path, 'w') as input_file:
-            input_file.write('')
-
-
-def needs_reload(filename, minutes):
-    path = make_data_filename(filename)
-    now = datetime.now()
-    minutes = now.minute - minutes if (now.minute - minutes) >= 0 else 0
-
-    if not os.path.exists(path):
-        return True
-
-    with open(path, 'r') as input_file:
-        input_data = input_file.read()
-        if not input_data:
-            return True
-
-        data = json.loads(input_data)
-
-        if 'lastUpdated' not in data:
-            return True
-
-        previous_update_time = datetime.strptime(data['lastUpdated'], "%Y-%m-%dT%H:%M:%S.%f")
-
-        if previous_update_time >= now.replace(minute=minutes):
-            return False
-
-    return True
-
-
-def save_data(filename, data):
-    path = make_data_filename(filename)
-    ensure_file_exists(path)
-    n = now()
-    data_to_save = {
-        'data': data,
-        'lastUpdated': n if '.' in n else n + '.0000'
-    }
-    with open(path, 'w+') as output_file:
-        json_data = json.dumps(data_to_save, indent=2, separators=(',', ': '))
-        output_file.write(json_data)
+def persist_data(filename, content):
+    with get_db() as c:
+        c.execute("""
+            insert into data (filename, content, last_updated) values (:filename, :content, julianday('now'))
+            on conflict (filename) do update
+            set content = :content, last_updated = julianday('now')
+        """, {'filename': filename, 'content': json.dumps(content)})
 
 
 def load_data(filename):
-    path = make_data_filename(filename)
-    ensure_file_exists(path)
-    with open(path, 'r') as input_file:
-        return json.loads(input_file.read())['data']
+    with get_db() as c:
+        c.execute("select content from data where filename = ?", [filename])
+        return json.loads(c.fetchone()['content'])
+
+
+@contextmanager
+def get_db():
+    data_dir = os.path.join(os.path.dirname(__file__), '..', 'data')
+    os.makedirs(data_dir, exist_ok=True)
+    data_path = os.path.join(data_dir, 'data.sqlite3')
+
+    with sqlite3.connect(data_path) as db:
+        db.row_factory = sqlite3.Row
+
+        db.execute('''
+            CREATE TABLE IF NOT EXISTS data (
+                filename varchar unique,
+                content varchar,
+                last_updated timestamp default (julianday('now'))
+            )
+        ''')
+
+        db.commit()
+
+        yield db.cursor()
+
