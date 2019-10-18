@@ -12,11 +12,15 @@ def main():
     if args.json:
         print(json.dumps(shifts))
     else:
-        print('Now @ Helpdesk:')
-        print('Now @ TCAR:')
-        print('Next @ Helpdesk:')
-        print('Next @ TCAR:')
-        print(json.dumps(shifts))
+        print('Now:')
+        for person in shifts['now']:
+            print(f"{person['location']}: {person['name']}")
+
+        print()
+
+        print('Later:')
+        for person in shifts['later']:
+            print(f"{person['location']}: {person['name']}, {person['time']}")
 
 
 if __name__ == '__main__':
